@@ -1,35 +1,6 @@
-from typing import List, Set
+from utils import Grid, random_list, display
+from typing import Set
 from random import shuffle
-
-Grid = List[List[int]]
-
-
-def display(grid: Grid) -> None:
-    for row in grid:
-        print(row)
-    return
-
-
-def random_list() -> List[int]:
-    lst = list(range(1, 10))
-    shuffle(lst)
-    return lst
-
-
-def get_possible_move(grid: Grid, row: int, col: int) -> Set[int]:
-    s_placed = set(grid[row]) | \
-               {r[col] for r in grid} | \
-               {x for sub in grid[3 * (row // 3): 3 * (row // 3) + 3] for x in sub[3 * (col // 3): 3 * (col // 3) + 3]}
-    return set(range(1, 10)) - s_placed
-
-
-def generate_diag() -> Grid:
-    grid = [[0 for _ in range(9)] for _ in range(9)]
-    l_case = [random_list() for _ in range(3)]
-    for i, case in enumerate(l_case):
-        for j, row in enumerate([case[k:k + 3] for k in range(0, 9, 3)]):
-            grid[i * 3 + j][i * 3:i * 3 + 3] = row
-    return grid
 
 
 def solve_brute(grid: Grid, i=0, j=0) -> bool:
@@ -46,6 +17,22 @@ def solve_brute(grid: Grid, i=0, j=0) -> bool:
             return True
     grid[i][j] = 0
     return False
+
+
+def get_possible_move(grid: Grid, row: int, col: int) -> Set[int]:
+    s_placed = set(grid[row]) | \
+               {r[col] for r in grid} | \
+               {x for sub in grid[3 * (row // 3): 3 * (row // 3) + 3] for x in sub[3 * (col // 3): 3 * (col // 3) + 3]}
+    return set(range(1, 10)) - s_placed
+
+
+def generate_diag() -> Grid:
+    grid = [[0 for _ in range(9)] for _ in range(9)]
+    l_case = [random_list() for _ in range(3)]
+    for i, case in enumerate(l_case):
+        for j, row in enumerate([case[k:k + 3] for k in range(0, 9, 3)]):
+            grid[i * 3 + j][i * 3:i * 3 + 3] = row
+    return grid
 
 
 def generate_full_grid() -> Grid:
@@ -66,4 +53,3 @@ def check_grid(grid: Grid) -> bool:
 if __name__ == '__main__':
     grid = generate_full_grid()
     display(grid)
-    print(grid)
