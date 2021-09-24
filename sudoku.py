@@ -3,19 +3,19 @@ from typing import Set
 from random import shuffle
 
 
-def solve_brute(grid: Grid, i=0, j=0) -> bool:
-    if i == 9:
+def solve_brute(grid: Grid, row=0, col=0) -> bool:
+    if row == 9:
         return True
-    n_i, n_j = i + (j == 8), (j + 1) % 9
-    if grid[i][j]:
-        return solve_brute(grid, n_i, n_j)
-    l_move = list(get_possible_move(grid, i, j))
+    n_row, n_col = row + (col == 8), (col + 1) % 9
+    if grid[row][col]:
+        return solve_brute(grid, n_row, n_col)
+    l_move = list(get_possible_move(grid, row, col))
     shuffle(l_move)
     for move in l_move:
-        grid[i][j] = move
-        if solve_brute(grid, n_i, n_j):
+        grid[row][col] = move
+        if solve_brute(grid, n_row, n_col):
             return True
-    grid[i][j] = 0
+    grid[row][col] = 0
     return False
 
 
@@ -28,10 +28,10 @@ def get_possible_move(grid: Grid, row: int, col: int) -> Set[int]:
 
 def generate_diag() -> Grid:
     grid = [[0 for _ in range(9)] for _ in range(9)]
-    l_case = [random_list() for _ in range(3)]
-    for i, case in enumerate(l_case):
-        for j, row in enumerate([case[k:k + 3] for k in range(0, 9, 3)]):
-            grid[i * 3 + j][i * 3:i * 3 + 3] = row
+    l_square = [random_list() for _ in range(3)]
+    for i, square in enumerate(l_square):
+        for j, sub in enumerate([square[k:k + 3] for k in range(0, 9, 3)]):
+            grid[i * 3 + j][i * 3:i * 3 + 3] = sub
     return grid
 
 
