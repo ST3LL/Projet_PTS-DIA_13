@@ -1,4 +1,5 @@
 from random import shuffle
+from copy import deepcopy
 from typing import List, Optional, Set, Callable
 import string
 from more_termcolor import colored
@@ -61,14 +62,17 @@ class Game:
         self.ruleset = ruleset if ruleset is not None else build_vanilla_ruleset()
         self.grid = [[EMPTY if case is not None else None for case in row] for row in self.region_map]
         self.solve_brute()
+        self.thin_grid()
 
     def __str__(self):
         return '\n'.join([
             '  '.join([
-                colored(self.grid[i][j], L_COLOR[self.region_map[i][j] % len(L_COLOR)]) if self.grid[i][j] is not None else '#'
+                colored(case, L_COLOR[self.region_map[i][j] % len(L_COLOR)])
+                if (case := self.grid[i][j]) is not None else '#'
                 for j in range(len(self.grid[i]))])
             for i in range(len(self.grid))
-        ])
+        ]) + f"\n{sum([case in self.moveset for row in self.grid for case in row])} / " \
+             f"{sum([case is not None for row in self.grid for case in row])}"
 
     # </editor-fold>
 
@@ -83,10 +87,20 @@ class Game:
             moveset &= rule(self, row, col)
         return moveset
 
+    def thin_grid(self):
+        case_order = [(i, j) for i in range(len(self.grid)) for j in range(len(self.grid[i]))]
+        shuffle(case_order)
+        thin = deepcopy(self.grid)
+        for i, j in case_order:
+            self.grid[i][j] = EMPTY
+            if self.solve_brute(i, j, find=2) == 1:
+                thin[i][j] = EMPTY
+            self.grid = deepcopy(thin)
+
     # </editor-fold>
 
     # <editor-fold desc="Solvers">
-    def solve_brute(self, row: int = 0, col: int = 0) -> bool:
+    def solve_brute(self, row: int = 0, col: int = 0, find: int = 1) -> int:
         if row == len(self.grid):
             return True
         next_row, next_col = row + (col == (len(self.grid[row]) - 1)), (col + 1) % len(self.grid[row])
@@ -94,12 +108,14 @@ class Game:
             return self.solve_brute(next_row, next_col)
         l_move = list(self.calc_possible_moves(row, col))
         shuffle(l_move)
+        found = 0
         for move in l_move:
             self.grid[row][col] = move
-            if self.solve_brute(next_row, next_col):
-                return True
-        self.grid[row][col] = EMPTY
-        return False
+            found += self.solve_brute(next_row, next_col)
+            if found == find:
+                return found
+            self.grid[row][col] = EMPTY
+        return found
 
     # </editor-fold>
 
