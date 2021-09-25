@@ -1,6 +1,7 @@
 from random import shuffle
 from typing import List, Optional, Set, Callable
 import string
+from more_termcolor import colored
 
 # <editor-fold desc="Type hinting & Constants">
 Move = str
@@ -10,6 +11,7 @@ Region_map = List[List[Optional[int]]]
 Ruleset = Set[Callable]
 
 EMPTY = '0'
+L_COLOR = [29, 30, 31, 32, 33, 34, 35, 36, 37]
 
 
 # </editor-fold>
@@ -61,13 +63,12 @@ class Game:
         self.solve_brute()
 
     def __str__(self):
-        return '\n'.join(
-            ['  '.join([x if x is not None else '#' for x in self.grid[i]]) +
-             '   |   ' +
-             '  '.join([str(x) if x is not None else '#' for x in self.region_map[i]])
-             for i in range(len(self.grid))
-             ]
-        )
+        return '\n'.join([
+            '  '.join([
+                colored(self.grid[i][j], L_COLOR[self.region_map[i][j] % len(L_COLOR)]) if self.grid[i][j] is not None else '#'
+                for j in range(len(self.grid[i]))])
+            for i in range(len(self.grid))
+        ])
 
     # </editor-fold>
 
