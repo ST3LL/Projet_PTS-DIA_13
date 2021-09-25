@@ -51,6 +51,7 @@ class Game:
     dim: int
     moveset: Moveset
 
+    # <editor-fold desc="Dunder methods">
     def __init__(self, region_map: Region_map = None, ruleset: Ruleset = None):
         self.region_map = region_map if region_map is not None else build_vanilla_region_map()
         self.dim = calc_dim(self.region_map)
@@ -68,11 +69,20 @@ class Game:
              ]
         )
 
+    # </editor-fold>
+
+    # <editor-fold desc="Main methods">
+
+    def is_case(self, row: int, col: int) -> bool:
+        return 0 <= row < len(self.grid) and 0 <= col < len(self.grid[row])
+
     def calc_possible_moves(self, row: int, col: int) -> Moveset:
         moveset = set(self.moveset)
         for rule in self.ruleset:
             moveset &= rule(self, row, col)
         return moveset
+
+    # </editor-fold>
 
     # <editor-fold desc="Solvers">
     def solve_brute(self, row: int = 0, col: int = 0) -> bool:
@@ -97,11 +107,15 @@ class Game:
         return self.moveset & self.rule_row(row, col) & self.rule_col(row, col) & self.rule_region(row, col)
 
     def rule_row(self, row: int, col: int) -> Moveset:
-        return self.moveset - set(self.grid[row][max(0, col - self.dim + 1): col + self.dim - 1])
+        return self.moveset - {
+            self.grid[row][j] for j in range(col - self.dim + 1, col + self.dim)
+            if self.is_case(row, j)
+        }
 
     def rule_col(self, row: int, col: int) -> Moveset:
         return self.moveset - {
-            self.grid[i][col] for i in range(max(0, row - self.dim + 1), min(row + self.dim - 1, len(self.grid)))
+            self.grid[i][col] for i in range(row - self.dim + 1, row + self.dim)
+            if self.is_case(i, col)
         }
 
     def rule_region(self, row: int, col: int) -> Moveset:
@@ -109,6 +123,20 @@ class Game:
         return self.moveset - {
             self.grid[i][j] for i in range(len(self.grid)) for j in range(len(self.grid[i]))
             if self.region_map[i][j] == region
+        }
+
+    def rule_king(self, row: int, col: int) -> Moveset:
+        return self.moveset - {
+            self.grid[i][j] for i in range(row - 1, row + 2) for j in range(col - 1, col + 2)
+            if self.is_case(i, j)
+        }
+
+    def rule_knight(self, row: int, col: int) -> Moveset:
+        base, mul = (1, 2), (1, -1)
+        return self.moveset - {
+            self.grid[row + i][col + j]
+            for i, j in [(i * x, j * y) for i in base for j in base for x in mul for y in mul if i != j]
+            if self.is_case(row + i, col + j)
         }
 
     # </editor-fold>
