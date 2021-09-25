@@ -1,64 +1,119 @@
-from utils import Grid, random_list, display
-from typing import Set
 from random import shuffle
+from typing import List, Optional, Set, Callable
+import string
 
-# <editor-fold desc="Solvers">
-def solve_brute(grid: Grid, row=0, col=0) -> bool:
-    if row == 9:
-        return True
-    n_row, n_col = row + (col == 8), (col + 1) % 9
-    if grid[row][col]:
-        return solve_brute(grid, n_row, n_col)
-    l_move = list(get_possible_move(grid, row, col))
-    shuffle(l_move)
-    for move in l_move:
-        grid[row][col] = move
-        if solve_brute(grid, n_row, n_col):
+# <editor-fold desc="Type hinting & Constants">
+Move = str
+Moveset = Set[Move]
+Grid = List[List[Optional[Move]]]
+Region_map = List[List[Optional[int]]]
+Ruleset = Set[Callable]
+
+EMPTY = '0'
+
+
+# </editor-fold>
+
+# <editor-fold desc="help functions for Game.__init__">
+def calc_dim(region_map: Region_map) -> int:
+    d_k = {}
+    for row in region_map:
+        for k in row:
+            d_k[k] = d_k[k] + 1 if k in d_k else 1
+    if None in d_k:
+        del d_k[None]
+    s_k = set(d_k.values())
+    assert len(s_k) == 1
+    return s_k.pop()
+
+
+def build_vanilla_region_map() -> Region_map:
+    return [[i // 3 * 3 + j // 3 for j in range(9)] for i in range(9)]
+
+
+def build_vanilla_ruleset() -> Ruleset:
+    return {Game.rule_row, Game.rule_col, Game.rule_region}
+
+
+def calc_moveset(dim: int) -> Moveset:
+    moves = string.digits[1:] + string.ascii_uppercase
+    assert dim <= len(moves)
+    return set(moves[:dim])
+
+
+# </editor-fold>
+
+
+class Game:
+    grid: Grid
+    region_map: Region_map
+    ruleset: Ruleset
+    dim: int
+    moveset: Moveset
+
+    def __init__(self, region_map: Region_map = None, ruleset: Ruleset = None):
+        self.region_map = region_map if region_map is not None else build_vanilla_region_map()
+        self.dim = calc_dim(self.region_map)
+        self.moveset = calc_moveset(self.dim)
+        self.ruleset = ruleset if ruleset is not None else build_vanilla_ruleset()
+        self.grid = [[EMPTY if case is not None else None for case in row] for row in self.region_map]
+        self.solve_brute()
+
+    def __str__(self):
+        return '\n'.join(
+            ['  '.join([x if x is not None else '#' for x in self.grid[i]]) +
+             '   |   ' +
+             '  '.join([str(x) if x is not None else '#' for x in self.region_map[i]])
+             for i in range(len(self.grid))
+             ]
+        )
+
+    def calc_possible_moves(self, row: int, col: int) -> Moveset:
+        moveset = set(self.moveset)
+        for rule in self.ruleset:
+            moveset &= rule(self, row, col)
+        return moveset
+
+    # <editor-fold desc="Solvers">
+    def solve_brute(self, row: int = 0, col: int = 0) -> bool:
+        if row == len(self.grid):
             return True
-    grid[row][col] = 0
-    return False
+        next_row, next_col = row + (col == (len(self.grid[row]) - 1)), (col + 1) % len(self.grid[row])
+        if self.grid[row][col] != EMPTY:
+            return self.solve_brute(next_row, next_col)
+        l_move = list(self.calc_possible_moves(row, col))
+        shuffle(l_move)
+        for move in l_move:
+            self.grid[row][col] = move
+            if self.solve_brute(next_row, next_col):
+                return True
+        self.grid[row][col] = EMPTY
+        return False
 
+    # </editor-fold>
 
-# </editor-fold>
+    # <editor-fold desc="Rules">
+    def rule_vanilla(self, row: int, col: int) -> Moveset:
+        return self.moveset & self.rule_row(row, col) & self.rule_col(row, col) & self.rule_region(row, col)
 
-# <editor-fold desc="Grid generation">
-def generate_diag() -> Grid:
-    grid = [[0 for _ in range(9)] for _ in range(9)]
-    l_square = [random_list() for _ in range(3)]
-    for i, square in enumerate(l_square):
-        for j, sub in enumerate([square[k:k + 3] for k in range(0, 9, 3)]):
-            grid[i * 3 + j][i * 3:i * 3 + 3] = sub
-    return grid
+    def rule_row(self, row: int, col: int) -> Moveset:
+        return self.moveset - set(self.grid[row][max(0, col - self.dim + 1): col + self.dim - 1])
 
+    def rule_col(self, row: int, col: int) -> Moveset:
+        return self.moveset - {
+            self.grid[i][col] for i in range(max(0, row - self.dim + 1), min(row + self.dim - 1, len(self.grid)))
+        }
 
-def generate_full_grid() -> Grid:
-    grid = generate_diag()
-    solve_brute(grid)
-    return grid
+    def rule_region(self, row: int, col: int) -> Moveset:
+        region = self.region_map[row][col]
+        return self.moveset - {
+            self.grid[i][j] for i in range(len(self.grid)) for j in range(len(self.grid[i]))
+            if self.region_map[i][j] == region
+        }
 
-
-# </editor-fold>
-
-# <editor-fold desc="Main functions">
-def get_possible_move(grid: Grid, row: int, col: int) -> Set[int]:
-    s_placed = set(grid[row]) | \
-               {r[col] for r in grid} | \
-               {x for sub in grid[3 * (row // 3): 3 * (row // 3) + 3] for x in sub[3 * (col // 3): 3 * (col // 3) + 3]}
-    return set(range(1, 10)) - s_placed
-
-
-def check_grid(grid: Grid) -> bool:
-    return all([
-        all([x in row for row in grid for x in range(1, 10)]),
-        all([x in [row[col] for row in grid for col in range(9)] for x in range(1, 10)]),
-        all([x in [y for c in range(9) for sub in grid[3 * c // 3: 3 * c // 3 + 3] for y in
-                   sub[3 * c // 3: 3 * c // 3 + 3]] for x in range(1, 10)])
-    ])
-
-
-# </editor-fold>
+    # </editor-fold>
 
 
 if __name__ == '__main__':
-    grid = generate_full_grid()
-    display(grid)
+    game = Game()
+    print(game)
