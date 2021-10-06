@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<title>Home</title>
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+
+<body>
+    <section class="database">
+    <h1>Test Sudoku</h1>
+        <div class="database-one_col">
+            <form action="/result/" method="post">
+                <label>
+                    Number of Rows
+                    <input type="text" id="comp_select_nb_rows" name="comp_select_nb_rows">
+                </label>
+                <br>
+                <label>
+                    Number of columns
+                    <input type="text" id="comp_select_nb_cols" name="comp_select_nb_cols">
+                </label>
+                <br>
+                <button type="submit" class="btn">Go!</button>
+            </form>
+        </div>
+    </section>
+</body>
