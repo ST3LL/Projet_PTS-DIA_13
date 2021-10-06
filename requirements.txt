@@ -17,3 +17,5 @@ Flask-SQLAlchemy>=2.4.4
 Flask-WTF>=0.14.3
 Flask-User>=1.0.2.2
 Flask-Navigation>=0.2.0
+
+pandas>=1.2.3
