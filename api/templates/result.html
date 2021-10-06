@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<title>Request Viewer</title>
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+
+<div class="query_information">
+    <h2>Columns: {{ size_cols }}</h2>
+    <h2>Rows: {{ size_rows }}</h2>
+</div>
+
+<div class=page>
+    {% for row in output_data %}
+        {{ row|safe }}
+    {% endfor %}
+</div>
