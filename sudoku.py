@@ -3,6 +3,7 @@ from copy import deepcopy
 from typing import List, Optional, Set, Callable
 import string
 from more_termcolor import colored
+import time
 
 # <editor-fold desc="Type hinting & Constants">
 Move = str
@@ -30,8 +31,8 @@ def calc_dim(region_map: Region_map) -> int:
     return s_k.pop()
 
 
-def build_vanilla_region_map() -> Region_map:
-    return [[i // 3 * 3 + j // 3 for j in range(9)] for i in range(9)]
+def build_vanilla_region_map(dim: int = 3) -> Region_map:
+    return [[i // dim * dim + j // dim for j in range(dim**2)] for i in range(dim**2)]
 
 
 def build_vanilla_ruleset() -> Ruleset:
@@ -62,12 +63,12 @@ class Game:
         self.ruleset = ruleset if ruleset is not None else build_vanilla_ruleset()
         self.grid = [[EMPTY if case is not None else None for case in row] for row in self.region_map]
         self.solve_brute()
-        self.thin_grid()
+        # self.thin_random()
 
     def __str__(self):
         return '\n'.join([
             '  '.join([
-                colored(case, L_COLOR[self.region_map[i][j] % len(L_COLOR)])
+                colored(case, L_COLOR[self.region_map[i][j] % len(L_COLOR)] if self.region_map[i][j] is not None else 30)
                 if (case := self.grid[i][j]) is not None else '#'
                 for j in range(len(self.grid[i]))])
             for i in range(len(self.grid))
@@ -87,19 +88,9 @@ class Game:
             moveset &= rule(self, row, col)
         return moveset
 
-    def thin_grid(self):
-        case_order = [(i, j) for i in range(len(self.grid)) for j in range(len(self.grid[i]))]
-        shuffle(case_order)
-        thin = deepcopy(self.grid)
-        for i, j in case_order:
-            self.grid[i][j] = EMPTY
-            if self.solve_brute(i, j, find=2) == 1:
-                thin[i][j] = EMPTY
-            self.grid = deepcopy(thin)
-
     # </editor-fold>
 
-    # <editor-fold desc="Solvers">
+    # <editor-fold desc="Solvers and Thinners">
     def solve_brute(self, row: int = 0, col: int = 0, find: int = 1) -> int:
         if row == len(self.grid):
             return True
@@ -116,6 +107,16 @@ class Game:
                 return found
             self.grid[row][col] = EMPTY
         return found
+
+    def thin_random(self):
+        case_order = [(i, j) for i in range(len(self.grid)) for j in range(len(self.grid[i]))]
+        shuffle(case_order)
+        thin = deepcopy(self.grid)
+        for i, j in case_order:
+            self.grid[i][j] = EMPTY
+            if self.solve_brute(i, j, find=2) == 1:
+                thin[i][j] = EMPTY
+            self.grid = deepcopy(thin)
 
     # </editor-fold>
 
@@ -158,7 +159,9 @@ class Game:
 
     # </editor-fold>
 
-
 if __name__ == '__main__':
-    game = Game()
+    t = time.time()
+    for i in range(300):
+        game = Game(build_vanilla_region_map(3))
     print(game)
+    print(time.time() - t)
