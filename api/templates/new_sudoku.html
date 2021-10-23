@@ -1,0 +1,22 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>PTS: New Sudoku</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style2.css') }}">
+</head>
+<body>
+    <center>
+        <table border = 1 id="sudoku_grid">
+            {% for row in range(9) %}
+                <tr>
+                {% for col in range(9) %}
+                    <td contenteditable="true"></td>
+                {% endfor %}
+                </tr>
+            {% endfor %}
+            </tr>
+        </table>
+        <button type="button" onclick="submit_sudoku()">Submit</button>
+    </center>
+</body>
+</html>
