@@ -13,19 +13,9 @@ def home_app():
                            output_data=[df_grid.to_html(classes='d')])
 
 
-# @app.route('/result/', methods=['GET', 'POST'])
-# def result():
-#     if request.method == 'POST':
-#         select_nb_rows = request.form.get('comp_select_nb_rows')
-#         select_nb_columns = request.form.get('comp_select_nb_cols')
-#         grids = []
-#         for _ in range(int(select_nb_rows) + 1):
-#             grids.append(["*"] * int(select_nb_columns))
-#         df_grids = pd.DataFrame(grids)
-#         return render_template('result.html',
-#                                output_data=[df_grids.to_html(classes='d')],
-#                                size_cols=int(select_nb_columns),
-#                                size_rows=int(select_nb_rows))
+@app.route("/new_sudoku/", methods=['GET', 'POST'])
+def NewSudoku():
+    return render_template("new_sudoku.html")
 
 
 if __name__ == '__main__':
