@@ -7,15 +7,32 @@ td {
   border:1px solid;
   text-align:center;
 }
+td.none {
+  height:30px;
+  width:30px;
+  border:0px solid;
+  text-align:center;
+}
 td:first-child {
   border-left:solid;
 }
 td:nth-child(3n) {
   border-right:solid ;
 }
-tr:first-child {
+tr:first-child td {
   border-top:solid;
 }
 tr:nth-child(3n) td {
   border-bottom:solid ;
 }
+
+/* enleve tout des cases None
+tr td.none {
+  height:30px;
+  width:30px;
+  border:0px solid;
+  text-align:center;
+}
+*/
+
+
