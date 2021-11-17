@@ -4,16 +4,10 @@
 
 <body>
     <section class="database">
-    <h1>Test Sudoku</h1>
-        <div class="database-one_col">
-            {% for row in output_data %}
-                {{ row|safe }}
-            {% endfor %}
-        </div>
-    </section>
-    <div>
-        <form class="form-inline" method="POST" action="/new_sudoku/">
-            <button type="submit" class="btn">New Sudoku!</button>
+        <h1>Generate a Solution!</h1>
+        <form class="form-inline" method="POST" action="/generate_solution/">
+            <button type="submit" class="btn">Generate a solution!</button>
         </form>
-    </div>
+        <h1>New Sudoku!</h1>
+    </section>
 </body>
