@@ -2,7 +2,7 @@ from random import shuffle
 from copy import deepcopy
 from typing import List, Optional, Set, Callable, Tuple, Any, Dict
 import string
-from more_termcolor import colored
+# from more_termcolor import colored
 import time
 
 # <editor-fold desc="Type hinting & Constants">
@@ -72,11 +72,11 @@ class Game:
     def __str__(self):
         return '\n'.join([
             '  '.join([
-                colored(
-                    case,
-                    L_COLOR[self.region_map[i][j] % len(L_COLOR)] if self.region_map[i][j] is not None else 30
-                )
-                if (case := self.grid[i][j]) is not None else '#'
+                # colored(
+                    self.grid[i][j]#,
+                    # L_COLOR[self.region_map[i][j] % len(L_COLOR)] if self.region_map[i][j] is not None else 30
+                # )
+                if self.grid[i][j] is not None else '#'
                 for j in range(len(self.grid[i]))])
             for i in range(len(self.grid))
         ]) + f"\n{sum([case in self.moveset for row in self.grid for case in row])} / " \
@@ -97,8 +97,6 @@ class Game:
             (i, j): {move: 0 for move in self.moveset}
             for i in range(len(self.grid)) for j in range(len(self.grid[i]))
         }
-        # for case in d:
-        #     d[case][EMPTY] = inf
         return d
 
     def is_case(self, row: int, col: int) -> bool:
@@ -191,7 +189,14 @@ class Game:
 
 
 if __name__ == '__main__':
-    t = time.time()
-    game = Game(build_vanilla_region_map(3))
-    print(game)
-    print(time.time() - t)
+    l_t = []
+    for i in range(10):
+        t = time.time()
+        game = Game(build_vanilla_region_map(4))
+        x = time.time() - t
+        l_t.append(x)
+        print(i, x)
+    # print(game)
+    print("total:", sum(l_t))
+
+    # total: 16.74619174003601, with 1000 runs (~0.0165)

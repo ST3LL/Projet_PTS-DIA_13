@@ -159,9 +159,12 @@ class Game:
 
     # </editor-fold>
 
+
 if __name__ == '__main__':
-    t = time.time()
-    for i in range(300):
-        game = Game(build_vanilla_region_map(3))
-    print(game)
-    print(time.time() - t)
+    l_t = []
+    for i in range(10):
+        t = time.time()
+        Game(build_vanilla_region_map(4))
+        l_t.append(x := time.time() - t)
+        print(i, x)
+    print("total:", sum(l_t))
