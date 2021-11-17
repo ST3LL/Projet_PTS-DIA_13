@@ -1,6 +1,8 @@
+import random
+
 import pandas as pd
 from flask import Flask, render_template, request
-from sudoku import generate_full_grid
+from sudoku import Game, build_vanilla_region_map
 
 app = Flask(__name__)
 
@@ -12,7 +14,8 @@ def home_app():
 
 @app.route('/generate_solution/', methods=['GET', 'POST'])
 def GenerateSolution():
-    grid = generate_full_grid()
+    game = Game(build_vanilla_region_map())
+    grid = game.solution
     df_grid = pd.DataFrame(grid)
     return render_template('generate_solution.html',
                            output_data=[df_grid.to_html(classes='d')])
@@ -20,7 +23,14 @@ def GenerateSolution():
 
 @app.route("/new_sudoku/", methods=['GET', 'POST'])
 def NewSudoku():
-    return render_template("new_sudoku.html")
+    game = Game(build_vanilla_region_map())
+    grid_solved = game.solution
+    grid = game.grid
+    # grid[0][0] = None
+    # grid[2][2] = None
+    return render_template("new_sudoku.html",
+                           grid_solved=grid_solved,
+                           output_data=grid)
 
 
 if __name__ == '__main__':
