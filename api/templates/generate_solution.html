@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<title>Generate a solution</title>
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+
+<body>
+    <section class="database">
+    <h1>A solution has been generated</h1>
+        <div class="database-one_col">
+            {% for row in output_data %}
+                {{ row|safe }}
+            {% endfor %}
+        </div>
+    </section>
+    <div>
+        <form class="form-inline" method="POST" action="/new_sudoku/">
+            <button type="submit" class="btn">New Sudoku!</button>
+        </form>
+    </div>
+</body>
