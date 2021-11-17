@@ -1,38 +1,35 @@
 table {
   margin:1em auto;
 }
+
 td {
   height:30px;
   width:30px;
   border:1px solid;
   text-align:center;
 }
+
 td.none {
   height:30px;
   width:30px;
   border:0px solid;
   text-align:center;
 }
+
 td:first-child {
-  border-left:solid;
+  border-left: solid black;
 }
+
 td:nth-child(3n) {
-  border-right:solid ;
+  border-right: solid black;
+  bord
 }
+/* (3n) per 3 cells in black */
+
 tr:first-child td {
-  border-top:solid;
+  border-top:solid black;
 }
+
 tr:nth-child(3n) td {
-  border-bottom:solid ;
+  border-bottom:solid black;
 }
-
-/* enleve tout des cases None
-tr td.none {
-  height:30px;
-  width:30px;
-  border:0px solid;
-  text-align:center;
-}
-*/
-
-
