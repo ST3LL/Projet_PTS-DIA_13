@@ -12,7 +12,7 @@ Grid = List[List[Optional[Move]]]
 Region_map = List[List[Optional[int]]]
 Ruleset = Set[Callable]
 
-EMPTY = '0'
+EMPTY = '.'
 L_COLOR = [29, 30, 31, 32, 33, 34, 35, 36, 37]
 
 
@@ -50,6 +50,7 @@ def calc_moveset(dim: int) -> Moveset:
 
 class Game:
     grid: Grid
+    solution: Grid
     region_map: Region_map
     ruleset: Ruleset
     dim: int
@@ -63,7 +64,8 @@ class Game:
         self.ruleset = ruleset if ruleset is not None else build_vanilla_ruleset()
         self.grid = [[EMPTY if case is not None else None for case in row] for row in self.region_map]
         self.solve_brute()
-        # self.thin_random()
+        self.solution = deepcopy(self.grid)
+        self.thin_random()
 
     def __str__(self):
         return '\n'.join([
@@ -161,10 +163,5 @@ class Game:
 
 
 if __name__ == '__main__':
-    l_t = []
-    for i in range(10):
-        t = time.time()
-        Game(build_vanilla_region_map(4))
-        l_t.append(x := time.time() - t)
-        print(i, x)
-    print("total:", sum(l_t))
+    game = Game(build_vanilla_region_map())
+    print(game)
