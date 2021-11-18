@@ -28,7 +28,7 @@ tr:nth-child(3n) td {
 tr td.none {
   height:30px;
   width:30px;
-  border:0px solid;
+  border:0 solid;
   text-align:center;
 }
 
