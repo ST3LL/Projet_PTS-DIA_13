@@ -163,6 +163,6 @@ class Game:
 
 
 if __name__ == '__main__':
-    game = Game(build_vanilla_region_map(dim=6))
-    game_bis = Game.build_vanilla_ruleset()
+    game = Game(build_vanilla_region_map(dim=4))
+    # game_bis = Game.build_vanilla_ruleset()
     print(game)
