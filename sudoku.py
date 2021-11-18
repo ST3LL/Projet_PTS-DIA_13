@@ -3,7 +3,6 @@ from copy import deepcopy
 from typing import List, Optional, Set, Callable
 import string
 from more_termcolor import colored
-import time
 
 # <editor-fold desc="Type hinting & Constants">
 Move = str
@@ -32,7 +31,7 @@ def calc_dim(region_map: Region_map) -> int:
 
 
 def build_vanilla_region_map(dim: int = 3) -> Region_map:
-    return [[i // dim * dim + j // dim for j in range(dim**2)] for i in range(dim**2)]
+    return [[i // dim * dim + j // dim for j in range(dim ** 2)] for i in range(dim ** 2)]
 
 
 def build_vanilla_ruleset() -> Ruleset:
@@ -70,7 +69,8 @@ class Game:
     def __str__(self):
         return '\n'.join([
             '  '.join([
-                colored(case, L_COLOR[self.region_map[i][j] % len(L_COLOR)] if self.region_map[i][j] is not None else 30)
+                colored(case,
+                        L_COLOR[self.region_map[i][j] % len(L_COLOR)] if self.region_map[i][j] is not None else 30)
                 if (case := self.grid[i][j]) is not None else '#'
                 for j in range(len(self.grid[i]))])
             for i in range(len(self.grid))
@@ -163,5 +163,6 @@ class Game:
 
 
 if __name__ == '__main__':
-    game = Game(build_vanilla_region_map())
+    game = Game(build_vanilla_region_map(dim=4))
+    # game_bis = Game.build_vanilla_ruleset()
     print(game)

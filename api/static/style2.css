@@ -9,16 +9,20 @@ td {
   text-align:center;
 }
 td:first-child {
-  border-left:solid;
+  border-left: solid black;
 }
+
 td:nth-child(3n) {
-  border-right:solid ;
+  border-right: solid black;
 }
+/* (3n) per 3 cells in black */
+
 tr:first-child td {
-  border-top:solid;
+  border-top:solid black;
 }
+
 tr:nth-child(3n) td {
-  border-bottom:solid ;
+  border-bottom:solid black;
 }
 
 tr td.none {
