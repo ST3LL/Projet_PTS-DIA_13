@@ -3,12 +3,12 @@
 <head>
     <title>PTS: New Sudoku</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style2.css') }}">
-    <script src="submit_grid.js" type="text/javascript"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='submit_grid.js') }}" ></script>
 </head>
 <body>
-    <center>
-        <table border = 1 id="sudoku_grid">
-            {% for row in output_data %}
+    <div style="text-align: center;">
+        <table id="sudoku_grid">
+            {% for row in grid %}
                 <tr>
                 {% for col in row %}
                     {% if col == '.' %}
@@ -23,20 +23,10 @@
             {% endfor %}
             </tr>
         </table>
-        <button onclick="submit_sudoku()">Submit</button>
+        <button onclick="submit_sudoku('sudoku_grid', {{grid_solved}})">Submit</button>
+<!--        <button onclick="get_table_grid('sudoku_grid')">Submit</button>-->
         <h1 id="win"></h1>
-        <script>
-        function submit_sudoku() {
-<!--            if ({{grid}} == {{solved_grid}}){-->
-            if ('grid' == 'solved_grid'){
-                document.getElementById("win").innerHTML = "Victoire !";
-            }
-            else {
-                document.getElementById("win").innerHTML = "La grille n'est pas valide !";
-            }
-        }
-        </script>
-    </center>
+    </div>
     <div>
         <form class="form-inline" method="POST" action="/">
             <button type="submit" class="btn">Home page</button>

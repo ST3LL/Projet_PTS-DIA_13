@@ -1,14 +1,20 @@
 <!DOCTYPE html>
 <title>Generate a solution</title>
-<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style2.css') }}">
 
 <body>
     <section class="database">
     <h1>A solution has been generated</h1>
         <div class="database-one_col">
-            {% for row in output_data %}
-                {{ row|safe }}
+            <table id="sudoku_grid">
+            {% for row in grid %}
+                <tr>
+                {% for col in row %}
+                    <td>{{ col }}</td>
+                {% endfor %}
+                </tr>
             {% endfor %}
+        </table>
         </div>
     </section>
     <div>

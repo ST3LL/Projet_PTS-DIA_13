@@ -1,16 +1,11 @@
 table {
+  border:1px;
   margin:1em auto;
 }
 td {
   height:30px;
   width:30px;
   border:1px solid;
-  text-align:center;
-}
-td.none {
-  height:30px;
-  width:30px;
-  border:0px solid;
   text-align:center;
 }
 td:first-child {
@@ -26,13 +21,12 @@ tr:nth-child(3n) td {
   border-bottom:solid ;
 }
 
-/* enleve tout des cases None
 tr td.none {
   height:30px;
   width:30px;
   border:0px solid;
   text-align:center;
 }
-*/
+
 
 

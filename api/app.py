@@ -16,9 +16,8 @@ def home_app():
 def GenerateSolution():
     game = Game(build_vanilla_region_map())
     grid = game.solution
-    df_grid = pd.DataFrame(grid)
     return render_template('generate_solution.html',
-                           output_data=[df_grid.to_html(classes='d')])
+                           grid=grid)
 
 
 @app.route("/new_sudoku/", methods=['GET', 'POST'])
@@ -26,11 +25,10 @@ def NewSudoku():
     game = Game(build_vanilla_region_map())
     grid_solved = game.solution
     grid = game.grid
-    # grid[0][0] = None
-    # grid[2][2] = None
+    print(grid_solved)
     return render_template("new_sudoku.html",
                            grid_solved=grid_solved,
-                           output_data=grid)
+                           grid=grid)
 
 
 if __name__ == '__main__':
