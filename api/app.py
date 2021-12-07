@@ -27,6 +27,7 @@ def GenerateSolution():
 @app.route("/new_sudoku/", methods=['GET', 'POST'])
 def NewSudoku():
     if request.method == 'POST':
+        chars = ['1', '2', '3', '4', '5', '6', '7', '8', '9']
         get_dim = request.form.get('dim_sudoku')
         game = Game(build_vanilla_region_map(dim=int(get_dim)))
         grid_solved = game.solution
@@ -34,7 +35,8 @@ def NewSudoku():
         print(grid_solved)
         return render_template("new_sudoku.html",
                                grid_solved=grid_solved,
-                               grid=grid)
+                               grid=grid,
+                               chars=chars)
 
 
 if __name__ == '__main__':

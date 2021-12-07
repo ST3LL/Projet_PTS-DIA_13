@@ -12,7 +12,7 @@
                 <tr>
                 {% for col in row %}
                     {% if col == '.' %}
-                        <td contenteditable="true"></td>
+                        <td contenteditable="true" onKeyUp="verification_value_cell(this, {{chars}});"></td>
                     {% elif col %}
                         <td contenteditable="false">{{ col }}</td>
                     {% else %}
@@ -21,7 +21,6 @@
                 {% endfor %}
                 </tr>
             {% endfor %}
-            </tr>
         </table>
         <button onclick="submit_sudoku('sudoku_grid', {{grid_solved}})">Submit</button>
         <h1 id="win"></h1>
