@@ -18,13 +18,11 @@ L_COLOR = [29, 30, 31, 32, 33, 34, 35, 36, 37]
 # </editor-fold>
 
 # <editor-fold desc="help functions for the API">
-def get_models():
-    return list(D_SUDOKU_BY_NAME.keys())
-
-
-def get_rules_of_model(model_name: str):
-    return filter(lambda x: x.startswith('rule_'), dir(D_SUDOKU_BY_NAME[model_name]))
-
+def get_models_and_rules() -> Dict[str, List[str]]:
+    return {
+        model_name: filter(lambda x: x.startswith('rule_'), dir(model))
+        for model_name, model in D_SUDOKU_BY_NAME
+    }
 
 # </editor-fold>
 
