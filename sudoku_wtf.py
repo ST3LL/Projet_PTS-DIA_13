@@ -67,7 +67,6 @@ class Game:
         self.dependencies = self.build_dependencies()
         self.conflicts = self.build_conflicts()
         self.solve_brute()
-        # self.thin_random()
 
     def __str__(self):
         return '\n'.join([

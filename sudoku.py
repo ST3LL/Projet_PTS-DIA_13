@@ -2,7 +2,6 @@ from random import shuffle
 from copy import deepcopy
 from typing import List, Optional, Set, Callable
 import string
-from more_termcolor import colored
 import time
 
 # <editor-fold desc="Type hinting & Constants">
@@ -68,8 +67,9 @@ class Game:
     def __str__(self):
         return '\n'.join([
             '  '.join([
-                colored(case, L_COLOR[self.region_map[i][j] % len(L_COLOR)] if self.region_map[i][j] is not None else 30)
-                if (case := self.grid[i][j]) is not None else '#'
+                str(self.grid[i][j])
+                if self.grid[i][j] is not EMPTY else '.'
+                if self.grid[i][j] is not None else '#'
                 for j in range(len(self.grid[i]))])
             for i in range(len(self.grid))
         ]) + f"\n{sum([case in self.moveset for row in self.grid for case in row])} / " \

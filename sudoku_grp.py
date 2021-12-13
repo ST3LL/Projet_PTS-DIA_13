@@ -5,7 +5,7 @@ from typing import List, Optional, Set, Callable, Tuple, Dict, FrozenSet
 import time
 
 # <editor-fold desc="Type hinting & Constants">
-from more_termcolor import colored
+# from more_termcolor import colored
 
 Move = int
 Grid = List[List[Optional[Move]]]
@@ -69,24 +69,24 @@ class Game:
         self.region_map = region_map if region_map is not None else build_vanilla_region_map()
         self.dim = calc_dim(self.region_map)
         self.grid = [[EMPTY if case is not None else None for case in row] for row in self.region_map]
-        self.ALL_COORD = self.build_all_coord()
         self.moveset = calc_moveset(self.dim)
         self.ruleset = ruleset if ruleset is not None else build_vanilla_ruleset()
+        self.ALL_COORD = self.build_all_coord()
         self.moveset_of_group = {}
         self.groupdict = {}
         self.groupset_of_case = {case: set() for case in self.ALL_COORD}
         self.build_group_architecture()
         self.solve_brute()
         self.solution = deepcopy(self.grid)
-        # self.thin_random()
+        self.thin_random()
 
     def __str__(self):
         return '\n'.join([
             '  '.join([
-                colored(
-                hex(self.grid[i][j] - 1)[2:].upper(),
-                L_COLOR[self.region_map[i][j] % len(L_COLOR)] if self.region_map[i][j] is not None else 30
-                )
+                # colored(
+                hex(self.grid[i][j] - 1)[2:].upper()#,
+                # L_COLOR[self.region_map[i][j] % len(L_COLOR)] if self.region_map[i][j] is not None else 30
+                # )
                 if self.grid[i][j] is not EMPTY else '.'
                 if self.grid[i][j] is not None else '#'
                 for j in range(len(self.grid[i]))])
@@ -162,6 +162,8 @@ class Game:
             self.place(i, j, EMPTY)
             if self.solve_brute(i, j, find=2) == 1:
                 thin[i][j] = EMPTY
+            else:
+                self.place(i, j, thin[i][j])
             self.grid = deepcopy(thin)
 
     # </editor-fold>
