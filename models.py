@@ -18,12 +18,12 @@ L_COLOR = [29, 30, 31, 32, 33, 34, 35, 36, 37]
 # </editor-fold>
 
 # <editor-fold desc="help functions for the API">
-def get_models():
-    return list(D_SUDOKU_BY_NAME.keys())
+def get_models_and_rules() -> Dict[str, List[str]]:
+    return {
+        model_name: filter(lambda x: x.startswith('rule_'), dir(model))
+        for model_name, model in D_SUDOKU_BY_NAME
+    }
 
-
-def get_rules_of_model(model_name: str):
-    return filter(lambda x: x.startswith('rule_'), dir(D_SUDOKU_BY_NAME[model_name]))
 # </editor-fold>
 
 
@@ -41,7 +41,7 @@ def calc_dim(region_map: Region_map) -> int:
 
 
 def build_vanilla_region_map(dim: int = 3) -> Region_map:
-    return [[i // dim * dim + j // dim for j in range(dim**2)] for i in range(dim**2)]
+    return [[i // dim * dim + j // dim for j in range(dim ** 2)] for i in range(dim ** 2)]
 
 
 def build_vanilla_ruleset() -> Set[Rule]:
@@ -49,13 +49,14 @@ def build_vanilla_ruleset() -> Set[Rule]:
 
 
 def calc_moveset(dim: int) -> Set[Move]:
-    return {i for i in range(1, dim+1)}
+    return {i for i in range(1, dim + 1)}
 
 
 # </editor-fold>
 
 class Sudoku:
     grid: Grid
+    solution: Grid
     region_map: Region_map
     ruleset: Set[Rule]
     dim: int
@@ -91,22 +92,27 @@ class Sudoku:
             moveset &= rule(self, row, col)
         return moveset
 
-    def solve_brute(self, row: int = 0, col: int = 0, find: int = 1) -> int:
-        if row == len(self.grid):
-            return True
-        next_row, next_col = row + (col == (len(self.grid[row]) - 1)), (col + 1) % len(self.grid[row])
-        if self.grid[row][col] != EMPTY:
-            return self.solve_brute(next_row, next_col, find)
-        l_move = list(self.calc_possible_moves(row, col))
-        shuffle(l_move)
-        found = 0
-        for move in l_move:
-            self.place(row, col, move)
-            found += self.solve_brute(next_row, next_col, find)
-            if found >= find:
-                return found
-        self.place(row, col, EMPTY)
-        return found
+    def solve_brute(self, find: int = 1, save: bool = False):
+        def solve_brute_aux(row: int = 0, col: int = 0, find: int = 1) -> int:
+            if row == len(self.grid):
+                return True
+            next_row, next_col = row + (col == (len(self.grid[row]) - 1)), (col + 1) % len(self.grid[row])
+            if self.grid[row][col] != EMPTY:
+                return solve_brute_aux(next_row, next_col, find)
+            l_move = list(self.calc_possible_moves(row, col))
+            shuffle(l_move)
+            found = 0
+            for move in l_move:
+                self.place(row, col, move)
+                found += solve_brute_aux(next_row, next_col, find)
+                if found >= find:
+                    return found
+            self.place(row, col, EMPTY)
+            return found
+
+        solve_brute_aux(0, 0, find)
+        if save:
+            self.solution = deepcopy(self.grid)
 
     def thin_random(self):
         case_order = [(i, j) for i in range(len(self.grid)) for j in range(len(self.grid[i]))]
@@ -114,7 +120,7 @@ class Sudoku:
         thin = deepcopy(self.grid)
         for i, j in case_order:
             self.place(i, j, EMPTY)
-            if self.solve_brute(i, j, find=2) == 1:
+            if self.solve_brute(find=2) == 1:
                 thin[i][j] = EMPTY
             self.grid = deepcopy(thin)
 
@@ -306,18 +312,13 @@ D_SUDOKU_BY_NAME = {
 }
 
 
-def build_sudoku(model_name: str, region_map: Region_map, ruleset_name: List[str]) -> Tuple[Grid, Grid]:
+def build_sudoku(model_name: str, region_map: Region_map, ruleset_name: List[str]) -> Sudoku:
     model_class = D_SUDOKU_BY_NAME[model_name]
     ruleset = {getattr(model_class, rule_name) for rule_name in ruleset_name}
-    print(ruleset)
+
     sudoku_model = model_class(region_map, ruleset)
     sudoku_model.solve_brute()
-    print(sudoku_model)
-    full_grid = sudoku_model.grid
-    sudoku_model.thin_random()
-    print(sudoku_model)
-    thinned_grid = sudoku_model.grid
-    return full_grid, thinned_grid
+    return sudoku_model
 
 
 if __name__ == '__main__':
