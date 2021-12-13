@@ -1,5 +1,7 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request
 from sudoku import Game, build_vanilla_region_map
+from models import *
+
 
 app = Flask(__name__)
 
@@ -11,15 +13,18 @@ def page_not_found(e):
 
 @app.route('/', methods=['GET', 'POST'])
 def home_app():
-    return render_template('home.html')
+    return render_template('home.html', models=get_models_rules())
 
 
 @app.route('/generate_solution/', methods=['GET', 'POST'])
 def GenerateSolution():
     if request.method == 'POST':
+        models_selected = request.form.get('comp')
+        print(models_selected)
+        l_rules_from_model = get_rules_of_model(models_selected)
         get_dim_generation = request.form.get('dim_sudoku_generation')
-        game = Game(build_vanilla_region_map(dim=int(get_dim_generation)))
-        grid = game.solution
+        game = build_sudoku('vanilla', build_vanilla_region_map(dim=int(get_dim_generation)), l_rules_from_model)
+        # grid = game.solution
         return render_template('generate_solution.html',
                                grid=grid)
 
