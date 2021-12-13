@@ -21,7 +21,7 @@ L_COLOR = [29, 30, 31, 32, 33, 34, 35, 36, 37]
 def get_models_and_rules() -> Dict[str, List[str]]:
     return {
         model_name: filter(lambda x: x.startswith('rule_'), dir(model))
-        for model_name, model in D_SUDOKU_BY_NAME
+        for model_name, model in D_SUDOKU_BY_NAME.items()
     }
 
 # </editor-fold>
@@ -317,7 +317,7 @@ def build_sudoku(model_name: str, region_map: Region_map, ruleset_name: List[str
     ruleset = {getattr(model_class, rule_name) for rule_name in ruleset_name}
 
     sudoku_model = model_class(region_map, ruleset)
-    sudoku_model.solve_brute()
+    sudoku_model.solve_brute(save=True)
     return sudoku_model
 
 
