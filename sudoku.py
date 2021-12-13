@@ -2,7 +2,7 @@ from random import shuffle
 from copy import deepcopy
 from typing import List, Optional, Set, Callable
 import string
-from more_termcolor import colored
+import time
 
 # <editor-fold desc="Type hinting & Constants">
 Move = str
@@ -31,7 +31,7 @@ def calc_dim(region_map: Region_map) -> int:
 
 
 def build_vanilla_region_map(dim: int = 3) -> Region_map:
-    return [[i // dim * dim + j // dim for j in range(dim ** 2)] for i in range(dim ** 2)]
+    return [[i // dim * dim + j // dim for j in range(dim**2)] for i in range(dim**2)]
 
 
 def build_vanilla_ruleset() -> Ruleset:
@@ -49,7 +49,6 @@ def calc_moveset(dim: int) -> Moveset:
 
 class Game:
     grid: Grid
-    solution: Grid
     region_map: Region_map
     ruleset: Ruleset
     dim: int
@@ -63,15 +62,14 @@ class Game:
         self.ruleset = ruleset if ruleset is not None else build_vanilla_ruleset()
         self.grid = [[EMPTY if case is not None else None for case in row] for row in self.region_map]
         self.solve_brute()
-        self.solution = deepcopy(self.grid)
-        self.thin_random()
+        # self.thin_random()
 
     def __str__(self):
         return '\n'.join([
             '  '.join([
-                colored(case,
-                        L_COLOR[self.region_map[i][j] % len(L_COLOR)] if self.region_map[i][j] is not None else 30)
-                if (case := self.grid[i][j]) is not None else '#'
+                str(self.grid[i][j])
+                if self.grid[i][j] is not EMPTY else '.'
+                if self.grid[i][j] is not None else '#'
                 for j in range(len(self.grid[i]))])
             for i in range(len(self.grid))
         ]) + f"\n{sum([case in self.moveset for row in self.grid for case in row])} / " \
@@ -98,14 +96,14 @@ class Game:
             return True
         next_row, next_col = row + (col == (len(self.grid[row]) - 1)), (col + 1) % len(self.grid[row])
         if self.grid[row][col] != EMPTY:
-            return self.solve_brute(next_row, next_col)
+            return self.solve_brute(next_row, next_col, find)
         l_move = list(self.calc_possible_moves(row, col))
         shuffle(l_move)
         found = 0
         for move in l_move:
             self.grid[row][col] = move
-            found += self.solve_brute(next_row, next_col)
-            if found == find:
+            found += self.solve_brute(next_row, next_col, find)
+            if found >= find:
                 return found
             self.grid[row][col] = EMPTY
         return found
@@ -163,6 +161,4 @@ class Game:
 
 
 if __name__ == '__main__':
-    game = Game(build_vanilla_region_map(dim=4))
-    # game_bis = Game.build_vanilla_ruleset()
-    print(game)
+    print(Game(build_vanilla_region_map(4)))

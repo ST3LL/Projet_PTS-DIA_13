@@ -5,6 +5,8 @@ from typing import List, Optional, Set, Callable, Tuple, Dict, FrozenSet
 import time
 
 # <editor-fold desc="Type hinting & Constants">
+# from more_termcolor import colored
+
 Move = int
 Grid = List[List[Optional[Move]]]
 Region_map = List[List[Optional[int]]]
@@ -67,9 +69,9 @@ class Game:
         self.region_map = region_map if region_map is not None else build_vanilla_region_map()
         self.dim = calc_dim(self.region_map)
         self.grid = [[EMPTY if case is not None else None for case in row] for row in self.region_map]
-        self.ALL_COORD = self.build_all_coord()
         self.moveset = calc_moveset(self.dim)
         self.ruleset = ruleset if ruleset is not None else build_vanilla_ruleset()
+        self.ALL_COORD = self.build_all_coord()
         self.moveset_of_group = {}
         self.groupdict = {}
         self.groupset_of_case = {case: set() for case in self.ALL_COORD}
@@ -82,7 +84,7 @@ class Game:
         return '\n'.join([
             '  '.join([
                 # colored(
-                hex(self.grid[i][j] - 1)[2:].upper()  # ,
+                hex(self.grid[i][j] - 1)[2:].upper()#,
                 # L_COLOR[self.region_map[i][j] % len(L_COLOR)] if self.region_map[i][j] is not None else 30
                 # )
                 if self.grid[i][j] is not EMPTY else '.'
@@ -135,20 +137,22 @@ class Game:
     # </editor-fold>
 
     # <editor-fold desc="Solvers and Thinners">
-    def solve_brute(self, row: int = 0, col: int = 0) -> int:
+    def solve_brute(self, row: int = 0, col: int = 0, find: int = 1) -> int:
         if row == len(self.grid):
             return True
         next_row, next_col = row + (col == (len(self.grid[row]) - 1)), (col + 1) % len(self.grid[row])
         if self.grid[row][col] != EMPTY:
-            return self.solve_brute(next_row, next_col)
+            return self.solve_brute(next_row, next_col, find)
         l_move = list(self.calc_possible_moves(row, col))
         shuffle(l_move)
+        found = 0
         for move in l_move:
             self.place(row, col, move)
-            if self.solve_brute(next_row, next_col):
-                return True
+            found += self.solve_brute(next_row, next_col, find)
+            if found >= find:
+                return found
         self.place(row, col, EMPTY)
-        return False
+        return found
 
     def thin_random(self):
         case_order = [(i, j) for i in range(len(self.grid)) for j in range(len(self.grid[i]))]
@@ -156,8 +160,10 @@ class Game:
         thin = deepcopy(self.grid)
         for i, j in case_order:
             self.place(i, j, EMPTY)
-            if self.solve_brute(i, j):
+            if self.solve_brute(i, j, find=2) == 1:
                 thin[i][j] = EMPTY
+            else:
+                self.place(i, j, thin[i][j])
             self.grid = deepcopy(thin)
 
     # </editor-fold>
@@ -191,12 +197,4 @@ class Game:
 if __name__ == '__main__':
     m20x16 = [[0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3], [0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3], [0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3], [0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3], [4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6, 7, 7, 7, 7], [4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6, 7, 7, 7, 7], [4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6, 7, 7, 7, 7], [4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6, 7, 7, 7, 7], [8, 8, 8, 8, 9, 9, 9, 9, 10, 10, 10, 10, 11, 11, 11, 11], [8, 8, 8, 8, 9, 9, 9, 9, 10, 10, 10, 10, 11, 11, 11, 11], [8, 8, 8, 8, 9, 9, 9, 9, 10, 10, 10, 10, 11, 11, 11, 11], [8, 8, 8, 8, 9, 9, 9, 9, 10, 10, 10, 10, 11, 11, 11, 11], [12, 12, 12, 12, 13, 13, 13, 13, 14, 14, 14, 14, 15, 15, 15, 15], [12, 12, 12, 12, 13, 13, 13, 13, 14, 14, 14, 14, 15, 15, 15, 15], [12, 12, 12, 12, 13, 13, 13, 13, 14, 14, 14, 14, 15, 15, 15, 15], [12, 12, 12, 12, 13, 13, 13, 13, 14, 14, 14, 14, 15, 15, 15, 15], [16, 16, 16, 16, 17, 17, 17, 17, 18, 18, 18, 18, 19, 19, 19, 19], [16, 16, 16, 16, 17, 17, 17, 17, 18, 18, 18, 18, 19, 19, 19, 19], [16, 16, 16, 16, 17, 17, 17, 17, 18, 18, 18, 18, 19, 19, 19, 19], [16, 16, 16, 16, 17, 17, 17, 17, 18, 18, 18, 18, 19, 19, 19, 19]]
     m20x20 = [[0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 20, 20, 20, 20], [0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 20, 20, 20, 20], [0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 20, 20, 20, 20], [0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 20, 20, 20, 20], [4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6, 7, 7, 7, 7, 21, 21, 21, 21], [4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6, 7, 7, 7, 7, 21, 21, 21, 21], [4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6, 7, 7, 7, 7, 21, 21, 21, 21], [4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6, 7, 7, 7, 7, 21, 21, 21, 21], [8, 8, 8, 8, 9, 9, 9, 9, 10, 10, 10, 10, 11, 11, 11, 11, 22, 22, 22, 22], [8, 8, 8, 8, 9, 9, 9, 9, 10, 10, 10, 10, 11, 11, 11, 11, 22, 22, 22, 22], [8, 8, 8, 8, 9, 9, 9, 9, 10, 10, 10, 10, 11, 11, 11, 11, 22, 22, 22, 22], [8, 8, 8, 8, 9, 9, 9, 9, 10, 10, 10, 10, 11, 11, 11, 11, 22, 22, 22, 22], [12, 12, 12, 12, 13, 13, 13, 13, 14, 14, 14, 14, 15, 15, 15, 15, 23, 23, 23, 23], [12, 12, 12, 12, 13, 13, 13, 13, 14, 14, 14, 14, 15, 15, 15, 15, 23, 23, 23, 23], [12, 12, 12, 12, 13, 13, 13, 13, 14, 14, 14, 14, 15, 15, 15, 15, 23, 23, 23, 23], [12, 12, 12, 12, 13, 13, 13, 13, 14, 14, 14, 14, 15, 15, 15, 15, 23, 23, 23, 23], [16, 16, 16, 16, 17, 17, 17, 17, 18, 18, 18, 18, 19, 19, 19, 19, 24, 24, 24, 24], [16, 16, 16, 16, 17, 17, 17, 17, 18, 18, 18, 18, 19, 19, 19, 19, 24, 24, 24, 24], [16, 16, 16, 16, 17, 17, 17, 17, 18, 18, 18, 18, 19, 19, 19, 19, 24, 24, 24, 24], [16, 16, 16, 16, 17, 17, 17, 17, 18, 18, 18, 18, 19, 19, 19, 19, 24, 24, 24, 24]]
-    l_t = []
-    for i in range(1):
-        t = time.time()
-        game = Game(m20x20)
-        x = time.time() - t
-        l_t.append(x)
-        print(i, x)
-    print(game)
-    print("total:", sum(l_t))
+    print(Game(build_vanilla_region_map(4)))
