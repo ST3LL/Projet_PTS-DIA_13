@@ -318,6 +318,7 @@ def build_sudoku(model_name: str, region_map: Region_map, ruleset_name: List[str
 
     sudoku_model = model_class(region_map, ruleset)
     sudoku_model.solve_brute(save=True)
+    sudoku_model.thin_random()
     return sudoku_model
 
 
