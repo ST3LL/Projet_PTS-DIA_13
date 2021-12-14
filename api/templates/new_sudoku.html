@@ -4,6 +4,7 @@
     <title>PTS: New Sudoku</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style2.css') }}">
     <script type="text/javascript" src="{{ url_for('static', filename='submit_grid.js') }}" ></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='show_solution.js') }}" ></script>
 </head>
 <body>
     <div style="text-align: center;">
@@ -11,10 +12,10 @@
             {% for row in grid %}
                 <tr>
                 {% for col in row %}
-                    {% if col == '.' %}
+                    {% if col == 0 %}
                         <td contenteditable="true" onKeyUp="verification_value_cell(this, {{chars}});"></td>
                     {% elif col %}
-                        <td contenteditable="false">{{ col }}</td>
+                        <td contenteditable="false" style="background-color: #cecece;">{{ col }}</td>
                     {% else %}
                         <td contenteditable="false" class="none"></td>
                     {% endif %}
@@ -23,6 +24,7 @@
             {% endfor %}
         </table>
         <button onclick="submit_sudoku('sudoku_grid', {{grid_solved}})">Submit</button>
+        <button onclick="showSolution({{grid_solved}})">Solution</button>
         <h1 id="win"></h1>
     </div>
     <div>
