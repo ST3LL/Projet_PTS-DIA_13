@@ -1,7 +1,7 @@
 from copy import copy
 from typing import Dict, Set, List
 
-from models import Sudoku
+from sudoku_base import Sudoku
 from utils import GroupID, Group, Move, Case, Region_map, Rule, EMPTY
 
 

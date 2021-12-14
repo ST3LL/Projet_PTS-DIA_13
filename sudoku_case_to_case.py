@@ -1,6 +1,6 @@
 from typing import Dict, Set
 
-from models import Sudoku
+from sudoku_base import Sudoku
 from utils import Case, Move, Region_map, Rule, EMPTY
 
 

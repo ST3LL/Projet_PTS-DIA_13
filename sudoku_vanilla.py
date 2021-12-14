@@ -1,6 +1,6 @@
 from typing import Set
 
-from models import Sudoku
+from sudoku_base import Sudoku
 from utils import Move
 
 
