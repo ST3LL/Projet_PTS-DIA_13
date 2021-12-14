@@ -21,7 +21,7 @@ L_COLOR = [29, 30, 31, 32, 33, 34, 35, 36, 37]
 def get_models_and_rules() -> Dict[str, List[str]]:
     return {
         model_name: filter(lambda x: x.startswith('rule_'), dir(model))
-        for model_name, model in D_SUDOKU_BY_NAME
+        for model_name, model in D_SUDOKU_BY_NAME.items()
     }
 
 # </editor-fold>
@@ -110,9 +110,10 @@ class Sudoku:
             self.place(row, col, EMPTY)
             return found
 
-        solve_brute_aux(0, 0, find)
+        foo = solve_brute_aux(0, 0, find)
         if save:
             self.solution = deepcopy(self.grid)
+        return foo
 
     def thin_random(self):
         case_order = [(i, j) for i in range(len(self.grid)) for j in range(len(self.grid[i]))]
@@ -317,9 +318,10 @@ def build_sudoku(model_name: str, region_map: Region_map, ruleset_name: List[str
     ruleset = {getattr(model_class, rule_name) for rule_name in ruleset_name}
 
     sudoku_model = model_class(region_map, ruleset)
-    sudoku_model.solve_brute()
+    sudoku_model.solve_brute(save=True)
+    sudoku_model.thin_random()
     return sudoku_model
 
 
 if __name__ == '__main__':
-    build_sudoku('vanilla', build_vanilla_region_map(), ['rule_row', 'rule_col', 'rule_region'])
+    print(build_sudoku('vanilla', build_vanilla_region_map(), ['rule_row', 'rule_col', 'rule_region']))
