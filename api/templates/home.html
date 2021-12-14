@@ -1,44 +1,30 @@
 <!DOCTYPE html>
 <title>Home</title>
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+<script type="text/javascript" src="{{ url_for('static', filename='rule_selector.js') }}" ></script>
 
 <body>
     <section class="database">
-        <h1>Generate a Solution</h1>
-        <form class="form-inline" method="POST" action="/generate_solution/">
-            <label>Select a Model</label>
-            <div class="select">
-                <select name="comp_select1" class="selectpicker form-control">
-                    {% for m in models.keys() %}
-                    <option value="{{ m }}">{{ m }}</option>
-                    {% endfor %}
-                </select>
-            </div>
-            <label>Which Dimension?</label>
-            <div>
-                <div class="selectpicker form-control">
-                    <input type="text" id="dim_sudoku_generation" name="dim_sudoku_generation" placeholder="Dim. of the sudoku">
-                    <button type="submit" class="btn">Generate a Solution!</button>
-                </div>
-            </div>
-        </form>
-
-
-
-
-
-
-        <h1>New Sudoku</h1>
+        <h1>Generate a Grid</h1>
         <form class="form-inline" method="POST" action="/new_sudoku/">
-            <label>Select a Model</label>
-            <div class="select">
-                <select name="comp_select2" data-live-search="true" class="selectpicker form-control">
+            <label style="color: white;">Select a Model</label>
+            <div class="select" style="margin: auto; margin-bottom: 75px;">
+                <select id="comp_select1" name="comp_select1" class="selectpicker form-control" onChange="updateRulesSelector(this.value, {{ models }});">
                     {% for m in models.keys() %}
                     <option value="{{ m }}">{{ m }}</option>
                     {% endfor %}
                 </select>
             </div>
-           <label>Which Dimension?</label>
+
+            <label style="color: white;">Select Rules from the Model selected</label>
+            <div class="select" style="margin: auto; margin-bottom: 75px;">
+                <select id="comp_select2" multiple name="comp_select2" class="form-control">
+                    {% for r in models['vanilla'] %}
+                    <option value="{{ r }}">{{ r }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <label style="color: white;">Which Dimension for the Grid</label>
             <div>
                 <div class="selectpicker form-control">
                     <input type="text" id="dim_sudoku" name="dim_sudoku" placeholder="Dim. of the sudoku">
