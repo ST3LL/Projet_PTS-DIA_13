@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>PTS: New Sudoku</title>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style2.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
     <script type="text/javascript" src="{{ url_for('static', filename='submit_grid.js') }}" ></script>
     <script type="text/javascript" src="{{ url_for('static', filename='show_solution.js') }}" ></script>
 </head>
@@ -15,7 +15,7 @@
                     {% if col == 0 %}
                         <td contenteditable="true" onKeyUp="verification_value_cell(this, {{chars}});"></td>
                     {% elif col %}
-                        <td contenteditable="false" style="background-color: #cecece;">{{ col }}</td>
+                        <td contenteditable="false" style="background-color: #bebebe;">{{ col }}</td>
                     {% else %}
                         <td contenteditable="false" class="none"></td>
                     {% endif %}
