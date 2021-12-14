@@ -4,28 +4,46 @@
 
 <body>
     <section class="database">
-        <h1>Generate a Solution!</h1>
+        <h1>Generate a Solution</h1>
         <form class="form-inline" method="POST" action="/generate_solution/">
-            <div class="form-group">
-                <input type="text" id="dim_sudoku_generation" name="dim_sudoku_generation" placeholder="Dim. of the sudoku">
-                <button type="submit" class="btn">Generate a Solution!</button>
-            </div>
-        </form>
-        <h1>New Sudoku!</h1>
-        <form class="form-inline" method="POST" action="/new_sudoku">
+            <label>Select a Model</label>
             <div class="select">
-                <select name="comp" class="selectpicker form-control">
-                    {% for m in list(models.keys()) %}
-                    <option value="{{ m }}">{{  }}</option>
-                    {% for r in models[m] %}
-                        <option value="{{ r }}">{{ r }}</option>
-                        {% endfor %}
+                <select name="comp_select1" class="selectpicker form-control">
+                    {% for m in models.keys() %}
+                    <option value="{{ m }}">{{ m }}</option>
                     {% endfor %}
                 </select>
             </div>
-            <div class="form-group">
-                <input type="text" id="dim_sudoku" name="dim_sudoku" placeholder="Dim. of the sudoku">
-                <button type="submit" class="btn">New Sudoku!</button>
+            <label>Which Dimension?</label>
+            <div>
+                <div class="selectpicker form-control">
+                    <input type="text" id="dim_sudoku_generation" name="dim_sudoku_generation" placeholder="Dim. of the sudoku">
+                    <button type="submit" class="btn">Generate a Solution!</button>
+                </div>
+            </div>
+        </form>
+
+
+
+
+
+
+        <h1>New Sudoku</h1>
+        <form class="form-inline" method="POST" action="/new_sudoku/">
+            <label>Select a Model</label>
+            <div class="select">
+                <select name="comp_select2" data-live-search="true" class="selectpicker form-control">
+                    {% for m in models.keys() %}
+                    <option value="{{ m }}">{{ m }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+           <label>Which Dimension?</label>
+            <div>
+                <div class="selectpicker form-control">
+                    <input type="text" id="dim_sudoku" name="dim_sudoku" placeholder="Dim. of the sudoku">
+                    <button type="submit" class="btn">New Sudoku</button>
+                </div>
             </div>
         </form>
     </section>
