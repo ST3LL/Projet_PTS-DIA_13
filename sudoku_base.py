@@ -1,9 +1,9 @@
 from copy import deepcopy
 from random import shuffle
-from typing import List, Set
+from typing import Set
 
 from utils import Grid, Region_map, Rule, Move, calc_dim, calc_moveset, build_vanilla_region_map, \
-    build_vanilla_ruleset, EMPTY, D_SUDOKU_BY_NAME
+    build_vanilla_ruleset, EMPTY
 
 
 class Sudoku:
@@ -44,7 +44,7 @@ class Sudoku:
             moveset &= rule(self, row, col)
         return moveset
 
-    def solve_brute(self, find: int = 1, save: bool = False):
+    def solve_brute(self, find: int = 1, save: bool = False) -> int:
         def solve_brute_aux(row: int = 0, col: int = 0, find: int = 1) -> int:
             if row == len(self.grid):
                 return True
@@ -62,10 +62,10 @@ class Sudoku:
             self.place(row, col, EMPTY)
             return found
 
-        foo = solve_brute_aux(0, 0, find)
+        res = solve_brute_aux(0, 0, find)
         if save:
             self.solution = deepcopy(self.grid)
-        return foo
+        return res
 
     def thin_random(self):
         case_order = [(i, j) for i in range(len(self.grid)) for j in range(len(self.grid[i]))]
@@ -76,16 +76,3 @@ class Sudoku:
             if self.solve_brute(find=2) == 1:
                 thin[i][j] = EMPTY
             self.grid = deepcopy(thin)
-
-
-def build_sudoku(model_name: str, region_map: Region_map, ruleset_name: List[str]) -> Sudoku:
-    model_class = D_SUDOKU_BY_NAME[model_name]
-    ruleset = {getattr(model_class, rule_name) for rule_name in ruleset_name}
-    sudoku_model = model_class(region_map, ruleset)
-    sudoku_model.solve_brute(save=True)
-    sudoku_model.thin_random()
-    return sudoku_model
-
-
-if __name__ == '__main__':
-    print(build_sudoku('vanilla', build_vanilla_region_map(), ['rule_row', 'rule_col', 'rule_region']))
