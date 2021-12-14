@@ -20,7 +20,7 @@ L_COLOR = [29, 30, 31, 32, 33, 34, 35, 36, 37]
 # <editor-fold desc="help functions for the API">
 def get_models_and_rules() -> Dict[str, List[str]]:
     return {
-        model_name: filter(lambda x: x.startswith('rule_'), dir(model))
+        model_name: list(filter(lambda x: x.startswith('rule_'), dir(model)))
         for model_name, model in D_SUDOKU_BY_NAME.items()
     }
 
