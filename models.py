@@ -110,9 +110,10 @@ class Sudoku:
             self.place(row, col, EMPTY)
             return found
 
-        solve_brute_aux(0, 0, find)
+        foo = solve_brute_aux(0, 0, find)
         if save:
             self.solution = deepcopy(self.grid)
+        return foo
 
     def thin_random(self):
         case_order = [(i, j) for i in range(len(self.grid)) for j in range(len(self.grid[i]))]
@@ -323,4 +324,4 @@ def build_sudoku(model_name: str, region_map: Region_map, ruleset_name: List[str
 
 
 if __name__ == '__main__':
-    build_sudoku('vanilla', build_vanilla_region_map(), ['rule_row', 'rule_col', 'rule_region'])
+    print(build_sudoku('vanilla', build_vanilla_region_map(), ['rule_row', 'rule_col', 'rule_region']))
