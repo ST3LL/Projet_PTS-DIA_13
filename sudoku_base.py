@@ -56,7 +56,7 @@ class Sudoku:
             found = 0
             for move in l_move:
                 self.place(row, col, move)
-                found += solve_brute_aux(next_row, next_col, find)
+                found += solve_brute_aux(next_row, next_col, find-found)
                 if found >= find:
                     return found
             self.place(row, col, EMPTY)
@@ -70,9 +70,12 @@ class Sudoku:
     def thin_random(self):
         case_order = [(i, j) for i in range(len(self.grid)) for j in range(len(self.grid[i]))]
         shuffle(case_order)
-        thin = deepcopy(self.grid)
+        thinned_sudoku = deepcopy(self)
         for i, j in case_order:
             self.place(i, j, EMPTY)
             if self.solve_brute(find=2) == 1:
-                thin[i][j] = EMPTY
-            self.grid = deepcopy(thin)
+                thinned_sudoku.place(i, j, EMPTY)
+            self.update_as(thinned_sudoku)
+
+    def update_as(self, other_sudoku: 'Sudoku'):
+        self.grid = deepcopy(other_sudoku.grid)

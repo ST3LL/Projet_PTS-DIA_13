@@ -1,4 +1,4 @@
-from copy import copy
+from copy import copy, deepcopy
 from typing import Dict, Set, List
 
 from sudoku_base import Sudoku
@@ -11,7 +11,7 @@ class SudokuCaseToGroup(Sudoku):
     groupset_of_case: Dict[Case, Set[GroupID]]
 
     def __init__(self, region_map: Region_map = None, ruleset: Set[Rule] = None):
-        super(Sudoku, self).__init__(region_map, ruleset)
+        super().__init__(region_map, ruleset)
         self.ALL_COORD = self.build_all_coord()
         self.moveset_of_group = {}
         self.groupdict = {}
@@ -69,3 +69,7 @@ class SudokuCaseToGroup(Sudoku):
         for group in d_region.values():
             groupset.add(frozenset(group))
         return groupset
+
+    def update_as(self, other_sudoku: 'SudokuCaseToGroup'):
+        self.grid = deepcopy(other_sudoku.grid)
+        self.moveset_of_group = deepcopy(other_sudoku.moveset_of_group)

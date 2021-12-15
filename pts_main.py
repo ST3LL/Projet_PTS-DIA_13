@@ -15,7 +15,7 @@ D_SUDOKU_BY_NAME = {
 
 def get_models_and_rules() -> Dict[str, List[str]]:
     return {
-        model_name: filter(lambda x: x.startswith('rule_'), dir(model))
+        model_name: list(filter(lambda x: x.startswith('rule_'), dir(model)))
         for model_name, model in D_SUDOKU_BY_NAME.items()
     }
 
@@ -30,4 +30,5 @@ def build_sudoku(model_name: str, region_map: Region_map, ruleset_name: List[str
 
 
 if __name__ == '__main__':
-    print(build_sudoku('vanilla', build_vanilla_region_map(), ['rule_row', 'rule_col', 'rule_region']))
+    sud = build_sudoku('case to group', build_vanilla_region_map(), ['rule_vanilla'])
+    print(sud)

@@ -1,3 +1,5 @@
+from copy import deepcopy
+from random import shuffle
 from typing import Dict, Set
 
 from sudoku_base import Sudoku
@@ -15,7 +17,7 @@ class SudokuCaseToCase(Sudoku):
 
     def build_dependencies(self) -> Dict[Case, Set[Case]]:
         return {
-            (i, j): {case for rule in self.ruleset for case in rule(self, i, j)}
+            (i, j): {case for rule in self.ruleset for case in rule(self, i, j)} - {(i, j)}
             for i in range(len(self.grid)) for j in range(len(self.grid[i]))
         }
 
@@ -78,3 +80,7 @@ class SudokuCaseToCase(Sudoku):
             for i, j in [(i * x, j * y) for i in base for j in base for x in mul for y in mul if i != j]
             if self.is_case(row + i, col + j)
         }
+
+    def update_as(self, other_sudoku: 'SudokuCaseToCase'):
+        self.grid = deepcopy(other_sudoku.grid)
+        self.conflicts = deepcopy(other_sudoku.conflicts)
