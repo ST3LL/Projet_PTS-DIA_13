@@ -24,7 +24,7 @@ class Sudoku:
     def __str__(self):
         return '\n'.join([
             '  '.join([
-                hex(self.grid[i][j] - 1)[2:].upper()
+                hex(self.grid[i][j])[2:].upper()
                 if self.grid[i][j] is not EMPTY else '.'
                 if self.grid[i][j] is not None else '#'
                 for j in range(len(self.grid[i]))])
