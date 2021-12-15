@@ -30,5 +30,5 @@ def build_sudoku(model_name: str, region_map: Region_map, ruleset_name: List[str
 
 
 if __name__ == '__main__':
-    sud = build_sudoku('case to group', build_vanilla_region_map(), ['rule_vanilla'])
+    sud = build_sudoku('case to case', build_vanilla_region_map(dim=2), ['rule_king'])
     print(sud)

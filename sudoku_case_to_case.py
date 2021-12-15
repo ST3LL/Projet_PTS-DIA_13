@@ -66,10 +66,10 @@ class SudokuCaseToCase(Sudoku):
         }
 
     def rule_king(self, row: int, col: int) -> Set[Case]:
-        ope = (-1, 1)
+        ope = (-1, 0, 1)
         return {
             (row + i, col + j) for i in ope for j in ope
-            if self.is_case(i, j)
+            if self.is_case(row + i, col + j)
         }
 
     def rule_knight(self, row: int, col: int) -> Set[Case]:
