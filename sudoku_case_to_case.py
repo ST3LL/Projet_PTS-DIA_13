@@ -1,5 +1,4 @@
 from copy import deepcopy
-from random import shuffle
 from typing import Dict, Set
 
 from sudoku_base import Sudoku
@@ -82,5 +81,5 @@ class SudokuCaseToCase(Sudoku):
         }
 
     def update_as(self, other_sudoku: 'SudokuCaseToCase'):
-        self.grid = deepcopy(other_sudoku.grid)
+        super().update_as(other_sudoku)
         self.conflicts = deepcopy(other_sudoku.conflicts)

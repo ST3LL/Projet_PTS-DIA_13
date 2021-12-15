@@ -71,5 +71,5 @@ class SudokuCaseToGroup(Sudoku):
         return groupset
 
     def update_as(self, other_sudoku: 'SudokuCaseToGroup'):
-        self.grid = deepcopy(other_sudoku.grid)
+        super().update_as(other_sudoku)
         self.moveset_of_group = deepcopy(other_sudoku.moveset_of_group)
