@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request
-from sudoku import build_vanilla_region_map
-from models import *
+from utils import build_vanilla_region_map
+from pts_main import build_sudoku, get_models_and_rules
 
 
 app = Flask(__name__)
@@ -23,7 +23,9 @@ def Sudoku():
         models_selected = request.form.get('comp_select1')
         l_rules_from_model = request.form.getlist('comp_select2')
         get_dim_generation = request.form.get('dim_sudoku')
-        sudoku = build_sudoku(models_selected, build_vanilla_region_map(dim=int(get_dim_generation)), l_rules_from_model)
+        sudoku = build_sudoku(models_selected,
+                              build_vanilla_region_map(dim=int(get_dim_generation)),
+                              l_rules_from_model)
         grid_solved = sudoku.solution
         grid = sudoku.grid
         return render_template("new_sudoku.html",
