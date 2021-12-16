@@ -19,10 +19,10 @@ function submit_sudoku(grid_id, grid_solved) {
     let grid = get_table_grid(grid_id)
     console.log(grid)
     console.log(grid_solved)
-    console.log('-'+JSON.stringify(grid)+'-')
+    console.log('-'+JSON.stringify(grid).replaceAll('"', '')+'-')
     console.log('-'+JSON.stringify(grid_solved)+'-')
 
-    if (JSON.stringify(grid) == JSON.stringify(grid_solved)) {
+    if (JSON.stringify(grid).replaceAll('"', '') == JSON.stringify(grid_solved)) {
         document.getElementById("win").innerHTML = "Victoire !";
     }
     else {
