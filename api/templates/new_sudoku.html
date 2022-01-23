@@ -3,34 +3,25 @@
 <head>
     <title>PTS: New Sudoku</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <script type="text/javascript" src="{{ url_for('static', filename='show_grid.js') }}" ></script>
     <script type="text/javascript" src="{{ url_for('static', filename='submit_grid.js') }}" ></script>
     <script type="text/javascript" src="{{ url_for('static', filename='show_solution.js') }}" ></script>
 </head>
-<body>
+<body onload="showGrid({{grid}}, {{chars}})">
     <div style="text-align: center;">
-        <table id="sudoku_grid">
-            {% for row in grid %}
-                <tr>
-                {% for col in row %}
-                    {% if col == 0 %}
-                        <td contenteditable="true" onKeyUp="verification_value_cell(this, {{chars}});"></td>
-                    {% elif col %}
-                        <td contenteditable="false" style="background-color: #bebebe;">{{ col }}</td>
-                    {% else %}
-                        <td contenteditable="false" class="none"></td>
-                    {% endif %}
-                {% endfor %}
-                </tr>
-            {% endfor %}
-        </table>
-        <button onclick="submit_sudoku('sudoku_grid', {{grid_solved}})">Submit</button>
-        <button onclick="showSolution({{grid_solved}})">Solution</button>
+        <table id="sudoku_grid"></table>
+        <button onclick="submit_sudoku('sudoku_grid', {{grid_solved}})"><img src="https://icon-library.com/images/checkmark-icon-png/checkmark-icon-png-20.jpg" height="35"/> Submit</button>
+        <button onclick="showSolution({{grid_solved}})"><img src="https://icon-library.com/images/lightbulb-icon/lightbulb-icon-4.jpg" height="35"/> Solution</button>
+        <button onclick="showGrid({{grid}}, {{chars}})"><img src="http://cdn.onlinewebfonts.com/svg/img_346043.png" height="35"/> Reset</button>
         <h1 id="win"></h1>
+        <h1 id="timer"></h1>
+        <script src="{{ url_for('static', filename='timer.js') }}"></script>
     </div>
     <div>
         <form class="form-inline" method="POST" action="/">
             <button type="submit" class="btn">Home page</button>
         </form>
     </div>
+<!--<script>console.log(document.getElementById('sudoku_grid').innerHTML)</script>-->
 </body>
 </html>

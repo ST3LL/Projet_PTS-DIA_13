@@ -8,4 +8,5 @@ function showSolution(grid_solved){
         gridHTML += '</tr>';
     }
     document.getElementById('sudoku_grid').innerHTML = gridHTML;
+    stop_timer();
 }

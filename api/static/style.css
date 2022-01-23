@@ -109,6 +109,10 @@ button{
     border-radius: .25em;
 }
 
+button > img, button > span {
+  vertical-align: middle;
+}
+
 .button:hover::after{
     color: #f39c12;
 }

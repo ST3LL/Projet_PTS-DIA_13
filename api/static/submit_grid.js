@@ -24,6 +24,7 @@ function submit_sudoku(grid_id, grid_solved) {
 
     if (JSON.stringify(grid).replaceAll('"', '') == JSON.stringify(grid_solved)) {
         document.getElementById("win").innerHTML = "Victoire !";
+        stop_timer();
     }
     else {
         document.getElementById("win").innerHTML = "La grille n'est pas valide !";
@@ -32,6 +33,8 @@ function submit_sudoku(grid_id, grid_solved) {
 
 
 function verification_value_cell(cell, chars){
+    console.log(chars)
+    console.log(chars)
     val_cell = cell.innerHTML.replace('<br>', '')
     if (!(chars.includes(val_cell))) {
         cell.innerHTML = '<br>'
