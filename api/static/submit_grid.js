@@ -33,8 +33,6 @@ function submit_sudoku(grid_id, grid_solved) {
 
 
 function verification_value_cell(cell, chars){
-    console.log(chars)
-    console.log(chars)
     val_cell = cell.innerHTML.replace('<br>', '')
     if (!(chars.includes(val_cell))) {
         cell.innerHTML = '<br>'
