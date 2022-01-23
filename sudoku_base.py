@@ -83,3 +83,27 @@ class Sudoku:
 
     def update_as(self, other_sudoku: 'Sudoku'):
         self.grid = deepcopy(other_sudoku.grid)
+
+    def variation_permutation(self) -> Grid:
+        l_map = list(self.moveset)
+        shuffle(l_map)
+        d_map = {old_move: l_map[i] for i, old_move in enumerate(self.moveset)}
+        return [
+            [d_map[move] for move in row]
+            for row in self.grid
+        ]
+
+    def variation_rotation(self) -> Grid:
+        pass
+
+    def variation_shuffle_row(self) -> Grid:
+        pass
+
+    def variation_shuffle_col(self) -> Grid:
+        pass
+
+    def variation_symmetry_horizontal(self) -> Grid:
+        pass
+
+    def variation_symmetry_vertical(self) -> Grid:
+        pass
