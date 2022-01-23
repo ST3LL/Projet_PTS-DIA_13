@@ -1,3 +1,4 @@
+import time
 from copy import deepcopy
 from random import shuffle
 from typing import Set
@@ -13,12 +14,13 @@ class Sudoku:
     ruleset: Set[Rule]
     dim: int
     moveset: Set[Move]
+    solve_time: float
 
-    def __init__(self, region_map: Region_map = None, ruleset: Set[Rule] = None):
-        self.region_map = region_map if region_map is not None else build_vanilla_region_map()
+    def __init__(self, region_map: Region_map, ruleset: Set[Rule]):
+        self.region_map = region_map
         self.dim = calc_dim(self.region_map)
         self.moveset = calc_moveset(self.dim)
-        self.ruleset = ruleset if ruleset is not None else build_vanilla_ruleset()
+        self.ruleset = ruleset
         self.grid = [[EMPTY if case is not None else None for case in row] for row in self.region_map]
 
     def __str__(self):
@@ -62,9 +64,11 @@ class Sudoku:
             self.place(row, col, EMPTY)
             return found
 
+        t = time.time()
         res = solve_brute_aux(0, 0, find)
         if save:
             self.solution = deepcopy(self.grid)
+            self.solve_time = time.time() - t
         return res
 
     def thin_random(self):
