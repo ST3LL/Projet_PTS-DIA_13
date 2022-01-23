@@ -1,7 +1,8 @@
 from typing import Set
 
 from sudoku_base import Sudoku
-from utils import Move
+from utils import Move, Grid
+from random import shuffle
 
 
 class SudokuVanilla(Sudoku):
@@ -40,3 +41,27 @@ class SudokuVanilla(Sudoku):
             for i, j in [(i * x, j * y) for i in base for j in base for x in mul for y in mul if i != j]
             if self.is_case(row + i, col + j)
         }
+
+    def variation_permutation(self) -> Grid:
+        l_map = list(self.moveset)
+        shuffle(l_map)
+        d_map = {old_move: l_map[i] for i, old_move in enumerate(self.moveset)}
+        return [
+            [d_map[move] for move in row]
+            for row in self.grid
+        ]
+
+    def variation_rotation(self) -> Grid:
+        pass
+
+    def variation_shuffle_row(self) -> Grid:
+        pass
+
+    def variation_shuffle_col(self) -> Grid:
+        pass
+
+    def variation_symmetry_horizontal(self) -> Grid:
+        pass
+
+    def variation_symmetry_vertical(self) -> Grid:
+        pass
