@@ -1,7 +1,8 @@
 import time
 from copy import deepcopy
-from random import shuffle
+from random import shuffle, sample
 from typing import Set
+from math import sqrt
 
 from utils import Grid, Region_map, Rule, Move, calc_dim, calc_moveset, build_vanilla_region_map, \
     build_vanilla_ruleset, EMPTY
@@ -94,16 +95,19 @@ class Sudoku:
         ]
 
     def variation_rotation(self) -> Grid:
-        pass
+        return [[self.grid[j-1][-i] for j in range(1, self.dim+1)] for i in range(1, self.dim+1)]
 
     def variation_shuffle_row(self) -> Grid:
-        pass
+        dim_reg = int(sqrt(self.dim))
+        return [self.grid[i+j] for j in range(0, self.dim, dim_reg) for i in sample(list(range(dim_reg)), dim_reg)]
 
     def variation_shuffle_col(self) -> Grid:
-        pass
+        dim_reg = int(sqrt(self.dim))
+        return [[self.grid[k][i+j] for j in range(0, self.dim, dim_reg) for i in sample(list(range(dim_reg)), dim_reg)]
+                for k in range(self.dim)]
 
     def variation_symmetry_horizontal(self) -> Grid:
-        pass
+        return [self.grid[-i] for i in range(1, self.dim+1)]
 
     def variation_symmetry_vertical(self) -> Grid:
-        pass
+        return [[self.grid[i][-j] for j in range(1, self.dim+1)] for i in range(self.dim)]
