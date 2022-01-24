@@ -99,10 +99,11 @@ class Sudoku:
 
     def variation_shuffle_row(self) -> Grid:
         dim_reg = int(sqrt(self.dim))
-        return [self.grid[i+j] for j in range(0, self.dim, dim_reg) for i in sample(list(range(dim_reg)), dim_reg)]
+        dim_gp = list(map(lambda x: x*dim_reg, range(dim_reg)))
+        return [self.grid[i+j] for j in sample(dim_gp, len(dim_gp)) for i in sample(list(range(dim_reg)), dim_reg)]
 
     def variation_symmetry_horizontal(self) -> Grid:
         return self.grid[::-1]
 
     def variation_symmetry_diagonal(self) -> Grid:
-        pass
+        return [[self.grid[self.dim-j][self.dim-i]for j in range(1, self.dim+1)] for i in range(1, self.dim+1)]
