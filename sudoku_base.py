@@ -107,7 +107,7 @@ class Sudoku:
                 for k in range(self.dim)]
 
     def variation_symmetry_horizontal(self) -> Grid:
-        return [self.grid[-i] for i in range(1, self.dim+1)]
+        return self.grid[::-1]
 
-    def variation_symmetry_vertical(self) -> Grid:
-        return [[self.grid[i][-j] for j in range(1, self.dim+1)] for i in range(self.dim)]
+    def variation_symmetry_diagonal(self) -> Grid:
+        pass
