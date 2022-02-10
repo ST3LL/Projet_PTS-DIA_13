@@ -84,7 +84,7 @@ select
 
 .select::after
 {
-    content: '^';
+    content: 'v';
     position: absolute;
     top: 0;
     right: 0;
@@ -116,4 +116,3 @@ button > img, button > span {
 .button:hover::after{
     color: #f39c12;
 }
-
