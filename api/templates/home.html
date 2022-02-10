@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<title>Home</title>
+<title xmlns="http://www.w3.org/1999/html">Home</title>
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
 <script type="text/javascript" src="{{ url_for('static', filename='rule_selector.js') }}" ></script>
 
@@ -16,14 +16,17 @@
                 </select>
             </div>
 
-            <label style="color: white;">Select Rules from the Model selected</label>
-            <div class="select" style="margin: auto; margin-bottom: 75px;">
-                <select id="comp_select2" multiple name="comp_select2" class="form-control">
-                    {% for r in models['vanilla'] %}
-                    <option value="{{ r }}">{{ r }}</option>
-                    {% endfor %}
-                </select>
+            <div id="checkbox_rules">
+                <label style="color: white;">Select Rules from the Model selected</label>
+                <br>
+
+                {% for r in models['vanilla'] %}
+                    <input type="checkbox" id="comp_select2" name="comp_select2" value="{{ r }}">
+                    {{ r }}
+                    <br>
+                {% endfor %}
             </div>
+
             <label style="color: white;">Which Dimension for the Grid</label>
             <div>
                 <div class="selectpicker form-control">
