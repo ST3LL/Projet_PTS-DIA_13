@@ -10,9 +10,10 @@
 <body onload="showGrid({{grid}}, {{chars}})">
     <div style="text-align: center;">
         <table id="sudoku_grid"></table>
-        <button onclick="submit_sudoku('sudoku_grid', {{grid_solved}})"><img src="https://icon-library.com/images/checkmark-icon-png/checkmark-icon-png-20.jpg" height="35"/> Submit</button>
-        <button onclick="showSolution({{grid_solved}})"><img src="https://icon-library.com/images/lightbulb-icon/lightbulb-icon-4.jpg" height="35"/> Solution</button>
-        <button onclick="showGrid({{grid}}, {{chars}})"><img src="http://cdn.onlinewebfonts.com/svg/img_346043.png" height="35"/> Reset</button>
+        <button onclick="submit_sudoku('sudoku_grid', {{grid_solved}})"><img src="{{url_for('static', filename='checkmark_icon.png')}}" height="35"/> Submit</button>
+        <button onclick="showSolution({{grid_solved}})"><img src="{{url_for('static', filename='lightbulb_icon.png')}}" height="35"/> Solution</button>
+        <button onclick="showGrid({{grid}}, {{chars}})"><img src="{{url_for('static', filename='reset_icon.png')}}" height="28"/> Reset</button>
+
         <h1 id="win"></h1>
         <h1 id="timer"></h1>
         <script src="{{ url_for('static', filename='timer.js') }}"></script>
