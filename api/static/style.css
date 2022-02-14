@@ -15,6 +15,10 @@ h1 {
 	color: #fff;
 }
 
+.timer {
+	font-size: 50px;
+}
+
 .main_frame {
 	width: 80%;
 	margin: auto;
@@ -27,11 +31,12 @@ table {
 }
 
 td:not(.button_td) {
-  height:30px;
-  width:30px;
+  height:50px;
+  width:50px;
   border:1px solid;
   text-align: center;
   background-color: white;
+  font-size: 30px;
 }
 td:first-child:not(.button_td) {
   border-left: solid black;
@@ -103,10 +108,10 @@ button{
     border: 0;
     background: #2c3e50;
     height: 40px;
-    margin-top: 20px;
     color: #fff;
     cursor: pointer;
     border-radius: .25em;
+	font-size: 20px;
 }
 
 button > img, button > span {
@@ -157,7 +162,7 @@ button > img, button > span {
 }
 
 .b_chars{
-    width: 50px;
-    height: 50px;
-    font-size: 20px;
+    width: 70px;
+    height: 70px;
+    font-size: 40px;
 }
