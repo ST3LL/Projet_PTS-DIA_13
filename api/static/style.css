@@ -38,22 +38,6 @@ td:not(.button_td) {
   background-color: white;
   font-size: 30px;
 }
-td:first-child:not(.button_td) {
-  border-left: solid black;
-}
-
-td:nth-child(3n):not(.button_td) {
-  border-right: solid black;
-}
-/* (3n) per 3 cells in black */
-
-tr:first-child td:not(.button_td) {
-  border-top:solid black;
-}
-
-tr:nth-child(3n) td:not(.button_td) {
-  border-bottom:solid black;
-}
 
 tr td.none {
   height:30px;
