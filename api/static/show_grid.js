@@ -1,18 +1,16 @@
-function showGrid(grid, chars){
+function showGrid(grid, chars, colors, region_map){
     let gridHTML = '';
-    chars_str = '['
-    chars.forEach(function(c) {
-        chars_str += "'" + c + "', "
-    });
-    chars_str = chars_str.substring(0, chars_str.length - 2) + ']'
+    chars_str = str_list(chars, false)
+    colors_str = str_list(colors, false)
+    region_map_str = str_list(region_map, true)
 
-    for (let row of grid){
+    for (let row = 0; row < grid.length; row++){
         gridHTML += '<tr>';
-        for (let col of row){
-            if (col == 0)
-                gridHTML += '<td contenteditable="true" onKeyUp="verification_value_cell(this, ' + chars_str + ');"></td>'
-            else if (col)
-                gridHTML += '<td contenteditable="false" style="background-color: #bebebe;">' + col + '</td>'
+        for (let col = 0; col < grid[row].length; col++){
+            if (grid[row][col] == 0){
+                gridHTML += '<td contenteditable="false" id="' + ((row * grid[row].length)+col+1) + '" onclick="select_cell(this, ' + colors_str + ', ' + region_map_str + ');" style="background-color: ' + colors[region_map[row][col]] + 'a0;"></td>'
+            }else if (grid[row][col])
+                gridHTML += '<td contenteditable="false" style="background-color: ' + colors[region_map[row][col]] + '50;">' + grid[row][col] + '</td>'
             else
                 gridHTML += '<td contenteditable="false" class="none"></td></td>';
         }
@@ -20,5 +18,8 @@ function showGrid(grid, chars){
     }
     document.getElementById('sudoku_grid').innerHTML = gridHTML;
     document.getElementById('win').innerHTML = "";
+    document.getElementById('selection_mode').innerHTML = document.getElementById('selection_mode').innerHTML.replace("Simple", "Multi");
+    selected = [];
+    multi_selection = false;
     reset_timer();
 }

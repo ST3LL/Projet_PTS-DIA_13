@@ -6,23 +6,47 @@
     <script type="text/javascript" src="{{ url_for('static', filename='show_grid.js') }}" ></script>
     <script type="text/javascript" src="{{ url_for('static', filename='submit_grid.js') }}" ></script>
     <script type="text/javascript" src="{{ url_for('static', filename='show_solution.js') }}" ></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='choose.js') }}" ></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='str_list.js') }}" ></script>
 </head>
-<body onload="showGrid({{grid}}, {{chars}})">
-    <div style="text-align: center;">
-        <table id="sudoku_grid"></table>
-        <button onclick="submit_sudoku('sudoku_grid', {{grid_solved}})"><img src="{{url_for('static', filename='checkmark_icon.png')}}" height="35"/> Submit</button>
-        <button onclick="showSolution({{grid_solved}})"><img src="{{url_for('static', filename='lightbulb_icon.png')}}" height="35"/> Solution</button>
-        <button onclick="showGrid({{grid}}, {{chars}})"><img src="{{url_for('static', filename='reset_icon.png')}}" height="28"/> Reset</button>
-
-        <h1 id="win"></h1>
-        <h1 id="timer"></h1>
-        <script src="{{ url_for('static', filename='timer.js') }}"></script>
-    </div>
+<body onload="showGrid({{grid}}, {{chars}}, {{colors}}, {{region_map}})">
     <div>
         <form class="form-inline" method="POST" action="/">
             <button type="submit" class="btn">Home page</button>
         </form>
     </div>
+    <div class="div_global" style="text-align: center;">
+        <div class="div_grid" style="text-align: center;">
+            <table id="sudoku_grid"></table>
+            <div class="sudoku_options">
+                <button onclick="submit_sudoku('sudoku_grid', {{grid_solved}})"><img src="{{url_for('static', filename='checkmark_icon.png')}}" height="35"/> Submit</button>
+                <button onclick="showSolution({{grid_solved}})"><img src="{{url_for('static', filename='lightbulb_icon.png')}}" height="35"/> Solution</button>
+                <button onclick="showGrid({{grid}}, {{chars}}, {{colors}}, {{region_map}})"><img src="{{url_for('static', filename='reset_icon.png')}}" height="28"/> Reset</button>
+
+                <h1 id="timer"></h1>
+                <h1 id="win"></h1>
+                <script src="{{ url_for('static', filename='timer.js') }}"></script>
+            </div>
+        </div>
+        <div class="div_options" style="text-align: center;">
+                <table id="options_grid">
+                {% for row in range(0, chars|length, sqrt) %}
+                    <tr>
+                    {% for col in range(sqrt) %}
+                        <td class="button_td">
+                            <button onclick="choose({{chars[row+col]}}, {{colors}}, {{region_map}})" class="b_chars">{{ chars[row+col] }}</button>
+                        </td>
+                    {% endfor %}
+                    </tr>
+                {% endfor %}
+            </table>
+            <div class="options_buttons">
+                <button id="selection_mode" onclick="switch_mode(this, {{colors}}, {{region_map}})"><img src="{{url_for('static', filename='switch_icon.png')}}" height="28"/> Switch to Multi Selection</button>
+                <button onclick="choose(0, {{colors}}, {{region_map}})"><img src="{{url_for('static', filename='delete_icon.png')}}" height="28"/></button>
+            </div>
+        </div>
+    </div>
+
 <!--<script>console.log(document.getElementById('sudoku_grid').innerHTML)</script>-->
 </body>
 </html>

@@ -26,27 +26,27 @@ table {
   margin:1em auto;
 }
 
-td {
+td:not(.button_td) {
   height:30px;
   width:30px;
   border:1px solid;
   text-align: center;
   background-color: white;
 }
-td:first-child {
+td:first-child:not(.button_td) {
   border-left: solid black;
 }
 
-td:nth-child(3n) {
+td:nth-child(3n):not(.button_td) {
   border-right: solid black;
 }
 /* (3n) per 3 cells in black */
 
-tr:first-child td {
+tr:first-child td:not(.button_td) {
   border-top:solid black;
 }
 
-tr:nth-child(3n) td {
+tr:nth-child(3n) td:not(.button_td) {
   border-bottom:solid black;
 }
 
@@ -115,4 +115,49 @@ button > img, button > span {
 
 .button:hover::after{
     color: #f39c12;
+}
+
+/*
+.div_global{
+    margin: 0px auto;
+    padding: 5px;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+}
+
+.div_grid{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.div_options{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+*/
+
+.div_global{
+    margin: 0px auto;
+    padding: 5px;
+}
+
+.div_grid{
+   width: 48%;
+   float: left;
+}
+
+.div_options{
+   width: 48%;
+   float: right;
+}
+
+.b_chars{
+    width: 50px;
+    height: 50px;
+    font-size: 20px;
 }

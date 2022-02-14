@@ -30,11 +30,3 @@ function submit_sudoku(grid_id, grid_solved) {
         document.getElementById("win").innerHTML = "La grille n'est pas valide !";
     }
 }
-
-
-function verification_value_cell(cell, chars){
-    val_cell = cell.innerHTML.replace('<br>', '')
-    if (!(chars.includes(val_cell))) {
-        cell.innerHTML = '<br>'
-    }
-}
