@@ -7,13 +7,15 @@ import pickle
 from sudoku_base import Sudoku
 from sudoku_case_to_case import SudokuCaseToCase
 from sudoku_case_to_group import SudokuCaseToGroup
+from sudoku_mrv import SudokuMRV
 from sudoku_vanilla import SudokuVanilla
 from utils import Region_map, build_vanilla_region_map
 
 D_SUDOKU_BY_NAME = {
     'vanilla': SudokuVanilla,
     'case to case': SudokuCaseToCase,
-    'case to group': SudokuCaseToGroup
+    'case to group': SudokuCaseToGroup,
+    'mrv': SudokuMRV
 }
 
 
@@ -28,7 +30,7 @@ def build_sudoku(model_name: str, region_map: Region_map, ruleset_name: List[str
     model_class = D_SUDOKU_BY_NAME[model_name]
     ruleset = {getattr(model_class, rule_name) for rule_name in ruleset_name}
     sudoku_model = model_class(region_map, ruleset)
-    sudoku_model.solve_brute(save=True)
+    sudoku_model.solve_mrv(save=True)
     print(sudoku_model)
     sudoku_model.thin_random()
     print(sudoku_model)
@@ -36,4 +38,4 @@ def build_sudoku(model_name: str, region_map: Region_map, ruleset_name: List[str
 
 
 if __name__ == '__main__':
-    build_sudoku('vanilla', build_vanilla_region_map(), ['rule_knight', 'rule_region'])
+    build_sudoku('mrv', build_vanilla_region_map(), ['rule_vanilla'])
