@@ -1,11 +1,11 @@
 import time
 from copy import deepcopy
 from random import shuffle, sample
-from typing import Set
+from typing import Set, List
 from math import sqrt
 
 from utils import Grid, Region_map, Rule, Move, calc_dim, calc_moveset, build_vanilla_region_map, \
-    build_vanilla_ruleset, EMPTY
+    build_vanilla_ruleset, EMPTY, Case
 
 
 class Sudoku:
@@ -19,6 +19,7 @@ class Sudoku:
 
     def __init__(self, region_map: Region_map, ruleset: Set[Rule]):
         self.region_map = region_map
+        self.ALL_COORD = self.build_all_coord()
         self.dim = calc_dim(self.region_map)
         self.moveset = calc_moveset(self.dim)
         self.ruleset = ruleset
@@ -81,6 +82,9 @@ class Sudoku:
             if self.solve_brute(find=2) == 1:
                 thinned_sudoku.place(i, j, EMPTY)
             self.update_as(thinned_sudoku)
+
+    def build_all_coord(self) -> List[Case]:
+        return [(i, j) for i in range(len(self.region_map)) for j in range(len(self.region_map[i]))]
 
     def update_as(self, other_sudoku: 'Sudoku'):
         self.grid = deepcopy(other_sudoku.grid)
