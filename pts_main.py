@@ -32,10 +32,11 @@ def build_sudoku(model_name: str, region_map: Region_map, ruleset_name: List[str
     sudoku_model = model_class(region_map, ruleset)
     sudoku_model.solve_mrv(save=True)
     print(sudoku_model)
+    print(sudoku_model.solve_time)
     sudoku_model.thin_random()
     print(sudoku_model)
     return sudoku_model
 
 
 if __name__ == '__main__':
-    build_sudoku('mrv', build_vanilla_region_map(), ['rule_vanilla'])
+    build_sudoku('mrv', build_vanilla_region_map(5), ['rule_vanilla'])
