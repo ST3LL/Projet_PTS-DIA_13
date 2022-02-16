@@ -41,3 +41,12 @@ class SudokuVanilla(Sudoku):
             for i, j in [(i * x, j * y) for i in base for j in base for x in mul for y in mul if i != j]
             if self.is_case(row + i, col + j)
         }
+
+    def conflict_row(self, row: int, col: int):
+        return self.grid[row].count(self.grid[row][col]) - 1
+
+    def conflict_col(self, row: int, col: int):
+        return sum((
+            case_move == self.grid[row][col]
+            for case_move in (self.grid[i][col] for i in range(self.dim))
+        )) - 1
