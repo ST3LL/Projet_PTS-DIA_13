@@ -22,9 +22,9 @@ def Sudoku():
     if request.method == 'POST':
         models_selected = request.form.get('comp_select1')
         l_rules_from_model = request.form.getlist('comp_select2')
-        get_dim_generation = request.form.get('dim_sudoku')
+        get_dim_generation = int(request.form.get('dim_sudoku')) if request.form.get('dim_sudoku') != '' else 3
         sudoku = build_sudoku(models_selected,
-                              build_vanilla_region_map(dim=int(get_dim_generation)),
+                              build_vanilla_region_map(get_dim_generation),
                               l_rules_from_model)
         chars = list(sudoku.moveset)
         grid_solved = sudoku.solution
