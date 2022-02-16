@@ -25,7 +25,6 @@ class SudokuFaisceau(SudokuMRV):
             row, col = case
             self.place(row, col, min(self.conflicts[(row, col)].items(), key=lambda x: x[-1])[0])
             solve_aux()
-            return
 
         t = time.time()
         solve_aux()
