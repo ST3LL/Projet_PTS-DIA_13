@@ -48,30 +48,29 @@ class Sudoku:
             moveset &= rule(self, row, col)
         return moveset
 
-    def solve_brute(self, find: int = 1, save: bool = False) -> int:
-        def solve_brute_aux(row: int = 0, col: int = 0, find: int = 1) -> int:
+    def solve(self, find: int = 1, save: bool = False) -> None:
+        def solve_aux(row: int = 0, col: int = 0, find: int = 1) -> int:
             if row == len(self.grid):
                 return True
             next_row, next_col = row + (col == (len(self.grid[row]) - 1)), (col + 1) % len(self.grid[row])
             if self.grid[row][col] != EMPTY:
-                return solve_brute_aux(next_row, next_col, find)
+                return solve_aux(next_row, next_col, find)
             l_move = list(self.calc_possible_moves(row, col))
             shuffle(l_move)
             found = 0
             for move in l_move:
                 self.place(row, col, move)
-                found += solve_brute_aux(next_row, next_col, find-found)
+                found += solve_aux(next_row, next_col, find-found)
                 if found >= find:
                     return found
             self.place(row, col, EMPTY)
             return found
 
         t = time.time()
-        res = solve_brute_aux(0, 0, find)
+        solve_aux(0, 0, find)
         if save:
             self.solution = deepcopy(self.grid)
             self.solve_time = time.time() - t
-        return res
 
     def thin_random(self):
         case_order = [(i, j) for i in range(len(self.grid)) for j in range(len(self.grid[i]))]
@@ -79,7 +78,7 @@ class Sudoku:
         thinned_sudoku = deepcopy(self)
         for i, j in case_order:
             self.place(i, j, EMPTY)
-            if self.solve_brute(find=2) == 1:
+            if self.solve(find=2) == 1:
                 thinned_sudoku.place(i, j, EMPTY)
             self.update_as(thinned_sudoku)
 

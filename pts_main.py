@@ -32,7 +32,7 @@ def build_sudoku(model_name: str, region_map: Region_map, ruleset_name: List[str
     model_class = D_SUDOKU_BY_NAME[model_name]
     ruleset = {getattr(model_class, rule_name) for rule_name in ruleset_name}
     sudoku_model = model_class(region_map, ruleset)
-    sudoku_model.solve_mrv(save=True)
+    sudoku_model.solve(save=True)
     print(sudoku_model)
     print(sudoku_model.solve_time)
     sudoku_model.thin_random()
