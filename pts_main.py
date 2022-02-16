@@ -1,8 +1,4 @@
-import time
-from copy import deepcopy
-import random
 from typing import List, Dict
-import pickle
 
 from sudoku_base import Sudoku
 from sudoku_case_to_case import SudokuCaseToCase
@@ -10,6 +6,7 @@ from sudoku_case_to_group import SudokuCaseToGroup
 from sudoku_faisceau import SudokuFaisceau
 from sudoku_mrv import SudokuMRV
 from sudoku_vanilla import SudokuVanilla
+from sudoku_stochastic import SudokuStochastic
 from utils import Region_map, build_vanilla_region_map
 
 D_SUDOKU_BY_NAME = {
@@ -17,7 +14,8 @@ D_SUDOKU_BY_NAME = {
     'case to case': SudokuCaseToCase,
     'case to group': SudokuCaseToGroup,
     'mrv': SudokuMRV,
-    'faisceau': SudokuFaisceau
+    'faisceau': SudokuFaisceau,
+    'stochastic': SudokuStochastic
 }
 
 
@@ -41,4 +39,4 @@ def build_sudoku(model_name: str, region_map: Region_map, ruleset_name: List[str
 
 
 if __name__ == '__main__':
-    build_sudoku('mrv', build_vanilla_region_map(5), ['rule_vanilla'])
+    build_sudoku('stochastic', build_vanilla_region_map(2), ['rule_vanilla'])
