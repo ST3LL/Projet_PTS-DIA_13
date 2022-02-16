@@ -15,7 +15,7 @@ D_SUDOKU_BY_NAME = {
     'case to group': SudokuCaseToGroup,
     'mrv': SudokuMRV,
     'faisceau': SudokuFaisceau,
-    'stochastic': SudokuStochastic
+    'stochastic': SudokuStochastic,
 }
 
 
@@ -39,4 +39,4 @@ def build_sudoku(model_name: str, region_map: Region_map, ruleset_name: List[str
 
 
 if __name__ == '__main__':
-    build_sudoku('stochastic', build_vanilla_region_map(2), ['rule_vanilla'])
+    build_sudoku('case to group', build_vanilla_region_map(3), ['rule_vanilla'])
