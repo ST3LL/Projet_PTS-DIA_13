@@ -7,6 +7,7 @@ import pickle
 from sudoku_base import Sudoku
 from sudoku_case_to_case import SudokuCaseToCase
 from sudoku_case_to_group import SudokuCaseToGroup
+from sudoku_faisceau import SudokuFaisceau
 from sudoku_mrv import SudokuMRV
 from sudoku_vanilla import SudokuVanilla
 from utils import Region_map, build_vanilla_region_map
@@ -15,7 +16,8 @@ D_SUDOKU_BY_NAME = {
     'vanilla': SudokuVanilla,
     'case to case': SudokuCaseToCase,
     'case to group': SudokuCaseToGroup,
-    'mrv': SudokuMRV
+    'mrv': SudokuMRV,
+    'faisceau': SudokuFaisceau
 }
 
 

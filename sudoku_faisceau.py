@@ -1,28 +1,55 @@
 import time
-from random import shuffle
 from copy import deepcopy
-from typing import Dict, Set, Optional, Tuple
+from typing import Set, Optional, Tuple
 
-from sudoku_case_to_case import SudokuCaseToCase
 from sudoku_mrv import SudokuMRV
-from utils import Move, Case, Region_map, Rule, EMPTY
+from utils import Case, Region_map, Rule, EMPTY, Grid
 
 
 class SudokuFaisceau(SudokuMRV):
+    last_valid_grid: Optional[Grid]
+
+    def __init__(self, region_map: Region_map = None, ruleset: Set[Rule] = None):
+        super().__init__(region_map, ruleset)
+        self.last_valid_grid = None
+
+    def solve(self, find: int = 1, save: bool = False) -> None:
+        def solve_aux() -> None:
+            case, is_correct = self.min_move()
+            if self.last_valid_grid is None and not is_correct:
+                self.last_valid_grid = deepcopy(self.grid)
+
+            if case is None:
+                return
+
+            row, col = case
+            self.place(row, col, min(self.conflicts[(row, col)].items(), key=lambda x: x[-1])[0])
+            solve_aux()
+            return
+
+        t = time.time()
+        solve_aux()
+        if self.last_valid_grid is None:
+            self.last_valid_grid = deepcopy(self.grid)
+
+        if save:
+            self.solution = deepcopy(self.grid)
+            self.solve_time = time.time() - t
 
     def min_move(self) -> Tuple[Optional[Case], bool]:
         minimum = self.dim + 1
         min_case = None
-        is_correct = True
+        false_val = None
+
         for k, v in self.nb_moves.items():
-            if v < 0:
-                print('coucou')
             if self.grid[k[0]][k[1]] != EMPTY:
                 continue
             if not v:
-                is_correct = False
+                false_val = k
             elif v < minimum:
                 minimum = v
                 min_case = k
 
-        return min_case, is_correct
+        if minimum == self.dim + 1:
+            return false_val, False
+        return min_case, True
