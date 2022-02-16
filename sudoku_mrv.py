@@ -15,7 +15,7 @@ class SudokuMRV(SudokuCaseToCase):
         shuffle(self.ALL_COORD)
         self.nb_moves = {case: self.dim for case in set(self.ALL_COORD)}
 
-    def solve(self, find: int = 1, save: bool = False) -> None:
+    def solve(self, find: int = 1, save: bool = False) -> int:
         def solve_aux(find: int = 1, placed: int = 0) -> int:
             case, is_correct = self.min_move()
             if case is None:
@@ -38,6 +38,7 @@ class SudokuMRV(SudokuCaseToCase):
         if save:
             self.solution = deepcopy(self.grid)
             self.solve_time = time.time() - t
+        return res
 
     def place(self, row: int, col: int, move: Move) -> None:
         super().place(row, col, move)

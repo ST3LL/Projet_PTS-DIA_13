@@ -48,7 +48,10 @@ class Sudoku:
             moveset &= rule(self, row, col)
         return moveset
 
-    def solve(self, find: int = 1, save: bool = False) -> None:
+    def solve_thin(self):
+        return Sudoku.solve(self, find=2, save=True)
+
+    def solve(self, find: int = 1, save: bool = False) -> int:
         def solve_aux(row: int = 0, col: int = 0, find: int = 1) -> int:
             if row == len(self.grid):
                 return True
@@ -67,10 +70,11 @@ class Sudoku:
             return found
 
         t = time.time()
-        solve_aux(0, 0, find)
+        res = solve_aux(0, 0, find)
         if save:
             self.solution = deepcopy(self.grid)
             self.solve_time = time.time() - t
+        return res
 
     def thin_random(self):
         case_order = [(i, j) for i in range(len(self.grid)) for j in range(len(self.grid[i]))]
@@ -78,7 +82,7 @@ class Sudoku:
         thinned_sudoku = deepcopy(self)
         for i, j in case_order:
             self.place(i, j, EMPTY)
-            if self.solve(find=2) == 1:
+            if self.solve_thin() == 1:
                 thinned_sudoku.place(i, j, EMPTY)
             self.update_as(thinned_sudoku)
 

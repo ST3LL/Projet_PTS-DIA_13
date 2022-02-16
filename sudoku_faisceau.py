@@ -13,7 +13,7 @@ class SudokuFaisceau(SudokuMRV):
         super().__init__(region_map, ruleset)
         self.last_valid_grid = None
 
-    def solve(self, find: int = 1, save: bool = False) -> None:
+    def solve(self, find: int = 1, save: bool = False) -> int:
         def solve_aux() -> None:
             case, is_correct = self.min_move()
             if self.last_valid_grid is None and not is_correct:
@@ -34,6 +34,7 @@ class SudokuFaisceau(SudokuMRV):
         if save:
             self.solution = deepcopy(self.grid)
             self.solve_time = time.time() - t
+        return 1
 
     def min_move(self) -> Tuple[Optional[Case], bool]:
         minimum = self.dim + 1
