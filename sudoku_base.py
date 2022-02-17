@@ -1,11 +1,10 @@
 import time
 from copy import deepcopy
+from math import sqrt
 from random import shuffle, sample
 from typing import Set, List
-from math import sqrt
 
-from utils import Grid, Region_map, Rule, Move, calc_dim, calc_moveset, build_vanilla_region_map, \
-    build_vanilla_ruleset, EMPTY, Case
+from utils import Grid, Region_map, Rule, Move, calc_dim, calc_moveset, EMPTY, Case
 
 
 class Sudoku:

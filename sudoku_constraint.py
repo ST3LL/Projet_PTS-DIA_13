@@ -1,15 +1,13 @@
 import time
-from random import shuffle
 from copy import deepcopy
-from typing import Dict, Set, Optional, Tuple
+from random import shuffle
+from typing import Set, Tuple, Optional
 
-from sudoku_case_to_case import SudokuCaseToCase
-from utils import Move, Case, Region_map, Rule, EMPTY
+from sudoku_case_to_group import SudokuCaseToGroup
+from utils import EMPTY, Region_map, Rule, Case, Move
 
 
-class SudokuMRV(SudokuCaseToCase):
-    nb_moves: Dict[Case, int]
-
+class SudokuConstraint(SudokuCaseToGroup):
     def __init__(self, region_map: Region_map = None, ruleset: Set[Rule] = None):
         super().__init__(region_map, ruleset)
         shuffle(self.ALL_COORD)
@@ -40,25 +38,27 @@ class SudokuMRV(SudokuCaseToCase):
             self.solve_time = time.time() - t
         return res
 
-    def place(self, row: int, col: int, move: Move) -> None:
-        super().place(row, col, move)
-        for case in self.dependencies[(row, col)]:
-            if self.grid[case[0]][case[1]] == EMPTY:
-                self.calc_nb_moves(case)
-
-    def calc_nb_moves(self, case: Case) -> None:
-        self.nb_moves[case] = list(self.conflicts[case].values()).count(0)
-
     def get_target(self) -> Tuple[Optional[Case], bool]:
         minimum = self.dim + 1
         min_case = None
-        for k, v in self.nb_moves.items():
-            if self.grid[k[0]][k[1]] != EMPTY:
+        for case, groupset in self.groupset_of_case.items():
+            if self.grid[case[0]][case[1]] != EMPTY:
                 continue
+            v = self.nb_moves[case]
             if v < minimum:
                 minimum = v
-                min_case = k
+                min_case = case
         if not minimum:
             return None, False
 
         return min_case, True
+
+    def place(self, row: int, col: int, move: Move) -> None:
+        super().place(row, col, move)
+        for group_id in self.groupset_of_case[(row, col)]:
+            for case in self.groupdict[group_id]:
+                if self.grid[case[0]][case[1]] == EMPTY:
+                    self.calc_nb_moves(case)
+
+    def calc_nb_moves(self, case):
+        return len(self.calc_possible_moves(*case))
