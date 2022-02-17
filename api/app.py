@@ -1,5 +1,7 @@
+from random import shuffle
+
 from flask import Flask, render_template, request
-from utils import build_vanilla_region_map
+from utils import build_vanilla_region_map, get_color_list
 from pts_main import build_sudoku, get_models_and_rules
 from math import sqrt
 
@@ -29,7 +31,7 @@ def Sudoku():
         chars = list(sudoku.moveset)
         grid_solved = sudoku.solution
         grid = sudoku.grid
-        colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff', '#ffa500', '#00ffa5', '#a500ff']
+        colors = get_color_list()
         return render_template("new_sudoku.html",
                                grid_solved=grid_solved,
                                grid=grid,
