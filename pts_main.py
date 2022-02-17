@@ -4,6 +4,7 @@ from sudoku_base import Sudoku
 from sudoku_case_to_case import SudokuCaseToCase
 from sudoku_case_to_group import SudokuCaseToGroup
 from sudoku_constraint import SudokuConstraint
+from sudoku_crook import SudokuCrook
 from sudoku_faisceau import SudokuFaisceau
 from sudoku_mrv import SudokuMRV
 from sudoku_vanilla import SudokuVanilla
@@ -17,7 +18,8 @@ D_SUDOKU_BY_NAME = {
     'mrv': SudokuMRV,
     'faisceau': SudokuFaisceau,
     'stochastic': SudokuStochastic,
-    'constraint': SudokuConstraint
+    'constraint': SudokuConstraint,
+    'crook': SudokuCrook
 }
 
 
@@ -41,4 +43,4 @@ def build_sudoku(model_name: str, region_map: Region_map, ruleset_name: List[str
 
 
 if __name__ == '__main__':
-    build_sudoku('case to group', build_vanilla_region_map(4), ['rule_vanilla'])
+    build_sudoku('crook', build_vanilla_region_map(3), ['rule_vanilla'])

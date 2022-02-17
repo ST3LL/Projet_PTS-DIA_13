@@ -14,7 +14,7 @@ class SudokuConstraint(SudokuCaseToGroup):
         self.nb_moves = {case: self.dim for case in set(self.ALL_COORD)}
 
     def solve(self, find: int = 1, save: bool = False) -> int:
-        def solve_aux(find: int = 1, placed: int = 0) -> int:
+        def solve_aux(find: int = 1) -> int:
             case, is_correct = self.get_target()
             if case is None:
                 return is_correct
@@ -25,14 +25,14 @@ class SudokuConstraint(SudokuCaseToGroup):
             found = 0
             for move in l_move:
                 self.place(row, col, move)
-                found += solve_aux(find - found, placed + 1)
+                found += solve_aux(find - found)
                 if found >= find:
                     return found
             self.place(row, col, EMPTY)
             return found
 
         t = time.time()
-        res = solve_aux(find, 0)
+        res = solve_aux(find)
         if save:
             self.solution = deepcopy(self.grid)
             self.solve_time = time.time() - t
@@ -41,7 +41,7 @@ class SudokuConstraint(SudokuCaseToGroup):
     def get_target(self) -> Tuple[Optional[Case], bool]:
         minimum = self.dim + 1
         min_case = None
-        for case, groupset in self.groupset_of_case.items():
+        for case in self.groupset_of_case:
             if self.grid[case[0]][case[1]] != EMPTY:
                 continue
             v = self.nb_moves[case]
