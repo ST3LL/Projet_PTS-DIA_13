@@ -35,6 +35,17 @@ class Sudoku:
         ]) + f"\n{sum([case in self.moveset for row in self.grid for case in row])} / " \
              f"{sum([case is not None for row in self.grid for case in row])}"
 
+    @classmethod
+    def solve_grid(cls, region_map: Region_map, ruleset: Set[Rule], grid: Grid):
+        sudoku = cls(region_map, ruleset)
+        for row in range(len(grid)):
+            for col in range(len(grid)):
+                if grid[row][col] in sudoku.moveset:
+                    sudoku.place(row, col, grid[row][col])
+        start = time.perf_counter()
+        sudoku.solve(find=1, save=True)
+        return time.perf_counter() - start
+
     def is_case(self, row: int, col: int) -> bool:
         return 0 <= row < len(self.grid) and 0 <= col < len(self.grid[row])
 
@@ -68,11 +79,9 @@ class Sudoku:
             self.place(row, col, EMPTY)
             return found
 
-        t = time.time()
         res = solve_aux(0, 0, find)
         if save:
             self.solution = deepcopy(self.grid)
-            self.solve_time = time.time() - t
         return res
 
     def thin_random(self):
