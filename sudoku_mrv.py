@@ -33,11 +33,9 @@ class SudokuMRV(SudokuCaseToCase):
             self.place(row, col, EMPTY)
             return found
 
-        t = time.time()
         res = solve_aux(find)
         if save:
             self.solution = deepcopy(self.grid)
-            self.solve_time = time.time() - t
         return res
 
     def place(self, row: int, col: int, move: Move) -> None:

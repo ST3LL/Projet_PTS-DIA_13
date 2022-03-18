@@ -8,6 +8,7 @@ from sudoku_case_to_group import SudokuCaseToGroup
 from sudoku_constraint import SudokuConstraint
 from sudoku_crook import SudokuCrook
 from sudoku_faisceau import SudokuFaisceau
+from sudoku_hill_climbing import SudokuHillClimbing
 from sudoku_mrv import SudokuMRV
 from sudoku_vanilla import SudokuVanilla
 from sudoku_stochastic import SudokuStochastic
@@ -19,9 +20,10 @@ D_SUDOKU_BY_NAME = {
     'case to group': SudokuCaseToGroup,
     'mrv': SudokuMRV,
     'faisceau': SudokuFaisceau,
-    # 'stochastic': SudokuStochastic,
+    'stochastic': SudokuStochastic,
     'constraint': SudokuConstraint,
-    'crook': SudokuCrook
+    'crook': SudokuCrook,
+    'hill climbing': SudokuHillClimbing,
 }
 
 
@@ -38,7 +40,6 @@ def build_sudoku(model_name: str, region_map: Region_map, ruleset_name: List[str
     sudoku_model = model_class(region_map, ruleset)
     sudoku_model.solve(save=True)
     print(sudoku_model)
-    # print(sudoku_model.solve_time)
     sudoku_model.thin_random()
     print(sudoku_model)
     return sudoku_model
@@ -63,6 +64,7 @@ def benchmark(l_models, l_grid_and_region):
 
 
 if __name__ == '__main__':
-    l_sudoku_pickle = [sudoku.grid for sudoku in pickle.load(open("l_sudoku_pickle.pickle", "rb"))]
-    benchmark(list(D_SUDOKU_BY_NAME.keys()), [(grid, build_vanilla_region_map(3)) for grid in l_sudoku_pickle])
-    # build_sudoku('crook', build_vanilla_region_map(3), ['rule_vanilla'])
+    l_sudoku_pickle = [sudoku.grid for sudoku in pickle.load(open("l_sudoku_pickle.pickle", "rb"))][2:3]
+    print(*l_sudoku_pickle[0], sep='\n')
+    benchmark(['hill climbing'], [(grid, build_vanilla_region_map(3)) for grid in l_sudoku_pickle])
+    # build_sudoku('stochastic', build_vanilla_region_map(2), ['rule_vanilla'])
