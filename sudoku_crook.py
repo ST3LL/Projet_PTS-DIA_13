@@ -56,9 +56,7 @@ class SudokuCrook(SudokuCaseToGroup):
             self.place(best_case[0], best_case[1], EMPTY)
             return found
 
-        t = time.time()
         res = solve_aux(find)
         if save:
             self.solution = deepcopy(self.grid)
-            self.solve_time = time.time() - t
         return res

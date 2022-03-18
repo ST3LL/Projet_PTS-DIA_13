@@ -31,11 +31,9 @@ class SudokuConstraint(SudokuCaseToGroup):
             self.place(row, col, EMPTY)
             return found
 
-        t = time.time()
         res = solve_aux(find)
         if save:
             self.solution = deepcopy(self.grid)
-            self.solve_time = time.time() - t
         return res
 
     def get_target(self) -> Tuple[Optional[Case], bool]:

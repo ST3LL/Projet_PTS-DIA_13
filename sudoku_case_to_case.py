@@ -26,6 +26,9 @@ class SudokuCaseToCase(Sudoku):
             for i in range(len(self.grid)) for j in range(len(self.grid[i]))
         }
 
+    def calc_conflicts(self) -> int:
+        return sum((d[self.grid[case[0]][case[1]]] for case, d in self.conflicts.items()))
+
     def place(self, row: int, col: int, move: Move) -> None:
         self.clean(row, col)
         self.do(row, col, move)
