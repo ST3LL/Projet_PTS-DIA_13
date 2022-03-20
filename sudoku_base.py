@@ -24,6 +24,7 @@ class Sudoku:
         self.moveset = calc_moveset(self.dim)
         self.ruleset = ruleset
         self.move_history = list()
+        self.cycle = 0
         self.grid = [[EMPTY if case is not None else None for case in row] for row in self.region_map]
 
     def __str__(self):
@@ -52,7 +53,10 @@ class Sudoku:
         return 0 <= row < len(self.grid) and 0 <= col < len(self.grid[row])
 
     def place(self, row: int, col: int, move: Move) -> None:
-        self.move_history.append(((row, col), move))
+        # self.move_history.append(((row, col), move))
+        # self.cycle += 1
+        # if not self.cycle % 100_000:
+        #     print(self)
         self.grid[row][col] = move
 
     def calc_possible_moves(self, row: int, col: int) -> Set[Move]:

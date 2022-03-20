@@ -30,7 +30,6 @@ class SudokuCaseToCase(Sudoku):
         return sum((d[self.grid[case[0]][case[1]]] for case, d in self.conflicts.items()))
 
     def place(self, row: int, col: int, move: Move) -> None:
-        self.move_history.append(((row, col), move))
         self.clean(row, col)
         self.do(row, col, move)
 
@@ -40,7 +39,7 @@ class SudokuCaseToCase(Sudoku):
                 self.conflicts[case][self.grid[row][col]] -= 1
 
     def do(self, row, col, move) -> None:
-        self.grid[row][col] = move
+        super(SudokuCaseToCase, self).place(row, col, move)
 
         if move != EMPTY:
             for case in self.dependencies[(row, col)]:
