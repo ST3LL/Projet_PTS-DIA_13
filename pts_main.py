@@ -12,6 +12,7 @@ from sudoku_constraint import SudokuConstraint
 from sudoku_crook import SudokuCrook
 from sudoku_faisceau import SudokuFaisceau
 from sudoku_hill_climbing import SudokuHillClimbing
+from sudoku_linear_programming import SudokuLinear
 from sudoku_mrv import SudokuMRV
 from sudoku_stochastic import SudokuStochastic
 from sudoku_vanilla import SudokuVanilla
@@ -27,6 +28,7 @@ D_SUDOKU_BY_NAME = {
     'constraint': SudokuConstraint,
     'crook': SudokuCrook,
     'hill climbing': SudokuHillClimbing,
+    'linear': SudokuLinear
 }
 
 
@@ -96,10 +98,10 @@ def benchmark(l_models, l_src, log_file):
 
 def main_benchmark():
     src = 'sudoku_pickles'
-    for model in ['vanilla', 'case to case', 'case to group']:
+    for model in ['linear']:
         benchmark(
             [model],
-            [f"{src}/{x}" for x in listdir(src) if x.startswith('scrap')],
+            [f"{src}/{x}" for x in listdir(src) if x.startswith('mrv_3')],
             "log_pickle/big_pickle"
         )
 
@@ -129,14 +131,17 @@ def misc():
 
 
 def other():
-    src = 'sudoku_pickles'
-    for file in [f"{src}/{x}" for x in listdir(src) if x.startswith('scrap')]:
-        print(file, len(pickle.load(open(file, 'rb'))))
+    src = 'sudoku_pickles/mrv_3_100_100_10.pickle'
+    with open(src, 'rb') as f:
+        l_grid = pickle.load(f)
+    for i, grid in enumerate(l_grid[:1]):
+        print(i)
+        # print(*grid, sep='\n')
+        SudokuLinear.solve_grid(build_vanilla_region_map(3), {SudokuCaseToGroup.rule_vanilla}, grid, show=True)
 
 
 if __name__ == '__main__':
-    # misc()
-    # other()
-    main_benchmark()
+    other()
+    # main_benchmark()
     # main_build_pickles()
-    # main_visualize('log_pickle/small.pickle')
+    # main_visualize('log_pickle/big_pickle_linear_2_10_100_10.pickle')

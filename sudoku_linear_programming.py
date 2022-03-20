@@ -4,6 +4,7 @@ from random import shuffle
 from typing import Set
 
 import pulp
+from pulp import PULP_CBC_CMD
 
 from sudoku_case_to_group import SudokuCaseToGroup
 from utils import Region_map, Rule
@@ -16,8 +17,6 @@ class SudokuLinear(SudokuCaseToGroup):
     def solve(self, find: int = 1, save: bool = False) -> int:
         if find != 1:
             return find
-
-        t = time.time()
 
         linear = pulp.LpProblem("SudokuLinear")
         linear.setObjective(pulp.lpSum(0))
@@ -36,7 +35,7 @@ class SudokuLinear(SudokuCaseToGroup):
             for move in moves:
                 linear.addConstraint(pulp.LpConstraint(e=pulp.lpSum([grid[pos[0]][pos[1]][move]*move for pos in rule]),
                                                        sense=pulp.LpConstraintEQ, rhs=move))
-        linear.solve()
+        linear.solve(PULP_CBC_CMD(msg=False))
 
         for row in dims:
             for col in dims:
@@ -46,4 +45,3 @@ class SudokuLinear(SudokuCaseToGroup):
 
         if save:
             self.solution = deepcopy(self.grid)
-            self.solve_time = time.time() - t
