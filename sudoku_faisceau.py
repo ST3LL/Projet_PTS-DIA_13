@@ -26,14 +26,13 @@ class SudokuFaisceau(SudokuMRV):
             self.place(row, col, min(self.conflicts[(row, col)].items(), key=lambda x: x[-1])[0])
             solve_aux()
 
-        t = time.time()
+        self.move_history.clear()
         solve_aux()
         if self.last_valid_grid is None:
             self.last_valid_grid = deepcopy(self.grid)
 
         if save:
             self.solution = deepcopy(self.grid)
-            self.solve_time = time.time() - t
         return 1
 
     def get_target(self) -> Tuple[Optional[Case], bool]:

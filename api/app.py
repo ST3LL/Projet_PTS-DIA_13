@@ -30,6 +30,7 @@ def Sudoku():
                               l_rules_from_model)
         chars = list(sudoku.moveset)
         grid_solved = sudoku.solution
+        move_history = sudoku.move_history
         grid = sudoku.grid
         colors = get_color_list()
         return render_template("new_sudoku.html",
