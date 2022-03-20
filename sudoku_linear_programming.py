@@ -7,7 +7,7 @@ import pulp
 from pulp import PULP_CBC_CMD
 
 from sudoku_case_to_group import SudokuCaseToGroup
-from utils import Region_map, Rule
+from utils import Region_map, Rule, EMPTY
 
 
 class SudokuLinear(SudokuCaseToGroup):
@@ -35,6 +35,15 @@ class SudokuLinear(SudokuCaseToGroup):
             for move in moves:
                 linear.addConstraint(pulp.LpConstraint(e=pulp.lpSum([grid[pos[0]][pos[1]][move]*move for pos in rule]),
                                                        sense=pulp.LpConstraintEQ, rhs=move))
+
+        for row in dims:  # constraints of every value already set
+            for col in dims:
+                if self.grid[row][col] != EMPTY and self.grid[row][col] is not None:
+                    linear.addConstraint(
+                        pulp.LpConstraint(e=pulp.lpSum([grid[row][col][value] * value for value in moves]),
+                                          sense=pulp.LpConstraintEQ,
+                                          rhs=self.grid[row][col]))
+
         linear.solve(PULP_CBC_CMD(msg=False))
 
         for row in dims:
