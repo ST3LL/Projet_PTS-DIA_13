@@ -3,7 +3,7 @@ from random import shuffle, sample
 from typing import Set, Tuple, Generator
 
 from sudoku_case_to_case import SudokuCaseToCase
-from utils import Region_map, Rule, Case, EMPTY
+from utils import Region_map, Rule, Case, EMPTY, peek
 
 
 class SudokuHillClimbing(SudokuCaseToCase):
@@ -18,7 +18,10 @@ class SudokuHillClimbing(SudokuCaseToCase):
             current_conflicts = self.calc_conflicts()
             while True:
                 stuck = True
-                conflicts, a, b = min(self.generate_sons(), key=lambda x: x[0])
+                sons = peek(self.generate_sons())
+                if sons is None:
+                    return
+                conflicts, a, b = min(sons, key=lambda x: x[0])
                 if conflicts < current_conflicts:
                     self.switch_case(a, b)
                     current_conflicts = conflicts
@@ -26,7 +29,7 @@ class SudokuHillClimbing(SudokuCaseToCase):
                 if not current_conflicts:
                     return
                 if stuck:
-                    print('stuck at', current_conflicts)
+                    # print('stuck at', current_conflicts)
                     self.random_restart()
                     current_conflicts = self.calc_conflicts()
 

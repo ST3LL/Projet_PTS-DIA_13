@@ -2,7 +2,7 @@ import time
 from copy import deepcopy
 from math import sqrt
 from random import shuffle, sample, random, choice
-from typing import Set, List
+from typing import Set, List, Tuple
 
 from utils import Grid, Region_map, Rule, Move, calc_dim, calc_moveset, EMPTY, Case
 
@@ -15,6 +15,7 @@ class Sudoku:
     dim: int
     moveset: Set[Move]
     solve_time: float
+    move_history: List[Tuple[Case, Move]]
 
     def __init__(self, region_map: Region_map, ruleset: Set[Rule]):
         self.region_map = region_map
@@ -22,6 +23,7 @@ class Sudoku:
         self.dim = calc_dim(self.region_map)
         self.moveset = calc_moveset(self.dim)
         self.ruleset = ruleset
+        self.move_history = list()
         self.grid = [[EMPTY if case is not None else None for case in row] for row in self.region_map]
 
     def __str__(self):
@@ -50,6 +52,7 @@ class Sudoku:
         return 0 <= row < len(self.grid) and 0 <= col < len(self.grid[row])
 
     def place(self, row: int, col: int, move: Move) -> None:
+        self.move_history.append(((row, col), move))
         self.grid[row][col] = move
 
     def calc_possible_moves(self, row: int, col: int) -> Set[Move]:

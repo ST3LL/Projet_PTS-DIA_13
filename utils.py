@@ -1,3 +1,4 @@
+import itertools
 from random import shuffle
 from typing import List, Optional, Tuple, FrozenSet, Callable, Set
 
@@ -50,4 +51,13 @@ def get_color_list() -> List[str]:
     return L_COLOR_API
 
 
+# </editor-fold>
+
+# <editor-fold desc="miscellaneous">
+def peek(iterable):
+    try:
+        first = next(iterable)
+    except StopIteration:
+        return None
+    return itertools.chain([first], iterable)
 # </editor-fold>

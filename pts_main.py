@@ -58,7 +58,7 @@ def build_pickles(model_name: str, ruleset_name: List[str], l_dim: List[int], l_
                         build_vanilla_region_map(dim),
                         ruleset_name,
                         dif
-                    ), print(f'\t{_}') if not _ % 10 else None)[0] for _ in range(quantity)
+                    ), print(f'\t{_}') if not _ % 1 else None)[0] for _ in range(quantity)
                 ]
                 l_sudoku_and_variations = []
                 for sudoku in l_sudoku:
@@ -74,7 +74,7 @@ def benchmark(l_models, l_src, log_file):
         dim, dif, q, v = [int(x) for x in re.findall(r"\d+", src)]
         region_map = build_vanilla_region_map(dim)
         with open(src, 'rb') as f_src:
-            l_grid = pickle.load(f_src)
+            l_grid = pickle.load(f_src)[:10*11]
         for model_name in l_models:
             print(f"d {dim}, lvl {dif}, {q}*{v} by {model_name}")
             model_class = D_SUDOKU_BY_NAME[model_name]
@@ -83,7 +83,8 @@ def benchmark(l_models, l_src, log_file):
                     region_map,
                     {getattr(model_class, rule_name) for rule_name in ruleset},
                     grid
-                ), print(f'\t{i+1}') if not (i+1) % 10 else None)[0] for i, grid in enumerate(l_grid)
+                ), print(f'd {dim}, lvl {dif}, {q}*{v} by {model_name}\t{i + 1}') if not (i + 1) % (10 if dim == 2 else 1) else None)[0] for i, grid in
+                enumerate(l_grid)
             ]
             with open(f"{log_file}_{model_name.replace(' ', '-')}_{dim}_{dif}_{q}_{v}.pickle", 'wb') as f:
                 pickle.dump(l_batch, f)
@@ -91,26 +92,16 @@ def benchmark(l_models, l_src, log_file):
 
 def main_benchmark():
     src = 'sudoku_pickles'
-    # benchmark(
-    #     ['vanilla', 'mrv', 'case to case', 'case to group', 'crook'],
-    #     [f"{src}/{x}" for x in listdir(src)],
-    #     "log_pickle/big_pickle"
-    # )
-    benchmark(
-        ['faisceau', 'constraint'],
-        [f"{src}/{x}" for x in listdir(src)],
-        "log_pickle/big_pickle"
-    )
-    benchmark(
-        ['hill_climbing'],
-        [f"{src}/{x}" for x in listdir(src)],
-        "log_pickle/big_pickle"
-    )
-    # remain = ['faisceau', 'stochastic', 'constraint', 'hill climbing']
+    for model in ['vanilla', 'case to case', 'case to group']:
+        benchmark(
+            [model],
+            [f"{src}/{x}" for x in listdir(src) if x.startswith('scrap')],
+            "log_pickle/big_pickle"
+        )
 
 
 def main_build_pickles():
-    build_pickles('mrv', ['rule_vanilla'], [2, 3], [10 * i for i in range(1, 11)], 100, 10, 10)
+    build_pickles('mrv', ['rule_vanilla'], [4], [10 * i for i in range(1, 11)], 10, 10, 20)
 
 
 def main_visualize(src):
@@ -118,7 +109,30 @@ def main_visualize(src):
         print(json.dumps(pickle.load(f), indent=2))
 
 
+def misc():
+    ws = 'Workshop'
+    sudoku = SudokuVanilla(build_vanilla_region_map(4), {getattr(SudokuVanilla, 'rule_vanilla')})
+    for i, src in enumerate(sorted(listdir(ws))):
+        print(src)
+        l_sudoku_and_variations = []
+        l_grid = pickle.load(open(ws + '/' + src, 'rb'))
+        for j, grid in enumerate(l_grid):
+            sudoku.grid = grid
+            l_sudoku_and_variations.extend([sudoku.grid] +
+                                           [sudoku.build_variation(20) for n in range(10)]
+                                           )
+        pickle.dump(l_sudoku_and_variations, open(f"sudoku_pickles/scrap_4_{40 + 20*i}_{len(l_grid)}_{10}.pickle", 'wb'))
+
+
+def other():
+    src = 'sudoku_pickles'
+    for file in [f"{src}/{x}" for x in listdir(src) if x.startswith('scrap')]:
+        print(file, len(pickle.load(open(file, 'rb'))))
+
+
 if __name__ == '__main__':
-    # main_build_pickles()
+    # misc()
+    # other()
     main_benchmark()
+    # main_build_pickles()
     # main_visualize('log_pickle/small.pickle')
