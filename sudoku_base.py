@@ -1,8 +1,8 @@
 import time
 from copy import deepcopy
 from math import sqrt
-from random import shuffle, sample
-from typing import Set, List
+from random import shuffle, sample, random, choice
+from typing import Set, List, Tuple
 
 from utils import Grid, Region_map, Rule, Move, calc_dim, calc_moveset, EMPTY, Case
 
@@ -15,6 +15,7 @@ class Sudoku:
     dim: int
     moveset: Set[Move]
     solve_time: float
+    move_history: List[Tuple[Case, Move]]
 
     def __init__(self, region_map: Region_map, ruleset: Set[Rule]):
         self.region_map = region_map
@@ -22,6 +23,7 @@ class Sudoku:
         self.dim = calc_dim(self.region_map)
         self.moveset = calc_moveset(self.dim)
         self.ruleset = ruleset
+        self.move_history = list()
         self.grid = [[EMPTY if case is not None else None for case in row] for row in self.region_map]
 
     def __str__(self):
@@ -50,6 +52,7 @@ class Sudoku:
         return 0 <= row < len(self.grid) and 0 <= col < len(self.grid[row])
 
     def place(self, row: int, col: int, move: Move) -> None:
+        self.move_history.append(((row, col), move))
         self.grid[row][col] = move
 
     def calc_possible_moves(self, row: int, col: int) -> Set[Move]:
@@ -84,13 +87,13 @@ class Sudoku:
             self.solution = deepcopy(self.grid)
         return res
 
-    def thin_random(self):
+    def thin_random(self, difficulty: int):
         case_order = [(i, j) for i in range(len(self.grid)) for j in range(len(self.grid[i]))]
         shuffle(case_order)
         thinned_sudoku = deepcopy(self)
         for i, j in case_order:
             self.place(i, j, EMPTY)
-            if self.solve_thin() == 1:
+            if self.solve_thin() == 1 and (random() * 100) <= difficulty:
                 thinned_sudoku.place(i, j, EMPTY)
             self.update_as(thinned_sudoku)
 
@@ -105,7 +108,7 @@ class Sudoku:
         shuffle(l_map)
         d_map = {old_move: l_map[i] for i, old_move in enumerate(self.moveset)}
         return [
-            [d_map[move] for move in row]
+            [d_map[move] if move in self.moveset else move for move in row]
             for row in self.grid
         ]
 
@@ -122,3 +125,17 @@ class Sudoku:
 
     def variation_symmetry_diagonal(self) -> Grid:
         return [[self.grid[self.dim-j][self.dim-i]for j in range(1, self.dim+1)] for i in range(1, self.dim+1)]
+
+    def build_variation(self, degree: int) -> Grid:
+        sudoku_variation = deepcopy(self)
+        l_func_variation = [
+                    func for func in dir(self.__class__)
+                    if func.startswith("variation_")
+                ]
+        for i in range(degree):
+            func_variation = getattr(
+                self.__class__,
+                choice(l_func_variation)
+            )
+            sudoku_variation.grid = func_variation(sudoku_variation)
+        return sudoku_variation.grid

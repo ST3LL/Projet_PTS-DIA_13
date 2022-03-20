@@ -27,6 +27,7 @@ class SudokuCaseToCase(Sudoku):
         }
 
     def place(self, row: int, col: int, move: Move) -> None:
+        self.move_history.append(((row, col), move))
         self.clean(row, col)
         self.do(row, col, move)
 
