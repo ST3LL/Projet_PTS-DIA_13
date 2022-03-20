@@ -33,6 +33,7 @@ class SudokuHillClimbing(SudokuCaseToCase):
                     self.random_restart()
                     current_conflicts = self.calc_conflicts()
 
+        self.move_history.clear()
         self.s_free_case = {case for case in self.ALL_COORD if self.grid[case[0]][case[1]] == EMPTY}
         solve_aux()
         if save:

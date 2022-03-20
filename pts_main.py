@@ -1,6 +1,7 @@
 import json
 import pickle
 import re
+from copy import deepcopy
 from os import listdir
 from typing import List, Dict
 
@@ -42,6 +43,9 @@ def build_sudoku(model_name: str, region_map: Region_map, ruleset_name: List[str
     sudoku_model = model_class(region_map, ruleset)
     sudoku_model.solve(save=True)
     sudoku_model.thin_random(difficulty)
+    other_model = deepcopy(sudoku_model)
+    other_model.solve()
+    sudoku_model.move_history = other_model.move_history
     return sudoku_model
 
 

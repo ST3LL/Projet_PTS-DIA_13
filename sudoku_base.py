@@ -82,6 +82,7 @@ class Sudoku:
             self.place(row, col, EMPTY)
             return found
 
+        self.move_history.clear()
         res = solve_aux(0, 0, find)
         if save:
             self.solution = deepcopy(self.grid)

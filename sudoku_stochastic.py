@@ -52,7 +52,7 @@ class SudokuStochastic(SudokuVanilla):
                 for j_case in range(self.stride * j_region, self.stride * j_region + self.stride):
                     if self.grid[i_case][j_case] in d_frozen_case:
                         continue
-                    self.grid[i_case][j_case] = next(l_moveset)
+                    self.place(i_case, j_case, next(l_moveset))
 
         def solve_aux() -> None:
             def calc_region_conflicts() -> List[int]:
@@ -80,6 +80,7 @@ class SudokuStochastic(SudokuVanilla):
                 target = max(enumerate(l_region_conflicts), key=lambda x: x[-1])[0]
                 fill_region(target)
 
+        self.move_history.clear()
         fill_grid()
         solve_aux()
 

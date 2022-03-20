@@ -31,6 +31,7 @@ class SudokuConstraint(SudokuCaseToGroup):
             self.place(row, col, EMPTY)
             return found
 
+        self.move_history.clear()
         res = solve_aux(find)
         if save:
             self.solution = deepcopy(self.grid)
