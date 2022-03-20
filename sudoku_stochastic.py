@@ -37,7 +37,7 @@ class SudokuStochastic(SudokuVanilla):
 
         return l_frozen_case
 
-    def solve(self, find: int = 2, save: bool = False) -> int:
+    def solve(self, find: int = 1, save: bool = False) -> int:
         def fill_grid() -> None:
             for region_id in range(self.dim):
                 fill_region(region_id)
