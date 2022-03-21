@@ -15,7 +15,7 @@ class Sudoku:
     dim: int
     moveset: Set[Move]
     solve_time: float
-    move_history: List[List[int, int, Move]]
+    move_history: List[List[int]]
 
     def __init__(self, region_map: Region_map, ruleset: Set[Rule]):
         self.region_map = region_map
