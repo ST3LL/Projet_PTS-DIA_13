@@ -1,7 +1,5 @@
 function get_table_grid(tableID) {
     let tab = document.getElementById(tableID).rows;
-    console.log(tableID)
-    console.log(tab)
     tab_list = []
     for (var i = 0; i < tab.length; i++) {
             elem = tab[i].children
@@ -16,12 +14,12 @@ function get_table_grid(tableID) {
 }
 
 function submit_sudoku(grid_id, grid_solved) {
-    let grid = get_table_grid(grid_id)
-    console.log(grid)
-    console.log(grid_solved)
-    console.log('-'+JSON.stringify(grid).replaceAll('"', '')+'-')
-    console.log('-'+JSON.stringify(grid_solved)+'-')
+    submit_grid(grid_id, grid_solved)
+    cancelAllAnimationFrames();
+}
 
+function submit_grid(grid_id, grid_solved) {
+    let grid = get_table_grid(grid_id)
     if (JSON.stringify(grid).replaceAll('"', '') == JSON.stringify(grid_solved)) {
         document.getElementById("win").innerHTML = "Victoire !";
         stop_timer();
@@ -29,5 +27,5 @@ function submit_sudoku(grid_id, grid_solved) {
     else {
         document.getElementById("win").innerHTML = "La grille n'est pas valide !";
     }
-    cancelAllAnimationFrames();
 }
+

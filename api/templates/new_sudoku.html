@@ -21,7 +21,17 @@
                 <button onclick="backHome()"><img src="{{url_for('static', filename='home_icon.png')}}" height="28"/> Home page</button>
             </div>
             <div class="sudoku_watcher">
-                <button onclick="observeSolution({{grid}}, {{chars}}, {{colors}}, {{region_map}}, {{move_history}}, 0)"><img src="{{url_for('static', filename='eye_icon.png')}}" height="28"/> Observe resolution from the start</button>
+                <button onclick="observeSolution({{grid}}, {{grid_solved}}, {{chars}}, {{colors}}, {{region_map}}, {{move_history}}, 0, {{hints}})"><img src="{{url_for('static', filename='eye_icon.png')}}" height="28"/> Observe resolution from the start</button>
+            </div>
+            <div class="watcher_move">
+                <h1 id="move_label"></h1>
+                <h2 style="display:inline;" id="move_counter"></h2>
+                <h2 style="display:inline;" id="move_percent"></h2>
+            </div>
+            <div class="watcher_solution">
+                <h1 id="solution_label"></h1>
+                <h2 style="display:inline;" id="solution_counter"></h2>
+                <h2 style="display:inline;" id="solution_percent"></h2>
             </div>
         </div>
         <div class="div_options" style="text-align: center;">

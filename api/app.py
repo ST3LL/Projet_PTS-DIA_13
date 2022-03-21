@@ -1,7 +1,7 @@
 from random import shuffle
 
 from flask import Flask, render_template, request
-from utils import build_vanilla_region_map, get_color_list
+from utils import build_vanilla_region_map, get_color_list, EMPTY
 from pts_main import build_sudoku, get_models_and_rules
 from math import sqrt
 
@@ -32,6 +32,8 @@ def Sudoku():
         grid_solved = sudoku.solution
         move_history = sudoku.move_history
         grid = sudoku.grid
+        hints = sum([len([x for x in row if x is not None and x != EMPTY]) for row in grid])
+        print(hints)
         colors = get_color_list()
         return render_template("new_sudoku.html",
                                grid_solved=grid_solved,
@@ -40,7 +42,8 @@ def Sudoku():
                                region_map=sudoku.region_map,
                                colors=colors,
                                sqrt=int(sqrt(len(chars))),
-                               move_history=move_history)
+                               move_history=move_history,
+                               hints=hints)
 
 
 if __name__ == '__main__':
