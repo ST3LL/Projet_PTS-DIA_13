@@ -2,7 +2,7 @@ import time
 from copy import deepcopy
 from math import sqrt
 from random import shuffle, sample, random, choice
-from typing import Set, List, Tuple
+from typing import Set, List
 
 from utils import Grid, Region_map, Rule, Move, calc_dim, calc_moveset, EMPTY, Case
 
@@ -15,7 +15,7 @@ class Sudoku:
     dim: int
     moveset: Set[Move]
     solve_time: float
-    move_history: List[Tuple[Case, Move]]
+    move_history: List[List[int, int, Move]]
 
     def __init__(self, region_map: Region_map, ruleset: Set[Rule]):
         self.region_map = region_map
@@ -56,11 +56,11 @@ class Sudoku:
     def is_case(self, row: int, col: int) -> bool:
         return 0 <= row < len(self.grid) and 0 <= col < len(self.grid[row])
 
+    def calc_valid_proportion(self) -> float:
+        return sum((self.grid[i][j] == self.solution[i][j] for i, j in self.ALL_COORD)) / len(self.ALL_COORD)
+
     def place(self, row: int, col: int, move: Move) -> None:
-        # self.move_history.append(((row, col), move))
-        # self.cycle += 1
-        # if not self.cycle % 100_000:
-        #     print(self)
+        self.move_history.append([row, col, move])
         self.grid[row][col] = move
 
     def calc_possible_moves(self, row: int, col: int) -> Set[Move]:
