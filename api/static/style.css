@@ -106,6 +106,10 @@ button > img, button > span {
     color: #f39c12;
 }
 
+div.sudoku_watcher{
+    margin: 10px;
+}
+
 /*
 .div_global{
     margin: 0px auto;

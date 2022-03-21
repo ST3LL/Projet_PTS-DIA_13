@@ -29,4 +29,5 @@ function submit_sudoku(grid_id, grid_solved) {
     else {
         document.getElementById("win").innerHTML = "La grille n'est pas valide !";
     }
+    cancelAllAnimationFrames();
 }

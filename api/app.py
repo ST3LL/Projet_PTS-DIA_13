@@ -39,7 +39,8 @@ def Sudoku():
                                chars=chars,
                                region_map=sudoku.region_map,
                                colors=colors,
-                               sqrt=int(sqrt(len(chars))))
+                               sqrt=int(sqrt(len(chars))),
+                               move_history=move_history)
 
 
 if __name__ == '__main__':

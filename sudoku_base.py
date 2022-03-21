@@ -56,7 +56,7 @@ class Sudoku:
         return 0 <= row < len(self.grid) and 0 <= col < len(self.grid[row])
 
     def place(self, row: int, col: int, move: Move) -> None:
-        self.move_history.append(((row, col), move))
+        self.move_history.append([[row, col], move])
         self.grid[row][col] = move
 
     def calc_possible_moves(self, row: int, col: int) -> Set[Move]:

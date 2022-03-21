@@ -8,6 +8,7 @@ function choose(val, colors, region_map) {
         document.getElementById(cell_id).innerHTML = val
     }
     reset_selected(colors, region_map)
+    cancelAllAnimationFrames();
 }
 
 
@@ -26,6 +27,7 @@ function select_cell(cell, colors, region_map){
         selected = [id]
         cell.style.backgroundColor = "#87CEFA80"
     }
+    cancelAllAnimationFrames();
 }
 
 
@@ -45,6 +47,7 @@ function switch_mode(but, colors, region_map){
     else
         but.innerHTML = but.innerHTML.replace("Simple", "Multi");
     reset_selected(colors, region_map)
+    cancelAllAnimationFrames();
 }
 
 

@@ -22,4 +22,5 @@ function showGrid(grid, chars, colors, region_map){
     selected = [];
     multi_selection = false;
     reset_timer();
+    cancelAllAnimationFrames();
 }
