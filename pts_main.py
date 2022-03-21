@@ -12,6 +12,7 @@ from sudoku_constraint import SudokuConstraint
 from sudoku_crook import SudokuCrook
 from sudoku_faisceau import SudokuFaisceau
 from sudoku_hill_climbing import SudokuHillClimbing
+from sudoku_linear_programming import SudokuLinear
 from sudoku_mrv import SudokuMRV
 from sudoku_stochastic import SudokuStochastic
 from sudoku_vanilla import SudokuVanilla
@@ -27,6 +28,7 @@ D_SUDOKU_BY_NAME = {
     'constraint': SudokuConstraint,
     'crook': SudokuCrook,
     'hill climbing': SudokuHillClimbing,
+    'linear': SudokuLinear
 }
 
 
@@ -45,7 +47,7 @@ def build_sudoku(model_name: str, region_map: Region_map, ruleset_name: List[str
     sudoku_model.thin_random(difficulty)
     other_model = deepcopy(sudoku_model)
     other_model.solve()
-    sudoku_model.move_history = other_model.move_history
+    sudoku_model.move_history = deepcopy(other_model.move_history)
     return sudoku_model
 
 
@@ -129,14 +131,13 @@ def misc():
 
 
 def other():
-    # d_map = {str(i): i for i in range(11)}
-    # d_map.update({foo: 9+i for i, foo in enumerate('ABCDEF')})
-    src = 'sudoku_pickles'
-    for file in [f"{src}/{x}" for x in listdir(src) if x.startswith('scrap')]:
-        pickle.dump(
-            pickle.load(open(file, 'rb'))[:10*11],
-            open(f"{src}/adapt{file[len(src)+len('scrap')+1:-15]}0_10_10.pickle", 'wb')
-        )
+    src = 'sudoku_pickles/mrv_4_40_10_0.pickle'
+    with open(src, 'rb') as f:
+        l_grid = pickle.load(f)
+    for i, grid in enumerate(l_grid[:1]):
+        print(i)
+        # print(*grid, sep='\n')
+        SudokuCaseToGroup.solve_grid(build_vanilla_region_map(4), {SudokuCaseToGroup.rule_vanilla}, grid, show=True)
 
 
 if __name__ == '__main__':
