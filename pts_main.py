@@ -47,7 +47,7 @@ def build_sudoku(model_name: str, region_map: Region_map, ruleset_name: List[str
     sudoku_model.thin_random(difficulty)
     other_model = deepcopy(sudoku_model)
     other_model.solve()
-    sudoku_model.move_history = other_model.move_history
+    sudoku_model.move_history = deepcopy(other_model.move_history)
     return sudoku_model
 
 
@@ -131,13 +131,13 @@ def misc():
 
 
 def other():
-    src = 'sudoku_pickles/mrv_3_100_100_10.pickle'
+    src = 'sudoku_pickles/mrv_4_40_10_0.pickle'
     with open(src, 'rb') as f:
         l_grid = pickle.load(f)
     for i, grid in enumerate(l_grid[:1]):
         print(i)
         # print(*grid, sep='\n')
-        SudokuLinear.solve_grid(build_vanilla_region_map(3), {SudokuCaseToGroup.rule_vanilla}, grid, show=True)
+        SudokuCaseToGroup.solve_grid(build_vanilla_region_map(4), {SudokuCaseToGroup.rule_vanilla}, grid, show=True)
 
 
 if __name__ == '__main__':

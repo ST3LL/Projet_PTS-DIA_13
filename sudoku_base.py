@@ -66,7 +66,7 @@ class Sudoku:
         return moveset
 
     def solve_thin(self):
-        return Sudoku.solve(self, find=2, save=True)
+        return Sudoku.solve(self, find=2)
 
     def solve(self, find: int = 1, save: bool = False) -> int:
         def solve_aux(row: int = 0, col: int = 0, find: int = 1) -> int:
