@@ -18,9 +18,9 @@ function observeSolution(grid, chars, colors, region_map, move_history, i){
             if (i == 0){
                 showGrid(grid, chars, colors, region_map);
             }
-            row = move_history[i][0][0]
-            col = move_history[i][0][1]
-            val = move_history[i][1]
+            row = move_history[i][0]
+            col = move_history[i][1]
+            val = move_history[i][2]
             if (val == 0){
                 document.getElementById(((row * grid[row].length)+col+1)).innerHTML = '';
             } else {
