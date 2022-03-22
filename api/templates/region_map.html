@@ -1,0 +1,88 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>PTS: New Sudoku</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <script type="text/javascript" src="{{ url_for('static', filename='show_grid.js') }}" ></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='region_map_editor.js') }}" ></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='submit_grid.js') }}" ></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='show_solution.js') }}" ></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='rule_selector.js') }}" ></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='choose.js') }}" ></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='str_list.js') }}" ></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='back_home.js') }}" ></script>
+</head>
+<body onload="showRegionMap({{grid}}, {{chars}}, {{colors}}, {{region_map}})">
+    <div class="div_global" style="text-align: center;">
+        <div class="div_grid" style="text-align: center;">
+            <table id="sudoku_grid"></table>
+            <div class="sudoku_options">
+                <button onclick="showRegionMap({{grid}}, {{chars}}, {{colors}}, {{region_map}})"><img src="{{url_for('static', filename='reset_icon.png')}}" height="28"/> Reset</button>
+                <button onclick="window.location.href='/'"><img src="{{url_for('static', filename='home_icon.png')}}" height="28"/> Home page</button>
+            </div>
+
+            <h1 id="win"></h1>
+            <div class="watcher_move">
+                <h1 id="move_label"></h1>
+                <h2 style="display:inline;" id="move_counter"></h2>
+                <h2 style="display:inline;" id="move_percent"></h2>
+            </div>
+            <div class="watcher_solution">
+                <h1 id="solution_label"></h1>
+                <h2 style="display:inline;" id="solution_counter"></h2>
+                <h2 style="display:inline;" id="solution_percent"></h2>
+            </div>
+        </div>
+
+        <div class="div_options" style="text-align: center;">
+
+            <table id="options_grid">
+                {% for row in range(0, chars|length, sqrt) %}
+                    <tr>
+                    {% for col in range(sqrt) %}
+                        <td class="button_td">
+                            <button onclick="choose({{chars[row+col]}}, {{colors}}, {{region_map}})" class="b_chars">{{ chars[row+col] }}</button>
+                        </td>
+                    {% endfor %}
+                    </tr>
+                {% endfor %}
+            </table>
+            <div class="options_buttons">
+                <button id="selection_mode" onclick="switch_mode(this, {{colors}}, {{region_map}})"><img src="{{url_for('static', filename='switch_icon.png')}}" height="28"/> Switch to Multi Selection</button>
+            </div>
+            <div style="margin-top: 30px;">
+                <form class="form-inline" method="POST" action="/new_sudoku/">
+                    <label style="color: white;">Select a Model</label>
+                    <div class="select" style="margin: auto; margin-bottom: 10px;">
+                        <select id="comp_select1" name="comp_select1" class="selectpicker form-control" onChange="updateRulesSelector(this.value, {{ models }});">
+                            {% for m in models.keys() %}
+                            <option value="{{ m }}">{{ m }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div id="checkbox_rules">
+                        <label style="color: white;">Select Rules from the Model selected</label>
+                        <br>
+
+                        {% for r in models['vanilla'] %}
+                            <input type="checkbox" id="comp_select2" name="comp_select2" value="{{ r }}">
+                            {{ r }}
+                            <br>
+                        {% endfor %}
+                    </div>
+
+                    <label style="color: white;">Which Dimension for the Grid</label>
+                    <div>
+                        <div class="selectpicker form-control">
+                            <input type="hidden" id="dim_sudoku" name="dim_sudoku" value="{{dim}}">
+                            <input type="hidden" id="hidden_table" name="hidden_table" value="">
+                            <button onclick="return verify_region({{dim}})"><img src="{{url_for('static', filename='checkmark_icon.png')}}" height="35"/> New Sudoku</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
