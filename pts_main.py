@@ -112,7 +112,7 @@ def main_benchmark():
 
 
 def main_build_pickles():
-    build_pickles('mrv', ['rule_vanilla'], [2], [10 * i for i in range(1, 11)], 100, 10, 20)
+    build_pickles('mrv', ['rule_vanilla'], [2], [10 * i for i in range(10, 11)], 1000, 20, 20)
 
 
 def main_visualize(src):
