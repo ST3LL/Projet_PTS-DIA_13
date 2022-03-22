@@ -7,11 +7,11 @@ from keras.models import Model
 from tensorflow.python.keras.utils.np_utils import to_categorical
 
 from sudoku_base import Sudoku
+from sudoku_quick_ann import SudokuQuickANN
 from utils import load_models, Region_map, Rule
 
 
-class SudokuANN(Sudoku):
-    d_ann_by_dim: Dict[int, Model] = load_models()
+class SudokuSmartANN(SudokuQuickANN):
     threshold: float = 0.90
 
     def __init__(self, region_map: Region_map = None, ruleset: Set[Rule] = None):

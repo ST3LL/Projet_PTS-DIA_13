@@ -5,7 +5,8 @@ from copy import deepcopy
 from os import listdir
 from typing import List, Dict
 
-from sudoku_ann import SudokuANN
+from sudoku_quick_ann import SudokuQuickANN
+from sudoku_smart_ann import SudokuSmartANN
 from sudoku_base import Sudoku
 from sudoku_case_to_case import SudokuCaseToCase
 from sudoku_case_to_group import SudokuCaseToGroup
@@ -30,7 +31,8 @@ D_SUDOKU_BY_NAME = {
     'crook': SudokuCrook,
     'hill climbing': SudokuHillClimbing,
     'linear': SudokuLinear,
-    'ann': SudokuANN
+    'smart ann': SudokuSmartANN,
+    'quick ann': SudokuQuickANN
 }
 
 
@@ -102,7 +104,7 @@ def benchmark(l_models, ruleset, l_src, log_file):
 
 def main_benchmark():
     src = 'sudoku_pickles'
-    for model in ['ann']:
+    for model in ['smart ann']:
         benchmark(
             [model],
             set(),
@@ -142,12 +144,12 @@ def other():
     for i, (grid, sol) in enumerate(l_grid[428:430]):
         print('-----------', i, '-----------')
         # print(*grid, sep='\n')
-        SudokuANN.solve_grid(build_vanilla_region_map(3), set(), grid, show=True, solution=sol)
+        # SudokuANN.solve_grid(build_vanilla_region_map(3), set(), grid, show=True, solution=sol)
 
 
 if __name__ == '__main__':
     # misc()
     # other()
-    # main_benchmark()
-    main_build_pickles()
+    main_benchmark()
+    # main_build_pickles()
     # main_visualize('log_pickle/small.pickle')
