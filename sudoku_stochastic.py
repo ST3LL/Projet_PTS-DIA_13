@@ -75,6 +75,8 @@ class SudokuStochastic(SudokuVanilla):
 
             while True:
                 l_region_conflicts = calc_region_conflicts()
+                print(self)
+                input('next:')
                 if not any(l_region_conflicts):
                     break
                 target = max(enumerate(l_region_conflicts), key=lambda x: x[-1])[0]

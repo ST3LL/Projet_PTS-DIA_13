@@ -5,6 +5,7 @@ from copy import deepcopy
 from os import listdir
 from typing import List, Dict
 
+from sudoku_ann import SudokuANN
 from sudoku_base import Sudoku
 from sudoku_case_to_case import SudokuCaseToCase
 from sudoku_case_to_group import SudokuCaseToGroup
@@ -28,7 +29,8 @@ D_SUDOKU_BY_NAME = {
     'constraint': SudokuConstraint,
     'crook': SudokuCrook,
     'hill climbing': SudokuHillClimbing,
-    'linear': SudokuLinear
+    'linear': SudokuLinear,
+    'ann': SudokuANN
 }
 
 
@@ -64,50 +66,53 @@ def build_pickles(model_name: str, ruleset_name: List[str], l_dim: List[int], l_
                         build_vanilla_region_map(dim),
                         ruleset_name,
                         dif
-                    ), print(f'\t{_}') if not _ % 1 else None)[0] for _ in range(quantity)
+                    ), print(f'\t{_}'))[0] for _ in range(quantity)
                 ]
-                l_sudoku_and_variations = []
+                l_res = []
                 for sudoku in l_sudoku:
-                    l_sudoku_and_variations.append(sudoku.grid)
-                    l_sudoku_and_variations.extend(
-                        [sudoku.build_variation(degree_variation) for _ in range(variations)])
-                pickle.dump(l_sudoku_and_variations, f)
+                    l_res.append((sudoku.grid, sudoku.solution))
+                    for _ in range(variations):
+                        sudoku_variation = sudoku.build_variation(degree_variation)
+                        l_res.append((sudoku_variation.grid, sudoku_variation.solution))
+                pickle.dump(l_res, f)
 
 
-def benchmark(l_models, l_src, log_file):
-    ruleset = {'rule_vanilla'}
+def benchmark(l_models, ruleset, l_src, log_file):
     for src in l_src:
         dim, dif, q, v = [int(x) for x in re.findall(r"\d+", src)]
         region_map = build_vanilla_region_map(dim)
         with open(src, 'rb') as f_src:
-            l_grid = pickle.load(f_src)[:10*11]
+            l_grid = pickle.load(f_src)
         for model_name in l_models:
-            print(f"d {dim}, lvl {dif}, {q}*{v} by {model_name}")
+            print(f'd {dim}, lvl {dif}, {q}*{v} by {model_name}')
             model_class = D_SUDOKU_BY_NAME[model_name]
-            l_batch = [
-                (model_class.solve_grid(
-                    region_map,
-                    {getattr(model_class, rule_name) for rule_name in ruleset},
-                    grid
-                ), print(f'd {dim}, lvl {dif}, {q}*{v} by {model_name}\t{i + 1}') if not (i + 1) % (10 if dim == 2 else 1) else None)[0] for i, grid in
-                enumerate(l_grid)
-            ]
+            l_batch = []
+            for i, (grid, sol) in enumerate(l_grid):
+                solve_time, prop_valid = model_class.solve_grid(
+                        region_map,
+                        {getattr(model_class, rule_name) for rule_name in ruleset},
+                        grid,
+                        solution=sol
+                    )
+                print(f'd {dim}, lvl {dif}, {q}*{v} by {model_name}\t{i + 1}:\t{solve_time}\t{prop_valid}')
+                l_batch.append((solve_time, prop_valid))
             with open(f"{log_file}_{model_name.replace(' ', '-')}_{dim}_{dif}_{q}_{v}.pickle", 'wb') as f:
                 pickle.dump(l_batch, f)
 
 
 def main_benchmark():
     src = 'sudoku_pickles'
-    for model in ['vanilla', 'case to case', 'case to group', 'mrv'][::-1]:
+    for model in ['ann']:
         benchmark(
             [model],
-            sorted([f"{src}/{x}" for x in listdir(src) if x.startswith('mrv_4')], reverse=True),
-            "log_pickle/big_pickle"
+            set(),
+            sorted([f"{src}/{x}" for x in listdir(src) if x.startswith('mrv_3_')], reverse=True),
+            "log_pickle/new_pickle"
         )
 
 
 def main_build_pickles():
-    build_pickles('mrv', ['rule_vanilla'], [4], [10 * i for i in range(5, 7)], 10, 0, 20)
+    build_pickles('mrv', ['rule_vanilla'], [2], [10 * i for i in range(1, 11)], 100, 10, 20)
 
 
 def main_visualize(src):
@@ -131,13 +136,13 @@ def misc():
 
 
 def other():
-    src = 'sudoku_pickles/mrv_4_40_10_0.pickle'
+    src = 'sudoku_pickles/mrv_3_90_100_10.pickle'
     with open(src, 'rb') as f:
         l_grid = pickle.load(f)
-    for i, grid in enumerate(l_grid[:1]):
-        print(i)
+    for i, (grid, sol) in enumerate(l_grid[428:430]):
+        print('-----------', i, '-----------')
         # print(*grid, sep='\n')
-        SudokuCaseToGroup.solve_grid(build_vanilla_region_map(4), {SudokuCaseToGroup.rule_vanilla}, grid, show=True)
+        SudokuANN.solve_grid(build_vanilla_region_map(3), set(), grid, show=True, solution=sol)
 
 
 if __name__ == '__main__':

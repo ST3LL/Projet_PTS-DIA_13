@@ -1,4 +1,4 @@
-pulp
+pulp~=2.6.0
 # This file is used by pip to install required python packages
 # Usage: pip install -r requirements.txt
 
@@ -20,3 +20,6 @@ Flask-User>=1.0.2.2
 Flask-Navigation>=0.2.0
 
 pandas>=1.2.3
+
+keras~=2.8.0
+tensorflow~=2.8.0

@@ -30,6 +30,9 @@ class SudokuCaseToCase(Sudoku):
         self.clean(row, col)
         self.do(row, col, move)
 
+    def calc_conflicts(self) -> int:
+        return sum((self.conflicts[case][self.grid[case[0]][case[1]]] for case in self.ALL_COORD)) // 2
+
     def clean(self, row: int, col: int) -> None:
         if self.grid[row][col] != EMPTY:
             for case in self.dependencies[(row, col)]:
