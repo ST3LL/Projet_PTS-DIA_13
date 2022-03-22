@@ -61,6 +61,8 @@ if __name__ == '__main__':
         ]
         df = df.append(pd.DataFrame(data=[l_to_add], columns=[cols]), ignore_index=True)
 
+    df.to_csv('./output/comparaison_table.csv')
+
     d_df_models = separating_df(df)
 
     srg = SudokuReportGenerator(file_path=file_tex, output_path=output)
@@ -71,6 +73,11 @@ if __name__ == '__main__':
         srg.table(df_model[0])
         srg.table(df_model[1])
         srg.newpage()
+
+    srg.section('Resolution Time Evolution Plot')
+    srg.figure(0.4, 'C:/Users/tinou/PycharmProjects/Projet_PTS-DIA_13/reporting/time.png')
+    srg.section('Resolution Accuracy Evolution Plot')
+    srg.figure(0.4, 'C:/Users/tinou/PycharmProjects/Projet_PTS-DIA_13/reporting/accuracy.png')
     srg.end_document()
 
     subprocess.run(f'pdflatex -output-directory={output} {file_tex}', shell=True)

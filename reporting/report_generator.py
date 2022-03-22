@@ -12,19 +12,7 @@ class SudokuReportGenerator:
                            '\\usepackage{booktabs}',
                            '\\usepackage{hyperref}',
                            '\\usepackage{geometry}',
-                           '\\geometry{hmargin=1.5cm, vmargin=2cm}',
-                           '\\usepackage{multicol}',
-                           '\\setlength{\\columnsep}{6cm}']
-        self.function_img = """
-        \\newcommand{\\img}[3]{ %scale,lien,description
-        \\begin{figure}[!h]
-        \\begin{center}
-            \\includegraphics[scale=#1]{#2}
-            \\caption{#3}
-        \\end{center}
-        \\end{figure}
-        }
-        """
+                           '\\geometry{hmargin=1.5cm, vmargin=2cm}']
 
     def packages(self):
         for p in self.l_packages:
@@ -42,7 +30,9 @@ class SudokuReportGenerator:
         self.file.close()
 
     def center(self, element: str):
-        self.file.write('\\center{' + element + '}\n')
+        begin = '\\begin{center}\n'
+        end = '\\end{center}\n'
+        self.file.write(begin + element + end)
 
     def section(self, title: str):
         self.file.write('\\section{' + title + '}\n')
@@ -63,7 +53,7 @@ class SudokuReportGenerator:
         return self.center(df_final)
 
     def figure(self, scale: float, path: str):
-        self.file.write('\\center{\\includegraphics[scale=' + str(scale) + ']{' + path + '}}\n')
+        self.center('\\includegraphics[scale=' + str(scale) + ']{' + path + '}\n')
 
     def begin_itemize(self):
         self.file.write('\\begin{itemize}\n')

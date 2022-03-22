@@ -5,15 +5,14 @@
 \usepackage{hyperref}
 \usepackage{geometry}
 \geometry{hmargin=1.5cm, vmargin=2cm}
-\usepackage{multicol}
-\setlength{\columnsep}{6cm}
 \title{Evaluation of AI-based Sudoku Solvers}
 \begin{document}
 \maketitle
 \date{}
 \section{Sudoku solvers dimension/difficulty/time/accuracy comparison}
 \subsection{case-to-case}
-\center{\begin{tabular}{llllll}
+\begin{center}
+\begin{tabular}{llllll}
 \toprule
 {} & dimension & difficulty &  average time & average time variance & variance of time variance batches \\
 \midrule
@@ -39,8 +38,9 @@
 19 &         3 &         90 &  3.147635e-01 &          4.717674e+00 &                      1.355560e+03 \\
 \bottomrule
 \end{tabular}
-}
-\center{\begin{tabular}{llllll}
+\end{center}
+\begin{center}
+\begin{tabular}{llllll}
 \toprule
 {} & dimension & difficulty & average accuracy & average accuracy variance & variance of accuracy variance batches \\
 \midrule
@@ -66,10 +66,11 @@
 19 &         3 &         90 &              1.0 &                       0.0 &                                   0.0 \\
 \bottomrule
 \end{tabular}
-}
+\end{center}
 \newpage
 \subsection{case-to-group}
-\center{\begin{tabular}{llllll}
+\begin{center}
+\begin{tabular}{llllll}
 \toprule
 {} & dimension & difficulty &  average time & average time variance & variance of time variance batches \\
 \midrule
@@ -95,8 +96,9 @@
 39 &         3 &         90 &  1.025226e-01 &          7.783331e-02 &                      2.262000e-02 \\
 \bottomrule
 \end{tabular}
-}
-\center{\begin{tabular}{llllll}
+\end{center}
+\begin{center}
+\begin{tabular}{llllll}
 \toprule
 {} & dimension & difficulty & average accuracy & average accuracy variance & variance of accuracy variance batches \\
 \midrule
@@ -122,10 +124,11 @@
 39 &         3 &         90 &              1.0 &                       0.0 &                                   0.0 \\
 \bottomrule
 \end{tabular}
-}
+\end{center}
 \newpage
 \subsection{constraint}
-\center{\begin{tabular}{llllll}
+\begin{center}
+\begin{tabular}{llllll}
 \toprule
 {} & dimension & difficulty &  average time & average time variance & variance of time variance batches \\
 \midrule
@@ -151,8 +154,9 @@
 59 &         3 &         90 &  1.125888e+00 &          3.658195e+01 &                      6.274428e+04 \\
 \bottomrule
 \end{tabular}
-}
-\center{\begin{tabular}{llllll}
+\end{center}
+\begin{center}
+\begin{tabular}{llllll}
 \toprule
 {} & dimension & difficulty & average accuracy & average accuracy variance & variance of accuracy variance batches \\
 \midrule
@@ -178,10 +182,11 @@
 59 &         3 &         90 &              1.0 &                       0.0 &                                   0.0 \\
 \bottomrule
 \end{tabular}
-}
+\end{center}
 \newpage
 \subsection{crook}
-\center{\begin{tabular}{llllll}
+\begin{center}
+\begin{tabular}{llllll}
 \toprule
 {} & dimension & difficulty &  average time & average time variance & variance of time variance batches \\
 \midrule
@@ -207,8 +212,9 @@
 79 &         3 &         90 &  7.974403e-03 &          1.978145e-05 &                      2.775283e-09 \\
 \bottomrule
 \end{tabular}
-}
-\center{\begin{tabular}{llllll}
+\end{center}
+\begin{center}
+\begin{tabular}{llllll}
 \toprule
 {} & dimension & difficulty & average accuracy & average accuracy variance & variance of accuracy variance batches \\
 \midrule
@@ -234,10 +240,11 @@
 79 &         3 &         90 &              1.0 &                       0.0 &                                   0.0 \\
 \bottomrule
 \end{tabular}
-}
+\end{center}
 \newpage
 \subsection{faisceau}
-\center{\begin{tabular}{llllll}
+\begin{center}
+\begin{tabular}{llllll}
 \toprule
 {} & dimension & difficulty &  average time & average time variance & variance of time variance batches \\
 \midrule
@@ -263,8 +270,9 @@
 99 &         3 &         90 &  5.514976e-04 &          4.817938e-07 &                      2.048060e-12 \\
 \bottomrule
 \end{tabular}
-}
-\center{\begin{tabular}{llllll}
+\end{center}
+\begin{center}
+\begin{tabular}{llllll}
 \toprule
 {} & dimension & difficulty &    average accuracy & average accuracy variance & variance of accuracy variance batches \\
 \midrule
@@ -290,10 +298,11 @@
 99 &         3 &         90 &   0.715432098765433 &       0.02202494769367195 &                0.00011382133172673386 \\
 \bottomrule
 \end{tabular}
-}
+\end{center}
 \newpage
 \subsection{hill-climbing}
-\center{\begin{tabular}{llllll}
+\begin{center}
+\begin{tabular}{llllll}
 \toprule
 {} & dimension & difficulty &  average time & average time variance & variance of time variance batches \\
 \midrule
@@ -311,8 +320,9 @@
 111 &         3 &         20 &  1.333341e-02 &          2.852342e-04 &                      7.985190e-07 \\
 \bottomrule
 \end{tabular}
-}
-\center{\begin{tabular}{llllll}
+\end{center}
+\begin{center}
+\begin{tabular}{llllll}
 \toprule
 {} & dimension & difficulty & average accuracy & average accuracy variance & variance of accuracy variance batches \\
 \midrule
@@ -330,10 +340,11 @@
 111 &         3 &         20 &              1.0 &                       0.0 &                                   0.0 \\
 \bottomrule
 \end{tabular}
-}
+\end{center}
 \newpage
 \subsection{linear}
-\center{\begin{tabular}{llllll}
+\begin{center}
+\begin{tabular}{llllll}
 \toprule
 {} & dimension & difficulty &  average time & average time variance & variance of time variance batches \\
 \midrule
@@ -359,8 +370,9 @@
 131 &         3 &         90 &  9.067108e-02 &          7.257836e-05 &                      2.532135e-08 \\
 \bottomrule
 \end{tabular}
-}
-\center{\begin{tabular}{llllll}
+\end{center}
+\begin{center}
+\begin{tabular}{llllll}
 \toprule
 {} & dimension & difficulty & average accuracy & average accuracy variance & variance of accuracy variance batches \\
 \midrule
@@ -386,10 +398,11 @@
 131 &         3 &         90 &              1.0 &                       0.0 &                                   0.0 \\
 \bottomrule
 \end{tabular}
-}
+\end{center}
 \newpage
 \subsection{mrv}
-\center{\begin{tabular}{llllll}
+\begin{center}
+\begin{tabular}{llllll}
 \toprule
 {} & dimension & difficulty &  average time & average time variance & variance of time variance batches \\
 \midrule
@@ -415,8 +428,9 @@
 151 &         3 &         90 &  2.199863e-03 &          7.080610e-06 &                      6.879239e-11 \\
 \bottomrule
 \end{tabular}
-}
-\center{\begin{tabular}{llllll}
+\end{center}
+\begin{center}
+\begin{tabular}{llllll}
 \toprule
 {} & dimension & difficulty & average accuracy & average accuracy variance & variance of accuracy variance batches \\
 \midrule
@@ -442,62 +456,242 @@
 151 &         3 &         90 &              1.0 &                       0.0 &                                   0.0 \\
 \bottomrule
 \end{tabular}
-}
+\end{center}
 \newpage
-\subsection{vanilla}
-\center{\begin{tabular}{llllll}
+\subsection{quick-ann}
+\begin{center}
+\begin{tabular}{llllll}
 \toprule
 {} & dimension & difficulty &  average time & average time variance & variance of time variance batches \\
 \midrule
-152 &         2 &        100 &  4.713018e-05 &          1.704109e-09 &                      2.553037e-18 \\
-153 &         2 &         10 &  1.181682e-05 &          2.979569e-10 &                      1.892657e-18 \\
-154 &         2 &         20 &  1.516355e-05 &          3.515285e-10 &                      4.053147e-19 \\
-155 &         2 &         30 &  1.678145e-05 &          3.889825e-10 &                      5.059560e-19 \\
-156 &         2 &         40 &  2.482536e-05 &          6.296179e-10 &                      2.258311e-19 \\
-157 &         2 &         50 &  2.386500e-05 &          6.258014e-10 &                      6.743542e-19 \\
-158 &         2 &         60 &  2.096209e-05 &          3.118149e-10 &                      1.325595e-19 \\
-159 &         2 &         70 &  3.294891e-05 &          1.874894e-09 &                      1.297712e-16 \\
-160 &         2 &         80 &  4.729091e-05 &          3.370513e-08 &                      8.644665e-14 \\
-161 &         2 &         90 &  4.569491e-05 &          8.628173e-09 &                      4.885685e-15 \\
-162 &         3 &        100 &  2.846464e-01 &          6.995866e-01 &                      4.867427e+00 \\
-163 &         3 &         10 &  3.803945e-05 &          6.592078e-10 &                      1.628970e-19 \\
-164 &         3 &         20 &  5.297300e-05 &          1.465691e-09 &                      1.645444e-18 \\
-165 &         3 &         30 &  1.078873e-04 &          2.076369e-08 &                      9.993865e-15 \\
-166 &         3 &         40 &  1.753418e-04 &          1.131490e-07 &                      3.381034e-13 \\
-167 &         3 &         50 &  5.839050e-04 &          1.616915e-06 &                      2.187441e-11 \\
-168 &         3 &         60 &  5.836747e-03 &          1.560231e-03 &                      1.344713e-04 \\
-169 &         3 &         70 &  2.790812e-02 &          1.147977e-02 &                      1.444770e-03 \\
-170 &         3 &         80 &  8.677804e-02 &          1.198107e-01 &                      3.064799e-01 \\
-171 &         3 &         90 &  1.678644e-01 &          2.844652e-01 &                      1.715671e+00 \\
+152 &         2 &        100 &  2.944313e-02 &          2.774421e-05 &                      5.641537e-08 \\
+153 &         2 &         10 &  2.675118e-02 &          1.053419e-04 &                      4.851761e-08 \\
+154 &         2 &         20 &  2.974572e-02 &          5.182667e-05 &                      4.808107e-08 \\
+155 &         2 &         30 &  2.941623e-02 &          6.126665e-05 &                      1.047684e-07 \\
+156 &         2 &         40 &  3.016468e-02 &          2.925792e-05 &                      4.656126e-08 \\
+157 &         2 &         50 &  2.939558e-02 &          2.577868e-05 &                      4.800753e-08 \\
+158 &         2 &         60 &  2.957121e-02 &          2.534840e-05 &                      4.573244e-08 \\
+159 &         2 &         70 &  2.940420e-02 &          2.760262e-05 &                      5.566783e-08 \\
+160 &         2 &         80 &  2.949898e-02 &          2.750988e-05 &                      5.520359e-08 \\
+161 &         2 &         90 &  2.977960e-02 &          3.272055e-05 &                      3.562549e-08 \\
+162 &         3 &        100 &  3.482220e-02 &          2.458973e-05 &                      4.330412e-08 \\
+163 &         3 &         10 &  3.497897e-02 &          5.357831e-05 &                      1.107677e-07 \\
+164 &         3 &         20 &  3.503387e-02 &          2.589568e-05 &                      4.704858e-08 \\
+165 &         3 &         30 &  3.491451e-02 &          2.716219e-05 &                      5.493040e-08 \\
+166 &         3 &         40 &  3.498947e-02 &          2.573799e-05 &                      4.717679e-08 \\
+167 &         3 &         50 &  3.502983e-02 &          2.565232e-05 &                      4.790226e-08 \\
+168 &         3 &         60 &  3.520865e-02 &          5.258647e-05 &                      1.091167e-07 \\
+169 &         3 &         70 &  3.521829e-02 &          2.509375e-05 &                      4.488713e-08 \\
+170 &         3 &         80 &  3.518229e-02 &          2.813881e-05 &                      5.770641e-08 \\
+171 &         3 &         90 &  3.581639e-02 &          2.054750e-04 &                      2.293465e-06 \\
+172 &         4 &        100 &  5.815151e-02 &          4.489100e-03 &                      0.000000e+00 \\
+173 &         4 &         40 &  5.619245e-02 &          2.906217e-04 &                      0.000000e+00 \\
+174 &         4 &         60 &  5.592578e-02 &          2.749585e-06 &                      0.000000e+00 \\
+175 &         4 &         80 &  5.544200e-02 &          9.956660e-07 &                      0.000000e+00 \\
 \bottomrule
 \end{tabular}
-}
-\center{\begin{tabular}{llllll}
+\end{center}
+\begin{center}
+\begin{tabular}{llllll}
+\toprule
+{} & dimension & difficulty &    average accuracy & average accuracy variance & variance of accuracy variance batches \\
+\midrule
+152 &         2 &        100 &  0.8111363636363637 &      0.008549276859504188 &                 6.154812920346759e-06 \\
+153 &         2 &         10 &                 1.0 &                       0.0 &                                   0.0 \\
+154 &         2 &         20 &  0.9993181818181818 &     6.345557851239625e-05 &                 8.951670061279116e-08 \\
+155 &         2 &         30 &            0.994375 &      0.000540092329545467 &                 2.859435163880546e-07 \\
+156 &         2 &         40 &  0.9892045454545455 &     0.0007073217975206751 &                 2.878707449062138e-07 \\
+157 &         2 &         50 &  0.9607954545454546 &     0.0038110149793388294 &                 2.952757129886748e-06 \\
+158 &         2 &         60 &   0.944034090909091 &      0.005784720428719082 &                3.5561935146538403e-06 \\
+159 &         2 &         70 &  0.8956818181818181 &      0.007264023760330567 &                  3.97255199706731e-06 \\
+160 &         2 &         80 &  0.8631818181818182 &      0.007644421487603346 &                  3.92889941653042e-06 \\
+161 &         2 &         90 &  0.8552272727272727 &      0.008714152892561902 &                 6.285523036229594e-06 \\
+162 &         3 &        100 &  0.5893602693602713 &     0.0017802990624539322 &                3.3911309582219797e-07 \\
+163 &         3 &         10 &  0.9990796857463525 &    1.4394600702120256e-05 &                 4.448255703648115e-10 \\
+164 &         3 &         20 &  0.9887542087542049 &    0.00021023251595642011 &                 7.468944215683443e-09 \\
+165 &         3 &         30 &  0.9589113355779955 &      0.000817852927579821 &                2.6840418547618773e-08 \\
+166 &         3 &         40 &  0.9048933782267121 &      0.002479026957440724 &                 8.520294235079064e-08 \\
+167 &         3 &         50 &  0.8263524130190799 &      0.003603287646385281 &                 1.327145179661675e-07 \\
+168 &         3 &         60 &  0.7401795735129066 &      0.004058101906960856 &                2.7164246866273353e-07 \\
+169 &         3 &         70 &   0.676195286195286 &      0.002758965008609607 &                 2.676536347106058e-07 \\
+170 &         3 &         80 &  0.6341414141414152 &      0.002122609811797995 &                2.3767567061700578e-07 \\
+171 &         3 &         90 &  0.6066442199775552 &     0.0019114320660149212 &                 3.115786230851298e-07 \\
+172 &         4 &        100 &           0.9376875 &     0.0009542495117187478 &                                   0.0 \\
+173 &         4 &         40 &         0.576734375 &     0.0007596018066406246 &                                   0.0 \\
+174 &         4 &         60 &        0.9271328125 &     0.0006313214721679667 &                                   0.0 \\
+175 &         4 &         80 &        0.9296171875 &     0.0008832042846679729 &                                   0.0 \\
+\bottomrule
+\end{tabular}
+\end{center}
+\newpage
+\subsection{smart-ann}
+\begin{center}
+\begin{tabular}{llllll}
+\toprule
+{} & dimension & difficulty &  average time & average time variance & variance of time variance batches \\
+\midrule
+176 &         2 &        100 &  1.119147e-01 &          6.982609e-04 &                      2.274140e-07 \\
+177 &         2 &         10 &  2.719301e-02 &          1.251606e-04 &                      5.557582e-08 \\
+178 &         2 &         20 &  3.172644e-02 &          1.264584e-04 &                      4.982299e-08 \\
+179 &         2 &         30 &  4.211882e-02 &          3.545372e-04 &                      1.229592e-07 \\
+180 &         2 &         40 &  4.743357e-02 &          3.262485e-04 &                      9.333553e-08 \\
+181 &         2 &         50 &  6.431694e-02 &          6.565269e-04 &                      1.226479e-07 \\
+182 &         2 &         60 &  7.010439e-02 &          5.268437e-04 &                      1.554122e-07 \\
+183 &         2 &         70 &  8.635050e-02 &          8.451764e-04 &                      1.601254e-07 \\
+184 &         2 &         80 &  9.680343e-02 &          7.238106e-04 &                      2.060865e-07 \\
+185 &         2 &         90 &  9.972651e-02 &          8.853367e-04 &                      2.369274e-07 \\
+186 &         3 &        100 &  8.828152e-01 &          2.608085e-02 &                      8.015462e-05 \\
+187 &         3 &         10 &  4.190906e-02 &          2.129979e-04 &                      4.400498e-08 \\
+188 &         3 &         20 &  6.547405e-02 &          4.108069e-04 &                      1.547593e-07 \\
+189 &         3 &         30 &  9.627915e-02 &          1.033617e-03 &                      7.000272e-07 \\
+190 &         3 &         40 &  1.414442e-01 &          2.987596e-03 &                      1.768485e-06 \\
+191 &         3 &         50 &  2.255063e-01 &          1.175275e-02 &                      1.067755e-05 \\
+192 &         3 &         60 &  3.739161e-01 &          2.831548e-02 &                      4.738556e-05 \\
+193 &         3 &         70 &  5.745506e-01 &          3.616353e-02 &                      5.849485e-05 \\
+194 &         3 &         80 &  7.415593e-01 &          3.149673e-02 &                      5.022928e-05 \\
+195 &         3 &         90 &  8.127244e-01 &          2.668684e-02 &                      6.232246e-05 \\
+196 &         4 &        100 &  1.632968e-01 &          3.827872e-03 &                      0.000000e+00 \\
+197 &         4 &         40 &  1.773572e+00 &          9.253761e-02 &                      0.000000e+00 \\
+198 &         4 &         60 &  1.880524e-01 &          3.156344e-03 &                      0.000000e+00 \\
+199 &         4 &         80 &  1.811371e-01 &          4.169151e-03 &                      0.000000e+00 \\
+\bottomrule
+\end{tabular}
+\end{center}
+\begin{center}
+\begin{tabular}{llllll}
+\toprule
+{} & dimension & difficulty &    average accuracy & average accuracy variance & variance of accuracy variance batches \\
+\midrule
+176 &         2 &        100 &  0.9911363636363636 &     0.0021941632231405233 &                 1.414005270942899e-05 \\
+177 &         2 &         10 &                 1.0 &                       0.0 &                                   0.0 \\
+178 &         2 &         20 &                 1.0 &                       0.0 &                                   0.0 \\
+179 &         2 &         30 &  0.9996022727272728 &    4.6006585743801254e-05 &                 9.116753879836641e-08 \\
+180 &         2 &         40 &  0.9996590909090909 &    4.2497417355371816e-05 &                 9.508827948910608e-08 \\
+181 &         2 &         50 &   0.998465909090909 &    0.00020006133780991838 &                 4.414153712978541e-07 \\
+182 &         2 &         60 &  0.9986363636363637 &     0.0002964359504132221 &                1.8738993578339512e-06 \\
+183 &         2 &         70 &  0.9939204545454545 &     0.0016640334452479243 &                1.5841431139303796e-05 \\
+184 &         2 &         80 &   0.992840909090909 &     0.0018166451446280881 &                1.6935800537126033e-05 \\
+185 &         2 &         90 &  0.9959090909090909 &     0.0009704803719008116 &                 5.942352130254925e-06 \\
+186 &         3 &        100 &  0.6802805836139169 &      0.015149768164246182 &                 3.978782776039456e-05 \\
+187 &         3 &         10 &  0.9999663299663301 &     4.145457568577755e-07 &                 4.617237059966525e-12 \\
+188 &         3 &         20 &  0.9994163860830525 &    1.3238256111432488e-05 &                1.2847000395650642e-09 \\
+189 &         3 &         30 &  0.9960718294051617 &    0.00012978015596795995 &                 3.056939439801186e-08 \\
+190 &         3 &         40 &  0.9895510662177309 &      0.000470415465290144 &                2.0168897764938363e-07 \\
+191 &         3 &         50 &  0.9615151515151499 &       0.00377158024943285 &                 6.775952879932871e-06 \\
+192 &         3 &         60 &  0.9067789001122329 &       0.01020023958250669 &                 1.573400753456741e-05 \\
+193 &         3 &         70 &   0.820549943883278 &      0.017106541030708657 &                 3.364284931397345e-05 \\
+194 &         3 &         80 &  0.7546464646464651 &      0.016623773462269512 &                 2.415719017957833e-05 \\
+195 &         3 &         90 &   0.708810325476993 &      0.016396446696671202 &                 4.828790345964947e-05 \\
+196 &         4 &        100 &        0.9880859375 &     9.227752685546873e-05 &                                   0.0 \\
+197 &         4 &         40 &         0.568796875 &     0.0007929299316406249 &                                   0.0 \\
+198 &         4 &         60 &          0.98471875 &     9.637841796874989e-05 &                                   0.0 \\
+199 &         4 &         80 &        0.9856328125 &    0.00010641961669921882 &                                   0.0 \\
+\bottomrule
+\end{tabular}
+\end{center}
+\newpage
+\subsection{stochastic}
+\begin{center}
+\begin{tabular}{llllll}
+\toprule
+{} & dimension & difficulty &  average time & average time variance & variance of time variance batches \\
+\midrule
+200 &         2 &        100 &  6.360509e-03 &          1.137920e-04 &                      5.403399e-07 \\
+201 &         2 &         10 &  6.281071e-03 &          3.622654e-05 &                      5.418242e-10 \\
+202 &         2 &         20 &  6.265426e-03 &          3.761085e-05 &                      1.211978e-09 \\
+203 &         2 &         30 &  6.396644e-03 &          1.374378e-04 &                      8.211432e-07 \\
+204 &         2 &         40 &  6.485410e-03 &          3.978786e-05 &                      8.259538e-10 \\
+205 &         2 &         50 &  6.663674e-03 &          4.372428e-05 &                      1.982181e-09 \\
+206 &         2 &         60 &  6.557755e-03 &          3.924065e-05 &                      9.541447e-10 \\
+207 &         2 &         70 &  6.769016e-03 &          4.659661e-05 &                      1.780782e-09 \\
+208 &         2 &         80 &  6.642398e-03 &          4.649874e-05 &                      2.934726e-09 \\
+209 &         2 &         90 &  6.554753e-03 &          4.260452e-05 &                      1.127521e-09 \\
+\bottomrule
+\end{tabular}
+\end{center}
+\begin{center}
+\begin{tabular}{llllll}
 \toprule
 {} & dimension & difficulty & average accuracy & average accuracy variance & variance of accuracy variance batches \\
 \midrule
-152 &         2 &        100 &              1.0 &                       0.0 &                                   0.0 \\
-153 &         2 &         10 &              1.0 &                       0.0 &                                   0.0 \\
-154 &         2 &         20 &              1.0 &                       0.0 &                                   0.0 \\
-155 &         2 &         30 &              1.0 &                       0.0 &                                   0.0 \\
-156 &         2 &         40 &              1.0 &                       0.0 &                                   0.0 \\
-157 &         2 &         50 &              1.0 &                       0.0 &                                   0.0 \\
-158 &         2 &         60 &              1.0 &                       0.0 &                                   0.0 \\
-159 &         2 &         70 &              1.0 &                       0.0 &                                   0.0 \\
-160 &         2 &         80 &              1.0 &                       0.0 &                                   0.0 \\
-161 &         2 &         90 &              1.0 &                       0.0 &                                   0.0 \\
-162 &         3 &        100 &              1.0 &                       0.0 &                                   0.0 \\
-163 &         3 &         10 &              1.0 &                       0.0 &                                   0.0 \\
-164 &         3 &         20 &              1.0 &                       0.0 &                                   0.0 \\
-165 &         3 &         30 &              1.0 &                       0.0 &                                   0.0 \\
-166 &         3 &         40 &              1.0 &                       0.0 &                                   0.0 \\
-167 &         3 &         50 &              1.0 &                       0.0 &                                   0.0 \\
-168 &         3 &         60 &              1.0 &                       0.0 &                                   0.0 \\
-169 &         3 &         70 &              1.0 &                       0.0 &                                   0.0 \\
-170 &         3 &         80 &              1.0 &                       0.0 &                                   0.0 \\
-171 &         3 &         90 &              1.0 &                       0.0 &                                   0.0 \\
+200 &         2 &        100 &              1.0 &                       0.0 &                                   0.0 \\
+201 &         2 &         10 &              1.0 &                       0.0 &                                   0.0 \\
+202 &         2 &         20 &              1.0 &                       0.0 &                                   0.0 \\
+203 &         2 &         30 &              1.0 &                       0.0 &                                   0.0 \\
+204 &         2 &         40 &              1.0 &                       0.0 &                                   0.0 \\
+205 &         2 &         50 &              1.0 &                       0.0 &                                   0.0 \\
+206 &         2 &         60 &              1.0 &                       0.0 &                                   0.0 \\
+207 &         2 &         70 &              1.0 &                       0.0 &                                   0.0 \\
+208 &         2 &         80 &              1.0 &                       0.0 &                                   0.0 \\
+209 &         2 &         90 &              1.0 &                       0.0 &                                   0.0 \\
 \bottomrule
 \end{tabular}
-}
+\end{center}
 \newpage
+\subsection{vanilla}
+\begin{center}
+\begin{tabular}{llllll}
+\toprule
+{} & dimension & difficulty &  average time & average time variance & variance of time variance batches \\
+\midrule
+210 &         2 &        100 &  4.713018e-05 &          1.704109e-09 &                      2.553037e-18 \\
+211 &         2 &         10 &  1.181682e-05 &          2.979569e-10 &                      1.892657e-18 \\
+212 &         2 &         20 &  1.516355e-05 &          3.515285e-10 &                      4.053147e-19 \\
+213 &         2 &         30 &  1.678145e-05 &          3.889825e-10 &                      5.059560e-19 \\
+214 &         2 &         40 &  2.482536e-05 &          6.296179e-10 &                      2.258311e-19 \\
+215 &         2 &         50 &  2.386500e-05 &          6.258014e-10 &                      6.743542e-19 \\
+216 &         2 &         60 &  2.096209e-05 &          3.118149e-10 &                      1.325595e-19 \\
+217 &         2 &         70 &  3.294891e-05 &          1.874894e-09 &                      1.297712e-16 \\
+218 &         2 &         80 &  4.729091e-05 &          3.370513e-08 &                      8.644665e-14 \\
+219 &         2 &         90 &  4.569491e-05 &          8.628173e-09 &                      4.885685e-15 \\
+220 &         3 &        100 &  2.846464e-01 &          6.995866e-01 &                      4.867427e+00 \\
+221 &         3 &         10 &  3.803945e-05 &          6.592078e-10 &                      1.628970e-19 \\
+222 &         3 &         20 &  5.297300e-05 &          1.465691e-09 &                      1.645444e-18 \\
+223 &         3 &         30 &  1.078873e-04 &          2.076369e-08 &                      9.993865e-15 \\
+224 &         3 &         40 &  1.753418e-04 &          1.131490e-07 &                      3.381034e-13 \\
+225 &         3 &         50 &  5.839050e-04 &          1.616915e-06 &                      2.187441e-11 \\
+226 &         3 &         60 &  5.836747e-03 &          1.560231e-03 &                      1.344713e-04 \\
+227 &         3 &         70 &  2.790812e-02 &          1.147977e-02 &                      1.444770e-03 \\
+228 &         3 &         80 &  8.677804e-02 &          1.198107e-01 &                      3.064799e-01 \\
+229 &         3 &         90 &  1.678644e-01 &          2.844652e-01 &                      1.715671e+00 \\
+\bottomrule
+\end{tabular}
+\end{center}
+\begin{center}
+\begin{tabular}{llllll}
+\toprule
+{} & dimension & difficulty & average accuracy & average accuracy variance & variance of accuracy variance batches \\
+\midrule
+210 &         2 &        100 &              1.0 &                       0.0 &                                   0.0 \\
+211 &         2 &         10 &              1.0 &                       0.0 &                                   0.0 \\
+212 &         2 &         20 &              1.0 &                       0.0 &                                   0.0 \\
+213 &         2 &         30 &              1.0 &                       0.0 &                                   0.0 \\
+214 &         2 &         40 &              1.0 &                       0.0 &                                   0.0 \\
+215 &         2 &         50 &              1.0 &                       0.0 &                                   0.0 \\
+216 &         2 &         60 &              1.0 &                       0.0 &                                   0.0 \\
+217 &         2 &         70 &              1.0 &                       0.0 &                                   0.0 \\
+218 &         2 &         80 &              1.0 &                       0.0 &                                   0.0 \\
+219 &         2 &         90 &              1.0 &                       0.0 &                                   0.0 \\
+220 &         3 &        100 &              1.0 &                       0.0 &                                   0.0 \\
+221 &         3 &         10 &              1.0 &                       0.0 &                                   0.0 \\
+222 &         3 &         20 &              1.0 &                       0.0 &                                   0.0 \\
+223 &         3 &         30 &              1.0 &                       0.0 &                                   0.0 \\
+224 &         3 &         40 &              1.0 &                       0.0 &                                   0.0 \\
+225 &         3 &         50 &              1.0 &                       0.0 &                                   0.0 \\
+226 &         3 &         60 &              1.0 &                       0.0 &                                   0.0 \\
+227 &         3 &         70 &              1.0 &                       0.0 &                                   0.0 \\
+228 &         3 &         80 &              1.0 &                       0.0 &                                   0.0 \\
+229 &         3 &         90 &              1.0 &                       0.0 &                                   0.0 \\
+\bottomrule
+\end{tabular}
+\end{center}
+\newpage
+\section{Resolution Time Evolution Plot}
+\begin{center}
+\includegraphics[scale=0.4]{C:/Users/tinou/PycharmProjects/Projet_PTS-DIA_13/reporting/time.png}
+\end{center}
+\section{Resolution Accuracy Evolution Plot}
+\begin{center}
+\includegraphics[scale=0.4]{C:/Users/tinou/PycharmProjects/Projet_PTS-DIA_13/reporting/accuracy.png}
+\end{center}
 \end{document}
