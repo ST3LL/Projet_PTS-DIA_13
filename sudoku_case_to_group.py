@@ -37,9 +37,8 @@ class SudokuCaseToGroup(Sudoku):
         return moveset
 
     def place(self, row: int, col: int, move: Move) -> None:
-        self.move_history.append(((row, col), move))
         val = self.grid[row][col]
-        self.grid[row][col] = move
+        super(SudokuCaseToGroup, self).place(row, col, move)
         for group in self.groupset_of_case[(row, col)]:
             if val != EMPTY:
                 self.moveset_of_group[group].remove(val)

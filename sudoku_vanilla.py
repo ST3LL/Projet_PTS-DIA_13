@@ -1,3 +1,4 @@
+from abc import ABC
 from typing import Set
 
 from sudoku_base import Sudoku
@@ -6,6 +7,7 @@ from random import shuffle
 
 
 class SudokuVanilla(Sudoku):
+
     def rule_vanilla(self, row: int, col: int) -> Set[Move]:
         return self.moveset & self.rule_row(row, col) & self.rule_col(row, col) & self.rule_region(row, col)
 

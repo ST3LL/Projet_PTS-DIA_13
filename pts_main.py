@@ -98,16 +98,16 @@ def benchmark(l_models, l_src, log_file):
 
 def main_benchmark():
     src = 'sudoku_pickles'
-    for model in ['linear']:
+    for model in ['vanilla', 'case to case', 'case to group', 'mrv'][::-1]:
         benchmark(
             [model],
-            [f"{src}/{x}" for x in listdir(src) if x.startswith('mrv_3')],
+            sorted([f"{src}/{x}" for x in listdir(src) if x.startswith('mrv_4')], reverse=True),
             "log_pickle/big_pickle"
         )
 
 
 def main_build_pickles():
-    build_pickles('mrv', ['rule_vanilla'], [4], [10 * i for i in range(1, 11)], 10, 10, 20)
+    build_pickles('mrv', ['rule_vanilla'], [4], [10 * i for i in range(5, 7)], 10, 0, 20)
 
 
 def main_visualize(src):
@@ -141,7 +141,8 @@ def other():
 
 
 if __name__ == '__main__':
-    other()
+    # misc()
+    # other()
     # main_benchmark()
-    # main_build_pickles()
-    # main_visualize('log_pickle/big_pickle_linear_2_10_100_10.pickle')
+    main_build_pickles()
+    # main_visualize('log_pickle/small.pickle')
