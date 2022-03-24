@@ -35,7 +35,7 @@ if __name__ == '__main__':
     file_tex = './sudoku_report.tex'
     output = './output/'
 
-    l_files = [entry for entry in os.listdir('./data')]
+    l_files = [entry for entry in os.listdir('../log_pickle/data')]
 
     cols = ['model', 'dimension', 'difficulty', 'average time', 'average time variance',
             'variance of time variance batches', 'average accuracy', 'average accuracy variance',
@@ -43,7 +43,7 @@ if __name__ == '__main__':
     df = pd.DataFrame(columns=[cols])
 
     for file in l_files:
-        l_data_tuples = pickle.load(open(f'./data/{file}', 'rb'))
+        l_data_tuples = pickle.load(open(f'../log_pickle/data/{file}', 'rb'))
         l_data_times, l_data_accuracy = [x[0] for x in l_data_tuples], [x[1] for x in l_data_tuples]
         dico = re.search(
             r"(?P<scrap_batch>\w+_\w+)_(?P<model>[\w-]+)_(?P<dim>\d)_(?P<dif>\d+)_(?P<quantity>\d+)_(?P<variations>\d+)",
@@ -75,9 +75,9 @@ if __name__ == '__main__':
         srg.newpage()
 
     srg.section('Resolution Time Evolution Plot')
-    srg.figure(0.4, 'C:/Users/tinou/PycharmProjects/Projet_PTS-DIA_13/reporting/time.png')
+    srg.figure(0.4, './reporting/time.png')
     srg.section('Resolution Accuracy Evolution Plot')
-    srg.figure(0.4, 'C:/Users/tinou/PycharmProjects/Projet_PTS-DIA_13/reporting/accuracy.png')
+    srg.figure(0.4, './reporting/accuracy.png')
     srg.end_document()
 
     subprocess.run(f'pdflatex -output-directory={output} {file_tex}', shell=True)

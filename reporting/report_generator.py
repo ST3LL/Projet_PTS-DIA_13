@@ -55,41 +55,5 @@ class SudokuReportGenerator:
     def figure(self, scale: float, path: str):
         self.center('\\includegraphics[scale=' + str(scale) + ']{' + path + '}\n')
 
-    def begin_itemize(self):
-        self.file.write('\\begin{itemize}\n')
-
-    def item(self, content: str):
-        self.file.write('   \\item ' + content + '\n')
-
-    def end_itemize(self):
-        self.file.write('\\end{itemize}\n')
-
-    def color_box_with_title(self, frame_color: str, backgroung_color: str, title: str, content: str):
-        self.file.write(
-            '\\begin{tcolorbox}[colback=' + backgroung_color + '!5,colframe=' + frame_color + '!40!black,title=' + title + ']\n')
-        self.file.write(content + '\n')
-        self.file.write('\\end{tcolorbox}\n')
-
-    def color_box(self, frame_color: str, backgroung_color: str, content: str):
-        self.file.write(
-            '\\begin{tcolorbox}[colback=' + backgroung_color + '!5,colframe=' + frame_color + '!40!black]\n')
-        self.file.write(content + '\n')
-        self.file.write('\\end{tcolorbox}\n')
-
-    def href(self, link: str, content: str):
-        return '\\href{' + link + '}{' + content + '}'
-
-    def bold(self, content: str):
-        return '\\textbf{' + content + '}'
-
-    def italic(self, content):
-        return '\\textit{' + content + '}'
-
-    def underline(self, content):
-        return '\\underline{' + content + '}'
-
-    def text_color(self, color: str, content: str):
-        return '\\textcolor{' + color + '}{' + content + '}'
-
     def newpage(self):
         self.file.write('\\newpage\n')
