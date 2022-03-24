@@ -75,9 +75,9 @@ if __name__ == '__main__':
         srg.newpage()
 
     srg.section('Resolution Time Evolution Plot')
-    srg.figure(0.4, './reporting/time.png')
+    srg.figure(0.4, './output/time.png')
     srg.section('Resolution Accuracy Evolution Plot')
-    srg.figure(0.4, './reporting/accuracy.png')
+    srg.figure(0.4, './output/accuracy.png')
     srg.end_document()
 
     subprocess.run(f'pdflatex -output-directory={output} {file_tex}', shell=True)
