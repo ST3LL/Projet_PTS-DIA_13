@@ -1,8 +1,13 @@
 import itertools
+import re
+from os import listdir
 from random import shuffle
-from typing import List, Optional, Tuple, FrozenSet, Callable, Set
+from typing import List, Optional, Tuple, FrozenSet, Callable, Set, Dict
 
 # <editor-fold desc="Type hinting & Constants">
+from keras.models import Model
+from tensorflow import keras
+
 Move = int
 Grid = List[List[Optional[Move]]]
 Region_map = List[List[Optional[int]]]
@@ -49,6 +54,18 @@ def calc_moveset(dim: int) -> Set[Move]:
 def get_color_list() -> List[str]:
     shuffle(L_COLOR_API)
     return L_COLOR_API
+
+
+def load_models() -> Dict[int, Model]:
+    src = "ann_models/"
+    d_res = {}
+    for file in listdir(src):
+        model_path = src + file
+        dim = re.search(r'\d+', file)[0]
+        assert dim not in d_res
+        d_res[int(dim)] = keras.models.load_model(model_path)
+    print('loaded models:', d_res.keys())
+    return d_res
 
 
 # </editor-fold>
