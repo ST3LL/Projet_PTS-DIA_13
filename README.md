@@ -1,4 +1,4 @@
-# Sudoku-AI-Solvers-Comparator
+# Sudoku-AI-Solvers-Comparator-Project
 
 ESILV - PTS (Technical and Scientific Project) 2021/2022 with three contributors, done as part of the ESILV master's degree.
 
