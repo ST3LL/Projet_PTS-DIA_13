@@ -1,3 +1,4 @@
+from copy import deepcopy
 from typing import Set, List, Dict
 from math import sqrt
 from random import shuffle
@@ -13,7 +14,7 @@ class SudokuStochastic(SudokuVanilla):
         super().__init__(region_map, ruleset)
         self.stride = self.calc_stride()
         self.l_frozen_case = self.build_frozen_case()
-        
+
     def calc_stride(self):
         stride = sqrt(self.dim)
         if stride != int(stride):
@@ -66,22 +67,27 @@ class SudokuStochastic(SudokuVanilla):
                             for j_case in range(self.stride * j_region, self.stride * j_region + self.stride):
                                 if self.grid[i_case][j_case] in self.l_frozen_case[j_region]:
                                     continue
-                                n_conflict_row, n_conflict_col = self.conflict_row(i_case, j_case), self.conflict_col(i_case, j_case)
+                                n_conflict_row, n_conflict_col = self.conflict_row(i_case, j_case), self.conflict_col(
+                                    i_case, j_case)
                                 n_conflicts += n_conflict_row + n_conflict_col
 
                         l_conflicts.append(n_conflicts)
 
                 return l_conflicts
 
+            target = None
             while True:
                 l_region_conflicts = calc_region_conflicts()
                 if not any(l_region_conflicts):
                     break
-                target = max(enumerate(l_region_conflicts), key=lambda x: x[-1])[0]
+                l_target = sorted(enumerate(l_region_conflicts), key=lambda x: x[-1])
+                new_target = l_target[-1][0]
+                target = new_target if new_target != target else l_target[-2][0]
                 fill_region(target)
 
         self.move_history.clear()
         fill_grid()
         solve_aux()
+        self.solution = deepcopy(self.grid)
 
         return 1

@@ -1,13 +1,15 @@
 import time
 from copy import deepcopy
 from random import shuffle
-from typing import Set, Tuple, Optional
+from typing import Set, Tuple, Optional, Dict
 
 from sudoku_case_to_group import SudokuCaseToGroup
 from utils import EMPTY, Region_map, Rule, Case, Move
 
 
 class SudokuConstraint(SudokuCaseToGroup):
+    nb_moves: Dict[Case, int]
+
     def __init__(self, region_map: Region_map = None, ruleset: Set[Rule] = None):
         super().__init__(region_map, ruleset)
         shuffle(self.ALL_COORD)

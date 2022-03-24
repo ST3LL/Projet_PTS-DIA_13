@@ -74,4 +74,3 @@ class SudokuHillClimbing(SudokuCaseToCase):
             if len(l_free_case) < 2:
                 continue
             self.switch_case(*sample(l_free_case, 2))
-
