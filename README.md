@@ -104,7 +104,5 @@ To do so, you need to run the ```app.py``` process and click on the link generat
 
 To launch a benchmark, you need to run the function "main_bechmark". You can modify some parameters in it.
 
-
-
-
-
+Noteworthy information: A file is missing in the './ann_models/solver_ann_4_pts/variables/' folder because of its weight. 
+You can download it from the following link: https://drive.google.com/file/d/1gPGl_gundwEtLVbkzN80cQyPX0Ri9u12/view?usp=sharing.
